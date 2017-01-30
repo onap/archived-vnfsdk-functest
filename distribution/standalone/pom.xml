@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.openo.vnf-sdk.function-test</groupId>
+        <artifactId>distribution</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>standalone</artifactId>
+    <name>vnfsdk-functest-distribution-standalone</name>
+    <packaging>pom</packaging>
+
+    <properties>
+        <packagename>openo-vnfsdk-functest</packagename>
+        <linux64id>linux64</linux64id>
+        <win64id>win64</win64id>
+        <linux64outputdir>target/assembly/${linux64id}</linux64outputdir>
+        <win64outputdir>target/assembly/${win64id}</win64outputdir>
+        <version.output>target/version</version.output>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources-${linux64id}</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${linux64outputdir}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/assembly/</directory>
+                                    <filtering>false</filtering>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>**/*.bat</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-resources-${win64id}</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${win64outputdir}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/assembly/</directory>
+                                    <filtering>false</filtering>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>**/*.sh</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-jar-${linux64id}</id>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.openo.vnf-sdk.function-test</groupId>
+                                    <artifactId>vnf-sdk-function-test</artifactId>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${linux64outputdir}</outputDirectory>
+                                    <destFileName>vnf-sdk-function-test</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-jar-${win64id}</id>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.openo.vnf-sdk.function-test</groupId>
+                                    <artifactId>vnf-sdk-function-test</artifactId>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${win64outputdir}</outputDirectory>
+                                    <destFileName>vnf-sdk-function-test</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>distribution</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target name="distribution">
+                                <tar destfile="${version.output}/${packagename}-${project.version}-linux64.tar.gz" longfile="posix" compression="gzip">
+                                    <tarfileset dir="target/assembly/linux64" filemode="0644" dirmode="0755">
+                                        <exclude name="**/*.sh"/>
+                                    </tarfileset>
+                                    <tarfileset dir="target/assembly/linux64" filemode="0755" dirmode="0755">
+                                        <include name="**/*.sh"/>
+                                    </tarfileset>
+                                </tar>
+                                <attachartifact file="${version.output}/${packagename}-${project.version}-linux64.tar.gz" classifier="linux64" type="tar.gz"/>
+                                <zip destfile="${version.output}/${packagename}-${project.version}-win64.zip" update="true">
+                                    <zipfileset dir="target/assembly/win64" includes="**"/>
+                                </zip>
+                                <attachartifact file="${version.output}/${packagename}-${project.version}-win64.zip" classifier="win64" type="zip"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openo.vnf-sdk.function-test</groupId>
+            <artifactId>vnf-sdk-function-test</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>  
+</project>
