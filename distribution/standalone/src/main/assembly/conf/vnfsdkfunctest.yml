@@ -32,7 +32,7 @@ server:
   adminContextPath: /admin
   connector:
     type: http
-    port: 8100
+    port: 8701
 
 # Logging settings.
 logging:
