@@ -16,6 +16,11 @@
 
 package org.openo.vnfsdk.functest.responsehandler;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Map;
+
 import javax.ws.rs.core.Response;
 
 import org.openo.vnfsdk.functest.FileUtil;
@@ -24,12 +29,15 @@ import org.openo.vnfsdk.functest.util.ZipCompressor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class VnfFuncTestResponseHandler {
 
-    private static boolean deleteFileEnabled = false;
+    private static int actioninProgress = 21;
+    private static int error = 22;
+    private static String resultpathkey = "DIR_RESULT";
 
-    private static String resultPath = "D:\\Pitchi_docs\\remote\\";
-
+    private static Map<String, String> mapConfigValues;
     private static VnfFuncTestResponseHandler vnfFuncRspHandler;
 
     private static final Logger logger = LoggerFactory.getLogger(VnfFuncTestResponseHandler.class);
@@ -40,42 +48,67 @@ public class VnfFuncTestResponseHandler {
     public static VnfFuncTestResponseHandler getInstance() {
         if(vnfFuncRspHandler == null) {
             vnfFuncRspHandler = new VnfFuncTestResponseHandler();
+            loadConfigurations();
         }
         return vnfFuncRspHandler;
     }
 
     public Response getResponseByFuncTestId(String funcTestId) {
-        // Check whether file Exists for the Request received !!!
-        // -----------------------------------------------------
-        String fileName = generateFilePath(funcTestId);
-        if(!FileUtil.checkFileExist(fileName)) {
-            logger.warn("Resquested function Test result not avaliable/In-Progress !!!");
-            return RestResponseUtil.getErrorResponse(21);
+
+        if((null == mapConfigValues) || (null == mapConfigValues.get(resultpathkey)))
+        {
+            logger.warn("Result Store path not configfured !!!");
+            return RestResponseUtil.getErrorResponse(error);
         }
 
-        String zipFileName = resultPath + funcTestId + ".zip";
+        String resultPath = mapConfigValues.get(resultpathkey);
+
+        // Check whether file Exists for the Request received !!!
+        // -----------------------------------------------------
+        String fileName = resultPath + File.separator + funcTestId;
+        if(!FileUtil.checkFileExist(fileName)) {
+            logger.warn("Resquested function Test result not avaliable/In-Progress !!!");
+            return RestResponseUtil.getErrorResponse(actioninProgress);
+        }
+
+        String zipFileName = fileName + ".zip";
         new ZipCompressor(zipFileName).compress(fileName);
 
         // Convert Zip-file byteCode and to response !!!
         // -----------------------------------------------------
         byte[] byteArrayFile = FileUtil.convertZipFiletoByteArray(zipFileName);
 
-        // Delete the zip file present if Success !!!
-        // ----------------------------------------------
-        if(deleteFileEnabled) {
-            FileUtil.deleteFile(zipFileName);
-        }
-
         if(null != byteArrayFile) {
+
+            // Delete Result folders present if Success !!!
+            // ----------------------------------------------
+            FileUtil.deleteFile(zipFileName);
+            FileUtil.deleteDirectory(fileName);
+
             logger.warn("Resquested function Test result Sucess !!!");
             return RestResponseUtil.getSuccessResponse(byteArrayFile);
-        } else {
+        }
+        else
+        {
             logger.warn("Resquested function Test result Faiuled !!!");
-            return RestResponseUtil.getErrorResponse(21);
+            return RestResponseUtil.getErrorResponse(error);
         }
     }
 
-    private String generateFilePath(String funcTestId) {
-        return resultPath + "/" + funcTestId;
+    @SuppressWarnings("unchecked")
+    private static void  loadConfigurations()
+    {
+        String curDir = System.getProperty("user.dir");
+        String confDir = curDir + File.separator + "conf" + File.separator + "robot" + File.separator;
+        ObjectMapper mapper = new ObjectMapper();
+        try
+        {
+            mapConfigValues = mapper.readValue(new FileInputStream(confDir + "robotMetaData.json"), Map.class);
+        }
+        catch(IOException e)
+        {
+            logger.error("Reading Json Meta data file failed or file do not exist" + e.getMessage());
+            return;
+        }
     }
 }

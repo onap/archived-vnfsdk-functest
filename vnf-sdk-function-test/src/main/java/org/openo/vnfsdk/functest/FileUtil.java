@@ -228,4 +228,24 @@ public final class FileUtil {
         }
         return byteArrayFile;
     }
+
+    /**
+     * Interface to Delete Directory
+     * <br/>
+     *
+     * @param directory
+     * @since  VNFSDK 2.0
+     */
+    public static void deleteDirectory(String directory) {
+        File file = new File(directory);
+        if(!file.exists()) {
+            return ;
+        }
+        if (file.isDirectory()) {
+            for (File sub : file.listFiles()) {
+                deleteFile(sub);
+            }
+        }
+        file.delete();
+    }
 }

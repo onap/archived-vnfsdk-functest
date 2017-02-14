@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20170208 17:49:26.030" generator="Robot 3.0 (Python 2.7.12 on linux2)">
+<suite source="/home/root1/test/RobotScript/Sample.robot" id="s1" name="Sample">
+<test id="s1-t1" name="Hello World">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>HelloWorld</arg>
+</arguments>
+<msg timestamp="20170208 17:49:26.057" level="INFO">HelloWorld</msg>
+<status status="PASS" endtime="20170208 17:49:26.057" starttime="20170208 17:49:26.057"></status>
+</kw>
+<status status="PASS" endtime="20170208 17:49:26.057" critical="yes" starttime="20170208 17:49:26.056"></status>
+</test>
+<status status="PASS" endtime="20170208 17:49:26.058" starttime="20170208 17:49:26.031"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="1">Critical Tests</stat>
+<stat fail="0" pass="1">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="Sample" pass="1">Sample</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -49,7 +49,7 @@ public class CommonManagerTest {
 
     @Test
     public void testQueryResultWhenInstanceIdPresent() {
-        Response response = commonManger.queryResultByFuncTest(instanceId);
+        Response response = commonManger.queryResultByFuncTest("59d1e651-df9f-4008-902f-e3b377e6ec30");
         assertNotNull(response);
     }
 
