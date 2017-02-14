@@ -14,46 +14,28 @@
  * limitations under the License.
  */
 
-package org.openo.vnfsdk.functest.externalservice.entity;
+package org.openo.vnfsdk.functest.exception;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class ServiceRegisterEntityTest {
+public class VnfSdkFuncTestExceptionTest {
 
-    private ServiceRegisterEntity serviceRegistry;
+    private VnfSdkFuncTestException sdkFuncTestException;
 
     @Before
-    public void setUp() {
-        serviceRegistry = new ServiceRegisterEntity();
+    public void setup() {
+        sdkFuncTestException = new VnfSdkFuncTestException();
     }
 
     @Test
-    public void testSetSingleNode() {
-        serviceRegistry.setSingleNode("127.0.0.1", "80", 10);
+    public void testSetErrorCode() {
+        sdkFuncTestException.setErrorCode("1001");
     }
 
     @Test
-    public void testSetServiceName() {
-        serviceRegistry.setServiceName("nfvo");
+    public void testSetErrorMsg() {
+        sdkFuncTestException.setErrorMsg("message");
 
     }
-
-    @Test
-    public void testSetVersion() {
-        serviceRegistry.setVersion("5.6");
-
-    }
-
-    @Test
-    public void testSetProtocol() {
-        serviceRegistry.setProtocol("http");
-    }
-
-    @Test
-    public void testSetVisualRange() {
-        serviceRegistry.setVisualRange("range");
-
-    }
-
 }

@@ -14,28 +14,27 @@
  * limitations under the License.
  */
 
-package org.openo.vnfsdk.functests;
+package org.openo.vnfsdk.functest.util;
 
-import org.junit.Before;
-import org.mockito.Mock;
-import org.openo.vnfsdk.functest.VnfSdkFuncTestApp;
-import org.openo.vnfsdk.functest.VnfSdkFuncTestAppConfiguration;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import io.dropwizard.setup.Environment;
+import org.junit.Test;
 
-public class VnfSdkFuncTestAppTest {
+public class TestGsonUtil {
 
-    private VnfSdkFuncTestApp vnfSdkFuncTestApp;
-
-    private Environment environment;
-
-    @Mock
-    VnfSdkFuncTestAppConfiguration configuartion;
-
-    @Before
-    public void setup() {
-        vnfSdkFuncTestApp = new VnfSdkFuncTestApp();
-
+    @Test
+    public void testGenerateId() {
+        assertNotNull(GsonUtil.generateId());
     }
 
+    @Test
+    public void testIsNotEmpty() {
+        assertTrue(GsonUtil.isNotEmpty("junittestcase"));
+    }
+
+    @Test
+    public void testGetNowTime() {
+        assertNotNull(GsonUtil.getNowTime());
+    }
 }

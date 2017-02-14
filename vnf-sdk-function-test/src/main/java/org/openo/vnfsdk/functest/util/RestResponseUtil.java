@@ -35,7 +35,7 @@ public class RestResponseUtil {
 
     public static Response getErrorResponse(Object obj) {
         if(obj != null) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(obj).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(GsonUtil.objectToString(obj)).build();
         } else {
             return Response.serverError().build();
         }
