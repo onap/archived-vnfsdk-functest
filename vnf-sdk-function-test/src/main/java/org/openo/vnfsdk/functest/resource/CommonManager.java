@@ -16,6 +16,18 @@
 
 package org.openo.vnfsdk.functest.resource;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.StringTokenizer;
+import java.util.UUID;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,6 +37,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.eclipse.jetty.http.HttpStatus;
+import org.openo.vnfsdk.functest.FileUtil;
+import org.openo.vnfsdk.functest.TaskExecution;
+import org.openo.vnfsdk.functest.responsehandler.VnfFuncTestResponseHandler;
+import org.openo.vnfsdk.functest.util.RestResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,8 +67,49 @@ public class CommonManager {
                     @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415, message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
                     @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "internal server error", response = String.class)})
     @Timed
-    public Response executeFuncTest() {
+    public Response executeFuncTest(InputStream csarInputStream) {
         LOGGER.info("execute function test");
+
+        try {
+
+            // Convert the stream to script folder
+            String nl = File.separator;
+            String filePath = storeChunkFileInLocal("temp", "TempFile.rar", csarInputStream);
+
+            // Unzip the folder
+            String tempDir = System.getProperty("user.dir") + nl + "temp";
+            FileUtil.unzip(filePath, tempDir);
+            LOGGER.info("File path=" + filePath);
+
+            String directories[] = FileUtil.getDirectory(tempDir);
+            if(null != directories) {
+                filePath = tempDir + File.separator + directories[0];
+            }
+
+            // Upload the script and execute the script and run command
+            final UUID uniqueKey = UUID.randomUUID();
+
+            final String finalPath = filePath;
+            ExecutorService es = Executors.newFixedThreadPool(3);
+            final Future<Integer> future = es.submit(new Callable<Integer>() {
+
+                public Integer call() throws Exception {
+
+                    new TaskExecution().executeScript(finalPath, uniqueKey);
+                    return 0;
+                }
+            });
+
+            // Send REST response
+            Response response = RestResponseUtil.getSuccessResponse(uniqueKey);
+
+            return response;
+
+        } catch(IOException e) {
+
+            e.printStackTrace();
+        }
+
         return null;
     }
 
@@ -67,8 +124,38 @@ public class CommonManager {
     @Timed
     public Response queryResultByFuncTest(@ApiParam(value = "functestId") @PathParam("functestId") String instanceId) {
         LOGGER.info("query functest result by id." + instanceId);
-        return null;
+        // Query VNF Function test result by function test ID
+        return VnfFuncTestResponseHandler.getInstance().getResponseByFuncTestId(instanceId);
+    }
 
+    public String storeChunkFileInLocal(String dirName, String fileName, InputStream uploadedInputStream)
+            throws IOException {
+        File tmpDir = new File(dirName);
+        System.out.println("tmpdir = " + dirName);
+        if(!tmpDir.exists()) {
+            tmpDir.mkdirs();
+        }
+        StringTokenizer st = new StringTokenizer(fileName, "/");
+        String actualFile = null;
+        while(st.hasMoreTokens()) {
+            actualFile = st.nextToken();
+        }
+        File file = new File(tmpDir + File.separator + actualFile);
+        OutputStream os = null;
+        try {
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            os = new FileOutputStream(file, true);
+            while((read = uploadedInputStream.read(bytes)) != -1) {
+                os.write(bytes, 0, read);
+            }
+            os.flush();
+            return file.getAbsolutePath();
+        } finally {
+            if(os != null) {
+                os.close();
+            }
+        }
     }
 
 }

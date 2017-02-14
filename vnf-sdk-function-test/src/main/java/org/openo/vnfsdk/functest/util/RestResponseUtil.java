@@ -23,7 +23,7 @@ public class RestResponseUtil {
 
     public static Response getSuccessResponse(Object obj) {
         if(obj != null) {
-            return Response.ok(obj).build();
+            return Response.ok(GsonUtil.objectToString(obj)).build();
         } else {
             return Response.ok().build();
         }
