@@ -1,0 +1,6 @@
+{
+    "FRAMEWORK_TYPE": "robot",
+    "MAIN_SCRIPT": "main.robot",
+    "DIR_RESULT": "D:\\Pitchi_docs\\remote\\",
+    "DIR_REMOTE": "/home/root1/test/"
+}

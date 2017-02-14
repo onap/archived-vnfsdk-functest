@@ -1,0 +1,8 @@
+######### System Under Test ####################
+
+--variable NODE_IP:192.168.4.47
+--variable NODE_NAME:TestSystem
+--variable NODE_USERNAME:root
+--variable NODE_PASSWORD:root123
+
+
