@@ -34,10 +34,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class VnfFuncTestResponseHandler {
 
     private static int actioninProgress = 21;
+
     private static int error = 22;
+
     private static String resultpathkey = "DIR_RESULT";
 
     private static Map<String, String> mapConfigValues;
+
     private static VnfFuncTestResponseHandler vnfFuncRspHandler;
 
     private static final Logger logger = LoggerFactory.getLogger(VnfFuncTestResponseHandler.class);
@@ -53,10 +56,13 @@ public class VnfFuncTestResponseHandler {
         return vnfFuncRspHandler;
     }
 
+    public void setConfigMap(Map<String, String> inMapConfigValues) {
+        mapConfigValues = inMapConfigValues;
+    }
+
     public Response getResponseByFuncTestId(String funcTestId) {
 
-        if((null == mapConfigValues) || (null == mapConfigValues.get(resultpathkey)))
-        {
+        if((null == mapConfigValues) || (null == mapConfigValues.get(resultpathkey))) {
             logger.warn("Result Store path not configfured !!!");
             return RestResponseUtil.getErrorResponse(error);
         }
@@ -83,30 +89,24 @@ public class VnfFuncTestResponseHandler {
             // Delete Result folders present if Success !!!
             // ----------------------------------------------
             FileUtil.deleteFile(zipFileName);
-            FileUtil.deleteDirectory(fileName);
+            // Later will delete this file..FileUtil.deleteDirectory(fileName);
 
             logger.warn("Resquested function Test result Sucess !!!");
             return RestResponseUtil.getSuccessResponse(byteArrayFile);
-        }
-        else
-        {
+        } else {
             logger.warn("Resquested function Test result Faiuled !!!");
             return RestResponseUtil.getErrorResponse(error);
         }
     }
 
     @SuppressWarnings("unchecked")
-    private static void  loadConfigurations()
-    {
+    private static void loadConfigurations() {
         String curDir = System.getProperty("user.dir");
         String confDir = curDir + File.separator + "conf" + File.separator + "robot" + File.separator;
         ObjectMapper mapper = new ObjectMapper();
-        try
-        {
+        try {
             mapConfigValues = mapper.readValue(new FileInputStream(confDir + "robotMetaData.json"), Map.class);
-        }
-        catch(IOException e)
-        {
+        } catch(IOException e) {
             logger.error("Reading Json Meta data file failed or file do not exist" + e.getMessage());
             return;
         }
