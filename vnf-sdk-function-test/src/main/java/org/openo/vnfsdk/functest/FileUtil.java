@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -96,7 +97,7 @@ public final class FileUtil {
      * @return unzip file name
      * @throws IOException e1
      */
-    public static ArrayList<String> unzip(String zipFileName, String extPlace) throws IOException {
+    public static List<String> unzip(String zipFileName, String extPlace) throws IOException {
         ZipFile zipFile = null;
         ArrayList<String> unzipFileNams = new ArrayList<String>();
 
@@ -142,15 +143,12 @@ public final class FileUtil {
 
     public static String[] getDirectory(String directory) {
         File file = new File(directory);
-        String[] directories = file.list(new FilenameFilter() {
+        return file.list(new FilenameFilter() {
 
-            @Override
             public boolean accept(File current, String name) {
                 return new File(current, name).isDirectory();
             }
         });
-
-        return directories;
     }
 
     /**
@@ -163,8 +161,8 @@ public final class FileUtil {
             if(inputStream != null) {
                 inputStream.close();
             }
-        } catch(Exception e1) {
-            LOG.info("close InputStream error!");
+        } catch(Exception ex) {
+            LOG.error("close InputStream error!: " + ex);
         }
     }
 
@@ -178,8 +176,8 @@ public final class FileUtil {
             if(outputStream != null) {
                 outputStream.close();
             }
-        } catch(Exception e1) {
-            LOG.info("close OutputStream error!");
+        } catch(Exception ex) {
+            LOG.error("close OutputStream error!: " + ex);
         }
     }
 
@@ -190,12 +188,12 @@ public final class FileUtil {
      */
     private static void closeZipFile(ZipFile zipFile) {
         try {
-            if(zipFile != null) {
-                zipFile.close();
-                zipFile = null;
+        	ZipFile tempZipFile = zipFile;
+            if(tempZipFile != null) {
+            	tempZipFile.close();
             }
-        } catch(IOException e1) {
-            LOG.info("close ZipFile error!");
+        } catch(IOException ioe) {
+            LOG.error("close ZipFile error!: " + ioe);
         }
     }
 
@@ -214,17 +212,19 @@ public final class FileUtil {
 
     public static byte[] convertZipFiletoByteArray(String filename) {
         File file = new File(filename);
+        byte[] emptyArray = new byte[0];
         if(!file.exists()) {
-            return null;
+            return emptyArray;
         }
 
         byte[] byteArrayFile = new byte[(int)file.length()];
         try {
             FileInputStream fileInputStream = new FileInputStream(filename);
-            fileInputStream.read(byteArrayFile);
+            int value = fileInputStream.read(byteArrayFile);
             fileInputStream.close();
+            LOG.debug("Number of bytes read from fileInputStream = "+value);
         } catch(Exception e) {
-            e.printStackTrace();
+            LOG.error("convertZipFiletoByteArray: " + e);
         }
         return byteArrayFile;
     }
@@ -234,15 +234,15 @@ public final class FileUtil {
      * <br/>
      *
      * @param directory
-     * @since  VNFSDK 2.0
+     * @since VNFSDK 2.0
      */
     public static void deleteDirectory(String directory) {
         File file = new File(directory);
         if(!file.exists()) {
-            return ;
+            return;
         }
-        if (file.isDirectory()) {
-            for (File sub : file.listFiles()) {
+        if(file.isDirectory()) {
+            for(File sub : file.listFiles()) {
                 deleteFile(sub);
             }
         }

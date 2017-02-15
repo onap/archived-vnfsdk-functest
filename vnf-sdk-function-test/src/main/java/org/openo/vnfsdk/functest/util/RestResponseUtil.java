@@ -21,6 +21,9 @@ import javax.ws.rs.core.Response.Status;
 
 public class RestResponseUtil {
 
+    private RestResponseUtil() {
+    }
+
     public static Response getSuccessResponse(Object obj) {
         if(obj != null) {
             return Response.ok(GsonUtil.objectToString(obj)).build();

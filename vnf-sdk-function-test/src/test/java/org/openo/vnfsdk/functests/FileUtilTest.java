@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.openo.vnfsdk.functest.FileUtil;
@@ -50,7 +50,7 @@ public class FileUtilTest {
 
     @Test
     public void testUnzip() throws IOException {
-        ArrayList<String> files = FileUtil.unzip(zipFileName, extractZip);
+        List<String> files = FileUtil.unzip(zipFileName, extractZip);
         assertNotNull(files);
     }
 

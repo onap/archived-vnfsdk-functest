@@ -69,8 +69,10 @@ public class VnfFuncTestResponseHandler {
 
         String resultPath = mapConfigValues.get(resultpathkey);
 
-        // Check whether file Exists for the Request received !!!
-        // -----------------------------------------------------
+        /*
+         * Check whether file Exists for the Request received !!!
+         * -----------------------------------------------------
+         */
         String fileName = resultPath + File.separator + funcTestId;
         if(!FileUtil.checkFileExist(fileName)) {
             logger.warn("Resquested function Test result not avaliable/In-Progress !!!");
@@ -78,18 +80,29 @@ public class VnfFuncTestResponseHandler {
         }
 
         String zipFileName = fileName + ".zip";
-        new ZipCompressor(zipFileName).compress(fileName);
+        try {
+            new ZipCompressor(zipFileName).compress(fileName);
+        } catch(IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-        // Convert Zip-file byteCode and to response !!!
-        // -----------------------------------------------------
+        /*
+         * Convert Zip-file byteCode and to response !!!
+         * -----------------------------------------------------
+         */
         byte[] byteArrayFile = FileUtil.convertZipFiletoByteArray(zipFileName);
 
         if(null != byteArrayFile) {
 
-            // Delete Result folders present if Success !!!
-            // ----------------------------------------------
+            /*
+             * Delete Result folders present if Success !!!
+             * ----------------------------------------------
+             */
             FileUtil.deleteFile(zipFileName);
-            // Later will delete this file..FileUtil.deleteDirectory(fileName);
+            /*
+             * Later will delete this file..FileUtil.deleteDirectory(fileName);
+             */
 
             logger.warn("Resquested function Test result Sucess !!!");
             return RestResponseUtil.getSuccessResponse(byteArrayFile);

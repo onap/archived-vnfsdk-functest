@@ -19,7 +19,9 @@ package org.openo.vnfsdk.functest.util;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedOutputStream;
 import java.util.zip.ZipEntry;
@@ -44,20 +46,38 @@ public class ZipCompressor {
      * compress file according several path.
      * 
      * @param pathName file path name
+     * @throws Exception
      */
-    public void compress(String... pathName) {
+    public void compress(String... pathName) throws Exception {
         ZipOutputStream out = null;
+        FileOutputStream fileOutputStream = null;
+        CheckedOutputStream cos = null;
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(zipFile);
-            CheckedOutputStream cos = new CheckedOutputStream(fileOutputStream, new CRC32());
+            fileOutputStream = new FileOutputStream(zipFile);
+            cos = new CheckedOutputStream(fileOutputStream, new CRC32());
             out = new ZipOutputStream(cos);
             String basedir = "";
             for(int i = 0; i < pathName.length; i++) {
                 compress(new File(pathName[i]), out, basedir);
             }
-            out.close();
+
         } catch(Exception e1) {
-            throw new RuntimeException(e1);
+            try {
+                throw new FileNotFoundException("Failed to find file: ");
+            } catch(FileNotFoundException e) {
+                LOG.error("compress: " + e);
+            }
+        } finally {
+            try {
+                if(out != null)
+                    out.close();
+                if(fileOutputStream != null)
+                    fileOutputStream.close();
+                if(cos != null)
+                    cos.close();
+            } catch(Exception e1) {
+                throw new IOException(e1);
+            }
         }
     }
 
@@ -65,11 +85,12 @@ public class ZipCompressor {
      * compress file according file path.
      * 
      * @param srcPathName file path name
+     * @throws IOException
      */
-    public void compress(String srcPathName) {
+    public void compress(String srcPathName) throws IOException {
         File file = new File(srcPathName);
         if(!file.exists()) {
-            throw new RuntimeException(srcPathName + "not exist!");
+            throw new FileNotFoundException(srcPathName + "not exist!");
         }
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(zipFile);
@@ -79,16 +100,16 @@ public class ZipCompressor {
             compress(file, out, basedir);
             out.close();
         } catch(Exception e1) {
-            throw new RuntimeException(e1);
+            throw new IOException(e1);
         }
     }
 
     private void compress(File file, ZipOutputStream out, String basedir) {
         if(file.isDirectory()) {
-            System.out.println("compress: " + basedir + file.getName());
+            LOG.info("compress: " + basedir + file.getName());
             this.compressDirectory(file, out, basedir);
         } else {
-            System.out.println("compress: " + basedir + file.getName());
+            LOG.info("compress: " + basedir + file.getName());
             this.compressFile(file, out, basedir);
         }
     }
