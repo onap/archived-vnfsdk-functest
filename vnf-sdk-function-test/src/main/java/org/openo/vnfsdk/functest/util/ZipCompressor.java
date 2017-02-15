@@ -43,45 +43,6 @@ public class ZipCompressor {
     }
 
     /**
-     * compress file according several path.
-     * 
-     * @param pathName file path name
-     * @throws Exception
-     */
-    public void compress(String... pathName) {
-        ZipOutputStream out = null;
-        FileOutputStream fileOutputStream = null;
-        CheckedOutputStream cos = null;
-        try {
-            fileOutputStream = new FileOutputStream(zipFile);
-            cos = new CheckedOutputStream(fileOutputStream, new CRC32());
-            out = new ZipOutputStream(cos);
-            String basedir = "";
-            for(int i = 0; i < pathName.length; i++) {
-                compress(new File(pathName[i]), out, basedir);
-            }
-
-        } catch(FileNotFoundException e1) {
-            try {
-                throw new FileNotFoundException("Failed to find file: ");
-            } catch(FileNotFoundException e) {
-                LOG.error("compress: ", e);
-            }
-        } finally {
-            try {
-                if(out != null)
-                    out.close();
-                if(fileOutputStream != null)
-                    fileOutputStream.close();
-                if(cos != null)
-                    cos.close();
-            } catch(Exception e1) {
-                LOG.error("Error while closing stream: ", e1);
-            }
-        }
-    }
-
-    /**
      * compress file according file path.
      * 
      * @param srcPathName file path name
