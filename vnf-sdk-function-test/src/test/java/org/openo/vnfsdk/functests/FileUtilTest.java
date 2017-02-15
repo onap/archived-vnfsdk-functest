@@ -56,7 +56,7 @@ public class FileUtilTest {
 
     @Test
     public void testGetDirectory() {
-        String[] getDirectories = FileUtil.getDirectory(getDirectory);
+        String[] getDirectories = FileUtil.getDirectory(".");
         assertNotNull(getDirectories);
     }
 
