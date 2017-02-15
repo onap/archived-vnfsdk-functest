@@ -16,10 +16,11 @@
 
 package org.openo.vnfsdk.functests;
 
-import org.junit.Before;
-import org.mockito.Mock;
+import org.junit.Test;
 import org.openo.vnfsdk.functest.VnfSdkFuncTestApp;
 import org.openo.vnfsdk.functest.VnfSdkFuncTestAppConfiguration;
+import org.openo.vnfsdk.functest.common.Config;
+import org.openo.vnfsdk.functest.common.ServiceRegistration;
 
 import io.dropwizard.setup.Environment;
 
@@ -29,12 +30,20 @@ public class VnfSdkFuncTestAppTest {
 
     private Environment environment;
 
-    @Mock
-    VnfSdkFuncTestAppConfiguration configuartion;
+    @Test
+    public void RunApp() {
 
-    @Before
-    public void setup() {
-        vnfSdkFuncTestApp = new VnfSdkFuncTestApp();
+        try {
+
+            Config.setConfigration(new VnfSdkFuncTestAppConfiguration());
+            Thread registerExtsysService = new Thread(new ServiceRegistration());
+            registerExtsysService.setName("Register vnfsdk-functionTest service to Microservice Bus");
+            registerExtsysService.start();
+
+        } catch(Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
     }
 
