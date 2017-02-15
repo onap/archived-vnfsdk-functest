@@ -36,14 +36,12 @@ public class ServiceRegistration implements Runnable {
         LOG.info("start extsys microservice register");
         boolean flag = false;
         int retry = 0;
-        while(!flag && retry < 1000) {
+        while(!flag || retry < 1000) {
             LOG.info("VNF-SDK function test microservice register.retry:" + retry);
             retry++;
 
             flag = MicroserviceBusConsumer.registerService(funcTestEntity);
-            if(retry >= 1000) {
-                flag = true;
-            }
+
             if(flag == false) {
                 LOG.warn("microservice register failed, sleep 30S and try again.");
                 threadSleep(30000);

@@ -16,7 +16,7 @@
 
 package org.openo.vnfsdk.functest.externalservice.msb;
 
-import java.io.IOException;
+import javax.ws.rs.ProcessingException;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.openo.vnfsdk.functest.common.Config;
@@ -39,8 +39,8 @@ public class MicroserviceBusConsumer {
         try {
             MicroserviceBusRest resourceserviceproxy = ConsumerFactory
                     .createConsumer(Config.getConfigration().getMsbServerAddr(), config, MicroserviceBusRest.class);
-            resourceserviceproxy.registerServce("false", entity);
-        } catch(IOException error) {
+            resourceserviceproxy.registerService("false", entity);
+        } catch(ProcessingException error) {
             LOG.error("Microservice register failed!", error);
             return false;
         }

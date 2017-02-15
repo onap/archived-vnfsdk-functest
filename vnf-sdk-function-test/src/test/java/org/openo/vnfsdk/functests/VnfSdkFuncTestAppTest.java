@@ -35,7 +35,9 @@ public class VnfSdkFuncTestAppTest {
 
         try {
 
-            Config.setConfigration(new VnfSdkFuncTestAppConfiguration());
+            VnfSdkFuncTestAppConfiguration oConfig = new VnfSdkFuncTestAppConfiguration();
+            oConfig.setMsbServerAddr("http://127.0.0.1");
+            Config.setConfigration(oConfig);
             Thread registerExtsysService = new Thread(new ServiceRegistration());
             registerExtsysService.setName("Register vnfsdk-functionTest service to Microservice Bus");
             registerExtsysService.start();

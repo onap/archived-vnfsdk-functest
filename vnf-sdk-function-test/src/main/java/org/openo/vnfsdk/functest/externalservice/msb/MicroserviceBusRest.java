@@ -16,8 +16,6 @@
 
 package org.openo.vnfsdk.functest.externalservice.msb;
 
-import java.io.IOException;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -34,6 +32,6 @@ public interface MicroserviceBusRest {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ServiceRegisterEntity registerServce(@QueryParam("createOrUpdate") String createOrUpdate,
-            ServiceRegisterEntity entity) throws IOException;
+    public ServiceRegisterEntity registerService(@QueryParam("createOrUpdate") String createOrUpdate,
+            ServiceRegisterEntity entity);
 }
