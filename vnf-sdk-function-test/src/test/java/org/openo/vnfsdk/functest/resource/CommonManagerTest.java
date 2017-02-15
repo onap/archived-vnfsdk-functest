@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,9 +55,13 @@ public class CommonManagerTest {
     public void testQueryResultWhenInstanceIdPresent() {
 
         Map<String, String> mapConfigValues = new HashMap<String, String>();
-        mapConfigValues.put("DIR_RESULT", ".\\src\\test\\resources");
+        String resultFolder = "59d1e651-df9f-4008-902f-e3b377e6ec30";
+        URL url = Thread.currentThread().getContextClassLoader().getResource(resultFolder);
+        File file = new File(url.getPath());
+        File parentFile = file.getParentFile();
+        mapConfigValues.put("DIR_RESULT", parentFile.getAbsolutePath());
         VnfFuncTestResponseHandler.getInstance().setConfigMap(mapConfigValues);
-        Response response = commonManger.queryResultByFuncTest("59d1e651-df9f-4008-902f-e3b377e6ec30");
+        Response response = commonManger.queryResultByFuncTest(resultFolder);
         assertNotNull(response);
     }
 
