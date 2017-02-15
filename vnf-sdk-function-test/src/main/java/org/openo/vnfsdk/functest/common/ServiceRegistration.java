@@ -39,6 +39,9 @@ public class ServiceRegistration implements Runnable {
         while(!flag && retry < 1000) {
             LOG.info("VNF-SDK function test microservice register.retry:" + retry);
             retry++;
+            if(retry >= 1000) {
+                flag = true;
+            }
             flag = MicroserviceBusConsumer.registerService(funcTestEntity);
             if(flag == false) {
                 LOG.warn("microservice register failed, sleep 30S and try again.");

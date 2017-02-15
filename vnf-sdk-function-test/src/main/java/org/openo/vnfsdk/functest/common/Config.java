@@ -22,6 +22,10 @@ public class Config {
 
     private static VnfSdkFuncTestAppConfiguration configration;
 
+    private Config() {
+
+    }
+
     public static VnfSdkFuncTestAppConfiguration getConfigration() {
         return configration;
     }

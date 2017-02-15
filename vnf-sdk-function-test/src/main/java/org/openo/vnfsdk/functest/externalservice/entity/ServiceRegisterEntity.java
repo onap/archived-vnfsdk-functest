@@ -17,6 +17,7 @@
 package org.openo.vnfsdk.functest.externalservice.entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -70,11 +71,11 @@ public class ServiceRegisterEntity {
         this.visualRange = visualRange;
     }
 
-    public ArrayList<ServiceNode> getNodes() {
+    public List<ServiceNode> getNodes() {
         return nodes;
     }
 
-    public void setNodes(ArrayList<ServiceNode> nodes) {
+    public void setNodes(List<ServiceNode> nodes) {
         this.nodes = nodes;
     }
 
@@ -88,7 +89,7 @@ public class ServiceRegisterEntity {
 
     private String visualRange;
 
-    private ArrayList<ServiceNode> nodes = new ArrayList<ServiceNode>();
+    private List<ServiceNode> nodes = new ArrayList<ServiceNode>();
 
     public void setSingleNode(String ip, String port, int ttl) {
         ServiceNode node = new ServiceNode();

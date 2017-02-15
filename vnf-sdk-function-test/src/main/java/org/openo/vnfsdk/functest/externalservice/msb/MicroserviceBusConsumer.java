@@ -16,6 +16,8 @@
 
 package org.openo.vnfsdk.functest.externalservice.msb;
 
+import java.io.IOException;
+
 import org.glassfish.jersey.client.ClientConfig;
 import org.openo.vnfsdk.functest.common.Config;
 import org.openo.vnfsdk.functest.externalservice.entity.ServiceRegisterEntity;
@@ -28,15 +30,18 @@ public class MicroserviceBusConsumer {
 
     private static final Logger LOG = LoggerFactory.getLogger(MicroserviceBusConsumer.class);
 
+    private MicroserviceBusConsumer() {
+
+    }
+
     public static boolean registerService(ServiceRegisterEntity entity) {
         ClientConfig config = new ClientConfig();
-        // LOG.info("microservice register body:" + ExtsysDbUtil.objectToString(entity));
         try {
             MicroserviceBusRest resourceserviceproxy = ConsumerFactory
                     .createConsumer(Config.getConfigration().getMsbServerAddr(), config, MicroserviceBusRest.class);
             resourceserviceproxy.registerServce("false", entity);
-        } catch(Exception error) {
-            LOG.error("Microservice register failed!" + error.getMessage());
+        } catch(IOException error) {
+            LOG.error("Microservice register failed!", error);
             return false;
         }
         return true;

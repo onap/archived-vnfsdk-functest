@@ -26,7 +26,6 @@ import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -91,7 +90,7 @@ public class CommonManager {
 
             final String finalPath = filePath;
             ExecutorService es = Executors.newFixedThreadPool(3);
-            final Future<Integer> future = es.submit(new Callable<Integer>() {
+            es.submit(new Callable<Integer>() {
 
                 public Integer call() throws Exception {
 

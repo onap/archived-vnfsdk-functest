@@ -100,7 +100,7 @@ public class VnfFuncTestResponseHandler {
              */
             FileUtil.deleteFile(zipFileName);
             /*
-             * Later will delete this file..FileUtil.deleteDirectory(fileName);
+             * Later will delete this file
              */
             logger.warn("Resquested function Test result Sucess !!!");
             return RestResponseUtil.getSuccessResponse(byteArrayFile);
