@@ -90,9 +90,10 @@ public class ZipCompressor {
         if(!file.exists()) {
             return;
         }
-        try {
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
+
             byte data[] = new byte[BUFFER];
-            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+
             ZipEntry entry = new ZipEntry(basedir + file.getName());
             out.putNextEntry(entry);
             int count;
@@ -100,8 +101,8 @@ public class ZipCompressor {
                 out.write(data, 0, count);
             }
             bis.close();
-        } catch(Exception e1) {
-            throw new RuntimeException(e1);
+        } catch(IOException e) {
+            LOG.info("Exception wile compress file" + file.getAbsolutePath(), e);
         }
     }
 }

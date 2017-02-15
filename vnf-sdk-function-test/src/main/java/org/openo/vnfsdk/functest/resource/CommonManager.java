@@ -101,9 +101,7 @@ public class CommonManager {
             });
 
             // Send REST response
-            Response response = RestResponseUtil.getSuccessResponse(uniqueKey);
-
-            return response;
+            return RestResponseUtil.getSuccessResponse(uniqueKey);
 
         } catch(IOException e) {
             LOGGER.error("Upload the script and execute the script and run command", e);
