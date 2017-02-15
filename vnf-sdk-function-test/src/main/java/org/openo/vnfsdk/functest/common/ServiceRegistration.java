@@ -56,7 +56,7 @@ public class ServiceRegistration implements Runnable {
         try {
             Thread.sleep(second);
         } catch(InterruptedException error) {
-            LOG.error("thread sleep error.errorMsg:" + error.getMessage());
+            LOG.error("thread sleep error.errorMsg:", error);
         }
         LOG.info("sleep end .");
     }

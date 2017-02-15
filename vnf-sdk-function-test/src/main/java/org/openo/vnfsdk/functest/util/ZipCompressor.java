@@ -48,7 +48,7 @@ public class ZipCompressor {
      * @param pathName file path name
      * @throws Exception
      */
-    public void compress(String... pathName) throws Exception {
+    public void compress(String... pathName) {
         ZipOutputStream out = null;
         FileOutputStream fileOutputStream = null;
         CheckedOutputStream cos = null;
@@ -61,11 +61,11 @@ public class ZipCompressor {
                 compress(new File(pathName[i]), out, basedir);
             }
 
-        } catch(Exception e1) {
+        } catch(FileNotFoundException e1) {
             try {
                 throw new FileNotFoundException("Failed to find file: ");
             } catch(FileNotFoundException e) {
-                LOG.error("compress: " + e);
+                LOG.error("compress: ", e);
             }
         } finally {
             try {
@@ -76,7 +76,7 @@ public class ZipCompressor {
                 if(cos != null)
                     cos.close();
             } catch(Exception e1) {
-                throw new IOException(e1);
+                LOG.error("Error while closing stream: ", e1);
             }
         }
     }

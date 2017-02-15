@@ -81,7 +81,8 @@ public class VnfSdkFuncTestApp extends Application<VnfSdkFuncTestAppConfiguratio
         String basePath = simpleServerFactory.getApplicationContextPath();
         String rootPath = simpleServerFactory.getJerseyRootPath();
         rootPath = rootPath.substring(0, rootPath.indexOf("/*"));
-        basePath = basePath.equals("/") ? rootPath : (new StringBuilder()).append(basePath).append(rootPath).toString();
+        basePath =
+                ("/").equals(rootPath) ? rootPath : (new StringBuilder()).append(basePath).append(rootPath).toString();
         config.setBasePath(basePath);
         config.setScan(true);
     }

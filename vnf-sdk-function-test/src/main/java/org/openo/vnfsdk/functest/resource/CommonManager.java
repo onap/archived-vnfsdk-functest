@@ -106,8 +106,7 @@ public class CommonManager {
             return response;
 
         } catch(IOException e) {
-
-            e.printStackTrace();
+            LOGGER.error("Upload the script and execute the script and run command", e);
         }
 
         return null;
@@ -131,7 +130,7 @@ public class CommonManager {
     public String storeChunkFileInLocal(String dirName, String fileName, InputStream uploadedInputStream)
             throws IOException {
         File tmpDir = new File(dirName);
-        System.out.println("tmpdir = " + dirName);
+        LOGGER.info("tmpdir=" + dirName);
         if(!tmpDir.exists()) {
             tmpDir.mkdirs();
         }

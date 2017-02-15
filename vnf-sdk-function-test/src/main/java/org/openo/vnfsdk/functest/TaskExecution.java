@@ -48,7 +48,7 @@ public class TaskExecution {
             mapValues = mapper.readValue(new FileInputStream(confDir + "robotMetaData.json"), Map.class);
         } catch(IOException e) {
 
-            LOGGER.error("Reading Json Meta data file failed or file do not exist" + e.getMessage());
+            LOGGER.error("Reading Json Meta data file failed or file do not exist", e);
             return;
         }
 
@@ -92,11 +92,11 @@ public class TaskExecution {
             process = Runtime.getRuntime().exec(command);
             inputStream = process.getInputStream();
             while((ch = inputStream.read()) != -1) {
-                LOGGER.info("" + ch);
+                LOGGER.info("character ..." + Integer.toString(ch));
             }
 
         } catch(Exception e) {
-            LOGGER.error("TaskExecution ... executeScript() ... [Exception] ..." + e.getMessage());
+            LOGGER.error("TaskExecution ... executeScript() ... [Exception] ...", e);
         }
     }
 

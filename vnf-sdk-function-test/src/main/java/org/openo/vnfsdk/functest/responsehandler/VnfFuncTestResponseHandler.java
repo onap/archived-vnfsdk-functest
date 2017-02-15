@@ -56,7 +56,7 @@ public class VnfFuncTestResponseHandler {
         return vnfFuncRspHandler;
     }
 
-    public void setConfigMap(Map<String, String> inMapConfigValues) {
+    public static void setConfigMap(Map<String, String> inMapConfigValues) {
         mapConfigValues = inMapConfigValues;
     }
 
@@ -83,8 +83,7 @@ public class VnfFuncTestResponseHandler {
         try {
             new ZipCompressor(zipFileName).compress(fileName);
         } catch(IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error("getResponseByFuncTestId ", e);
         }
 
         /*
@@ -103,7 +102,6 @@ public class VnfFuncTestResponseHandler {
             /*
              * Later will delete this file..FileUtil.deleteDirectory(fileName);
              */
-
             logger.warn("Resquested function Test result Sucess !!!");
             return RestResponseUtil.getSuccessResponse(byteArrayFile);
         } else {
@@ -120,7 +118,7 @@ public class VnfFuncTestResponseHandler {
         try {
             mapConfigValues = mapper.readValue(new FileInputStream(confDir + "robotMetaData.json"), Map.class);
         } catch(IOException e) {
-            logger.error("Reading Json Meta data file failed or file do not exist" + e.getMessage());
+            logger.error("Reading Json Meta data file failed or file do not exist", e);
             return;
         }
     }
