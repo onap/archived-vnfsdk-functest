@@ -16,25 +16,27 @@
 
 package org.openo.vnfsdk.functest.externalservice.msb;
 
-import org.glassfish.jersey.client.ClientConfig;
-import org.junit.Test;
-import org.mockito.Mockito;
-import org.openo.vnfsdk.functest.externalservice.entity.ServiceRegisterEntity;
-import org.openo.vnfsdk.functest.externalservice.msb.MicroserviceBusConsumer;
-import org.openo.vnfsdk.functest.externalservice.msb.MicroserviceBusRest;
-import org.powermock.api.mockito.PowerMockito;
+import javax.ws.rs.ProcessingException;
 
-import com.eclipsesource.jaxrs.consumer.ConsumerFactory;
+import org.junit.Test;
+import org.openo.vnfsdk.functest.VnfSdkFuncTestAppConfiguration;
+import org.openo.vnfsdk.functest.common.Config;
+import org.openo.vnfsdk.functest.externalservice.entity.ServiceRegisterEntity;
 
 public class MicroserviceBusConsumerTest {
 
     @Test
     public void testRegisterService() {
-        ServiceRegisterEntity entity = Mockito.mock(ServiceRegisterEntity.class);
-        Mockito.mock(MicroserviceBusRest.class);
-        Mockito.mock(ClientConfig.class);
-        PowerMockito.mockStatic(ConsumerFactory.class);
-        PowerMockito.mockStatic(MicroserviceBusConsumer.class);
-        MicroserviceBusConsumer.registerService(entity);
+
+        try {
+            ServiceRegisterEntity entity = new ServiceRegisterEntity();
+            VnfSdkFuncTestAppConfiguration oConfig = new VnfSdkFuncTestAppConfiguration();
+            oConfig.setMsbServerAddr("http://127.0.0.1");
+            Config.setConfigration(oConfig);
+
+            MicroserviceBusConsumer.registerService(entity);
+        } catch(ProcessingException e) {
+            // Connect to MSB will fail, Connect refused is OK
+        }
     }
 }
