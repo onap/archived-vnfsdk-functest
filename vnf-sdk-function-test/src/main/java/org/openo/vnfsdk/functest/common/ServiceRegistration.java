@@ -39,10 +39,11 @@ public class ServiceRegistration implements Runnable {
         while(!flag && retry < 1000) {
             LOG.info("VNF-SDK function test microservice register.retry:" + retry);
             retry++;
+
+            flag = MicroserviceBusConsumer.registerService(funcTestEntity);
             if(retry >= 1000) {
                 flag = true;
             }
-            flag = MicroserviceBusConsumer.registerService(funcTestEntity);
             if(flag == false) {
                 LOG.warn("microservice register failed, sleep 30S and try again.");
                 threadSleep(30000);
@@ -60,6 +61,7 @@ public class ServiceRegistration implements Runnable {
             Thread.sleep(second);
         } catch(InterruptedException error) {
             LOG.error("thread sleep error.errorMsg:", error);
+            Thread.currentThread().interrupt();
         }
         LOG.info("sleep end .");
     }
