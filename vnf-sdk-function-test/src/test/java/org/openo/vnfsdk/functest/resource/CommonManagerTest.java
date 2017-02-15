@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
@@ -31,6 +32,7 @@ import javax.ws.rs.core.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.openo.vnfsdk.functest.responsehandler.VnfFuncTestResponseHandler;
+import org.openo.vnfsdk.functest.util.ZipCompressor;
 
 public class CommonManagerTest {
 
@@ -45,7 +47,16 @@ public class CommonManagerTest {
 
     @Test
     public void testexecuteFunc() throws FileNotFoundException {
-        InputStream mockInputStream = new FileInputStream(new File("src//test//resources//RobotScript.zip"));
+
+        URL url = Thread.currentThread().getContextClassLoader().getResource("RobotScript");
+        String zipFileName = url.getPath() + ".zip";
+        try {
+            new ZipCompressor(zipFileName).compress(url.getPath());
+        } catch(IOException e) {
+
+        }
+
+        InputStream mockInputStream = new FileInputStream(zipFileName);
         Response response = commonManger.executeFuncTest(mockInputStream);
         instanceId = response.getEntity().toString();
         assertNotNull(instanceId);
