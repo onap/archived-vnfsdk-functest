@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
         <groupId>org.openo.vnf-sdk.function-test</groupId>
@@ -25,18 +26,27 @@
                                 <pluginExecutionFilter>
                                     <groupId>org.apache.maven.plugins</groupId>
                                     <artifactId>maven-dependency-plugin</artifactId>
-                                    <version>2.10</version>  
+                                    <version>2.10</version>
                                     <versionRange>[2.0,)</versionRange>
                                     <goals>
                                         <goal>copy-dependencies</goal>
                                     </goals>
                                 </pluginExecutionFilter>
                                 <action>
-                                    <ignore/>
+                                    <ignore />
                                 </action>
                             </pluginExecution>
                         </pluginExecutions>
                     </lifecycleMappingMetadata>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -80,8 +90,10 @@
                             <source>1.8</source>
                             <target>1.8</target>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>org.openo.vnfsdk.functest.VnfSdkFuncTestApp</mainClass>
                                 </transformer>
                             </transformers>
@@ -134,8 +146,8 @@
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId> 
-            <version>1.16.4</version>           
+            <artifactId>lombok</artifactId>
+            <version>1.16.4</version>
         </dependency>
         <dependency>
             <groupId>io.swagger</groupId>
