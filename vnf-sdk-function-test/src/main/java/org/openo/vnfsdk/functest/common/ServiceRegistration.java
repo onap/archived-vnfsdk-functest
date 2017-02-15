@@ -66,7 +66,7 @@ public class ServiceRegistration implements Runnable {
         funcTestEntity.setProtocol("REST");
         funcTestEntity.setVersion("v1");
         funcTestEntity.setUrl("/openoapi/vnfsdk/v1");
-        funcTestEntity.setSingleNode(Config.getConfigration().getServiceIp(), "8107", 0);
+        funcTestEntity.setSingleNode(Config.getConfigration().getServiceIp(), "8701", 0);
         funcTestEntity.setVisualRange("1");
     }
 }
