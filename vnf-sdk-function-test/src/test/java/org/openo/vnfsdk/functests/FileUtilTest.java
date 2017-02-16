@@ -26,19 +26,20 @@ import org.openo.vnfsdk.functest.FileUtil;
 
 public class FileUtilTest {
 
-    private String createDirPath = "C:/Users/Administrator/Desktop/Unzip";
+    private String createDirPath = "." + File.separator + "tempvnf";
 
-    private String deleteDirPath = "D:/deletefolder";
+    private String deleteDirPath = createDirPath;
 
     private String zipFileName = "src/test/resources/RobotScript.zip";
-
-    private String extractZip = "D:/Test/AA";
-
-    private String getDirectory = "D:/Test/AA";
 
     @Test
     public void testCreateDirectory() {
         assertTrue(FileUtil.createDirectory(createDirPath));
+    }
+
+    @Test
+    public void testDeleteDirectory() {
+        FileUtil.deleteDirectory(deleteDirPath);
     }
 
     @Test
