@@ -80,7 +80,7 @@ public class CommonManager {
             FileUtil.unzip(filePath, tempDir);
             LOGGER.info("File path=" + filePath);
 
-            String directories[] = FileUtil.getDirectory(tempDir);
+            String[] directories = FileUtil.getDirectory(tempDir);
             if(null != directories) {
                 filePath = tempDir + File.separator + directories[0];
             }

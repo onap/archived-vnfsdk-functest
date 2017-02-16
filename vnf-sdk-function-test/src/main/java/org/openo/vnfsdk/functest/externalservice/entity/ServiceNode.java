@@ -27,6 +27,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceNode {
+	
+	private String ip;
+
+    private String port;
+
+    private int ttl;
 
     public String getIp() {
         return ip;
@@ -52,9 +58,5 @@ public class ServiceNode {
         this.ttl = ttl;
     }
 
-    private String ip;
-
-    private String port;
-
-    private int ttl;
+    
 }

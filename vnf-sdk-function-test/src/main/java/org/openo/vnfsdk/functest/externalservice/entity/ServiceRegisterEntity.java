@@ -30,6 +30,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceRegisterEntity {
+	
+	private String serviceName;
+
+    private String version;
+
+    private String url;
+
+    private String protocol;
+
+    private String visualRange;
+
+    private List<ServiceNode> nodes = new ArrayList<ServiceNode>();
 
     public String getServiceName() {
         return serviceName;
@@ -79,17 +91,7 @@ public class ServiceRegisterEntity {
         this.nodes = nodes;
     }
 
-    private String serviceName;
-
-    private String version;
-
-    private String url;
-
-    private String protocol;
-
-    private String visualRange;
-
-    private List<ServiceNode> nodes = new ArrayList<ServiceNode>();
+    
 
     public void setSingleNode(String ip, String port, int ttl) {
         ServiceNode node = new ServiceNode();

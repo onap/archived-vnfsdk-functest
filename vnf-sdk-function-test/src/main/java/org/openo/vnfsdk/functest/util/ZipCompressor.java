@@ -92,7 +92,7 @@ public class ZipCompressor {
         }
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
 
-            byte data[] = new byte[BUFFER];
+            byte[] data = new byte[BUFFER];
 
             ZipEntry entry = new ZipEntry(basedir + file.getName());
             out.putNextEntry(entry);
