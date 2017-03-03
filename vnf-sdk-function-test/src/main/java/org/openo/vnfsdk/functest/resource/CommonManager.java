@@ -124,6 +124,16 @@ public class CommonManager {
         return VnfFuncTestResponseHandler.getInstance().getResponseByFuncTestId(instanceId);
     }
 
+    /**
+     * Convert the stream to File Name<br/>
+     * 
+     * @param dirName - Directory name
+     * @param fileName - FileName
+     * @param uploadedInputStream - Input Stream
+     * @return - File Path
+     * @throws IOException - Exception while writing file
+     * @since VNFSDK
+     */
     public String storeChunkFileInLocal(String dirName, String fileName, InputStream uploadedInputStream)
             throws IOException {
         File tmpDir = new File(dirName);
