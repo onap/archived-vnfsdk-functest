@@ -48,7 +48,7 @@ public final class FileUtil {
     /**
      * Create directory.
      * 
-     * @param dir dir to create
+     * @param dir directory to create
      * @return boolean
      */
     public static boolean createDirectory(String dir) {
