@@ -46,7 +46,7 @@ public final class FileUtil {
     }
 
     /**
-     * create dir.
+     * Create directory.
      * 
      * @param dir dir to create
      * @return boolean
@@ -188,9 +188,9 @@ public final class FileUtil {
      */
     private static void closeZipFile(ZipFile zipFile) {
         try {
-        	ZipFile tempZipFile = zipFile;
+            ZipFile tempZipFile = zipFile;
             if(tempZipFile != null) {
-            	tempZipFile.close();
+                tempZipFile.close();
             }
         } catch(IOException ioe) {
             LOG.error("close ZipFile error!: " + ioe);
@@ -222,7 +222,7 @@ public final class FileUtil {
             FileInputStream fileInputStream = new FileInputStream(filename);
             int value = fileInputStream.read(byteArrayFile);
             fileInputStream.close();
-            LOG.debug("Number of bytes read from fileInputStream = "+value);
+            LOG.debug("Number of bytes read from fileInputStream = " + value);
         } catch(Exception e) {
             LOG.error("convertZipFiletoByteArray: " + e);
         }
