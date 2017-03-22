@@ -19,6 +19,7 @@ package org.openo.vnfsdk.functest.responsehandler;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.Response;
@@ -36,6 +37,8 @@ public class VnfFuncTestResponseHandler {
     private static int actioninProgress = 21;
 
     private static int error = 22;
+
+    private static String resultFileName = "output.xml";
 
     private static String resultpathkey = "DIR_RESULT";
 
@@ -108,6 +111,22 @@ public class VnfFuncTestResponseHandler {
             logger.warn("Resquested function Test result Faiuled !!!");
             return RestResponseUtil.getErrorResponse(error);
         }
+    }
+
+    public Response downloadResults(String funcTestId) {
+
+        if((null == mapConfigValues) || (null == mapConfigValues.get(resultpathkey))) {
+            logger.warn("Result Store path not configfured !!!");
+            return RestResponseUtil.getErrorResponse(error);
+        }
+
+        String resultPath = mapConfigValues.get(resultpathkey);
+        String resultfileName = resultPath + File.separator + funcTestId + File.separator + resultFileName;
+
+        TestResultParser oTestResultParser = new TestResultParser();
+        List<TestResult> resultList = oTestResultParser.populateResultList(resultfileName);
+        return (!resultList.isEmpty()) ? RestResponseUtil.getSuccessResponse(resultList)
+                : RestResponseUtil.getErrorResponse(error);
     }
 
     @SuppressWarnings("unchecked")

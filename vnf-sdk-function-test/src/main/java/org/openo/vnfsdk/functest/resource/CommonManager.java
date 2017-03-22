@@ -27,6 +27,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -38,12 +39,16 @@ import javax.ws.rs.core.Response;
 import org.eclipse.jetty.http.HttpStatus;
 import org.openo.vnfsdk.functest.FileUtil;
 import org.openo.vnfsdk.functest.TaskExecution;
+import org.openo.vnfsdk.functest.externalservice.entity.Environment;
+import org.openo.vnfsdk.functest.externalservice.entity.EnvironmentMap;
+import org.openo.vnfsdk.functest.externalservice.entity.OperationStatusHandler;
 import org.openo.vnfsdk.functest.responsehandler.VnfFuncTestResponseHandler;
 import org.openo.vnfsdk.functest.util.RestResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -56,6 +61,40 @@ import io.swagger.annotations.ApiResponses;
 public class CommonManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CommonManager.class);
+
+    @POST
+    @Path("/setenv")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Timed
+    public Response setEnvironment(String env) {
+        LOGGER.info("set Environment");
+
+        try {
+
+            // Generate UUID for each environment
+            final UUID uniqueKey = UUID.randomUUID();
+
+            // Convert input string to Environment class
+            ObjectMapper mapper = new ObjectMapper();
+            Environment envObj = mapper.readValue(env, Environment.class);
+            if(null == envObj) {
+                // Converting input to Env object failed
+                return null;
+            }
+
+            // Set to the environment map
+            EnvironmentMap.getInstance().addEnv(uniqueKey, envObj);
+
+            // Send REST response
+            return RestResponseUtil.getSuccessResponse(uniqueKey);
+
+        } catch(Exception e) {
+            LOGGER.error("Setting the Environment Fail", e);
+        }
+
+        return null;
+    }
 
     @Path("")
     @POST
@@ -122,6 +161,35 @@ public class CommonManager {
         LOGGER.info("query functest result by id." + instanceId);
         // Query VNF Function test result by function test ID
         return VnfFuncTestResponseHandler.getInstance().getResponseByFuncTestId(instanceId);
+    }
+
+    @Path("/status/{operationId}")
+    @GET
+    @ApiOperation(value = "get function test result by id")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiResponses(value = {
+                    @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found", response = String.class),
+                    @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415, message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
+                    @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "internal server error", response = String.class)})
+    @Timed
+    public Response getOperationResult(@ApiParam(value = "operationId") @PathParam("operationId") String operationId) {
+        LOGGER.info("Query functest status by id." + operationId);
+
+        return OperationStatusHandler.getInstance().operationStatusfunc(UUID.fromString(operationId));
+    }
+
+    @Path("/download/{functestId}")
+    @GET
+    @ApiOperation(value = "get function test result by id")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiResponses(value = {
+                    @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found", response = String.class),
+                    @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415, message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
+                    @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "internal server error", response = String.class)})
+    @Timed
+    public Response downloadResults(@ApiParam(value = "functestId") @PathParam("functestId") String funcTestId) {
+        LOGGER.info("query functest result by id." + funcTestId);
+        return VnfFuncTestResponseHandler.getInstance().downloadResults(funcTestId);
     }
 
     /**
