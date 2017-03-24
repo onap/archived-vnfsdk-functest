@@ -42,19 +42,19 @@ public class OperationStatusHandler {
         return oInstance;
     }
 
-    public static synchronized Map<UUID, OperationStatus> getOperStatusMap() {
+    public synchronized Map<UUID, OperationStatus> getOperStatusMap() {
         return operStatusMap;
     }
 
-    public static synchronized void setOperStatusMap(UUID uuid, OperationStatus InputOperStatusMap) {
+    public synchronized void setOperStatusMap(UUID uuid, OperationStatus InputOperStatusMap) {
         operStatusMap.put(uuid, InputOperStatusMap);
     }
 
-    public Response operationStatusfunc(UUID uuid) {
+    public Response getOperationStatus(UUID uuid) {
 
-        if(OperationStatusHandler.getOperStatusMap().containsKey(uuid)) {
+        if(getOperStatusMap().containsKey(uuid)) {
 
-            OperationStatus operstatus = OperationStatusHandler.getOperStatusMap().get(uuid);
+            OperationStatus operstatus = getOperStatusMap().get(uuid);
             LOGGER.info("Operation Finished?" + operstatus.isOperFinished());
             LOGGER.info("Operation Result Message" + operstatus.getOperResultMessage());
 

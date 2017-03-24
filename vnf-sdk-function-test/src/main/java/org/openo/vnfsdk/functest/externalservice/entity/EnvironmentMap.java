@@ -46,4 +46,8 @@ public class EnvironmentMap {
         envmap.remove(uuid);
     }
 
+    public synchronized Environment getEnv(UUID uuid) {
+        return envmap.get(uuid);
+    }
+
 }

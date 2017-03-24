@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.UUID;
 import java.util.concurrent.Callable;
@@ -96,6 +97,103 @@ public class CommonManager {
         return null;
     }
 
+    @Path("/upload/{functestEnvId}")
+    @POST
+    @ApiOperation(value = "upload the function test")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiResponses(value = {
+                    @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found", response = String.class),
+                    @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415, message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
+                    @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "internal server error", response = String.class)})
+    @Timed
+    public Response uploadFuncTestPackage(InputStream csarInputStream,
+            @PathParam("functestEnvId") String functestEnvId) {
+        LOGGER.info("Upload function test package");
+
+        try {
+
+            // Convert the stream to script folder
+            String nl = File.separator;
+            String filePath = storeChunkFileInLocal("temp", "TempFile.rar", csarInputStream);
+
+            // Unzip the folder
+            String tempDir = System.getProperty("user.dir") + nl + "temp";
+            List<String> list = FileUtil.unzip(filePath, tempDir);
+            LOGGER.info("File path=" + filePath);
+
+            String[] directories = FileUtil.getDirectory(tempDir);
+            if(null != directories) {
+                filePath = tempDir + File.separator + directories[0];
+            }
+
+            // convert uuid string to UUID
+            final UUID UuidEnv = UUID.fromString(functestEnvId);
+            // generate UUID for the upload
+            final UUID UuidUpload = UUID.randomUUID();
+
+            final String finalPath = filePath;
+            ExecutorService es = Executors.newFixedThreadPool(3);
+            es.submit(new Callable<Integer>() {
+
+                @Override
+                public Integer call() throws Exception {
+
+                    new TaskExecution().uploadScript(finalPath, UuidEnv, UuidUpload);
+                    return 0;
+                }
+            });
+
+            // Send REST response
+            return RestResponseUtil.getSuccessResponse(UuidUpload);
+
+        } catch(IOException e) {
+            LOGGER.error("Upload the script and execute the script and run command", e);
+        }
+
+        return null;
+    }
+
+    @Path("/{uploadUUID}/{envUUID}/{frameworktype}")
+    @POST
+    @ApiOperation(value = "execute the function test")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiResponses(value = {
+                    @ApiResponse(code = HttpStatus.NOT_FOUND_404, message = "microservice not found", response = String.class),
+                    @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415, message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
+                    @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "internal server error", response = String.class)})
+    @Timed
+    public Response executeFunctionTest(@PathParam("envUUID") String functestEnvId,
+            @PathParam("uploadUUID") String uploadId, @PathParam("frameworktype") String frameworktype) {
+        LOGGER.info("Execute function test");
+
+        try {
+
+            final UUID EnvUUID = UUID.fromString(functestEnvId);
+            final UUID uploadUUID = UUID.fromString(uploadId);
+
+            // generate UUID for execute
+            final UUID executeUUID = UUID.randomUUID();
+
+            ExecutorService es = Executors.newFixedThreadPool(3);
+            es.submit(new Callable<Integer>() {
+
+                @Override
+                public Integer call() throws Exception {
+
+                    new TaskExecution().executeRobotScript(EnvUUID, uploadUUID, executeUUID, frameworktype);
+                    return 0;
+                }
+            });
+
+            // Send REST response
+            return RestResponseUtil.getSuccessResponse(executeUUID);
+
+        } catch(Exception e) {
+            LOGGER.error("Upload the script and execute the script and run command", e);
+        }
+
+        return null;
+    }
     @Path("")
     @POST
     @ApiOperation(value = "execute the function test")
@@ -131,6 +229,7 @@ public class CommonManager {
             ExecutorService es = Executors.newFixedThreadPool(3);
             es.submit(new Callable<Integer>() {
 
+               
                 public Integer call() throws Exception {
 
                     new TaskExecution().executeScript(finalPath, uniqueKey);
@@ -175,7 +274,7 @@ public class CommonManager {
     public Response getOperationResult(@ApiParam(value = "operationId") @PathParam("operationId") String operationId) {
         LOGGER.info("Query functest status by id." + operationId);
 
-        return OperationStatusHandler.getInstance().operationStatusfunc(UUID.fromString(operationId));
+        return OperationStatusHandler.getInstance().getOperationStatus(UUID.fromString(operationId));
     }
 
     @Path("/download/{functestId}")
