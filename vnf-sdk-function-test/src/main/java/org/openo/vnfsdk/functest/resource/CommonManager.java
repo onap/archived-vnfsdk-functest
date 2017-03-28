@@ -207,29 +207,28 @@ public class CommonManager {
         LOGGER.info("execute function test");
 
         try {
-
-            // Convert the stream to script folder
-            String nl = File.separator;
-            String filePath = storeChunkFileInLocal("temp", "TempFile.rar", csarInputStream);
-
-            // Unzip the folder
-            String tempDir = System.getProperty("user.dir") + nl + "temp";
-            FileUtil.unzip(filePath, tempDir);
-            LOGGER.info("File path=" + filePath);
-
-            String[] directories = FileUtil.getDirectory(tempDir);
-            if(null != directories) {
-                filePath = tempDir + File.separator + directories[0];
-            }
-
+            
             // Upload the script and execute the script and run command
             final UUID uniqueKey = UUID.randomUUID();
 
+            // Convert the stream to script folder
+            String nl = File.separator;
+            String filePath = storeChunkFileInLocal("package" + nl + uniqueKey.toString(), "TempFile.rar", csarInputStream);
+
+            // Unzip the folder
+            String tempDir = System.getProperty("user.dir") + nl + "package" + nl + uniqueKey + nl +"temp";
+            FileUtil.unzip(filePath, tempDir);
+            LOGGER.info("File path=" + filePath);
+
+            filePath = tempDir + File.separator + "RobotScript";
+            if(!FileUtil.checkFileExist(filePath)) {
+                return RestResponseUtil.getErrorResponse(null);
+            }
+            
             final String finalPath = filePath;
             ExecutorService es = Executors.newFixedThreadPool(3);
             es.submit(new Callable<Integer>() {
 
-               
                 public Integer call() throws Exception {
 
                     new TaskExecution().executeScript(finalPath, uniqueKey);
@@ -238,7 +237,7 @@ public class CommonManager {
             });
 
             // Send REST response
-            return RestResponseUtil.getSuccessResponse(uniqueKey);
+            return RestResponseUtil.getSuccessResponse(uniqueKey.toString());
 
         } catch(IOException e) {
             LOGGER.error("Upload the script and execute the script and run command", e);
