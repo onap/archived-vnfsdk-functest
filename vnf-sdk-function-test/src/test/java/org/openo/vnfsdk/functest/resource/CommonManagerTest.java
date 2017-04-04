@@ -40,9 +40,24 @@ public class CommonManagerTest {
 
     private String instanceId = "1234567";
 
+    private Response response = null;
+
     @Before
     public void setUp() {
         commonManger = new CommonManager();
+    }
+
+    @Test
+    public void testSetEnvironment() {
+        try {
+
+            String jsonInput =
+                    "{\"RemoteIp\":\"192.168.4.47\",\"UserName\":\"root\",\"Password\":\"root123\", \"Path\":\"/src/test/resources\"}";
+            response = commonManger.setEnvironment(jsonInput);
+            assertNotNull(response);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
