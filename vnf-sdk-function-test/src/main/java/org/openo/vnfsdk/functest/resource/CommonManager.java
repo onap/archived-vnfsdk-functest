@@ -40,6 +40,7 @@ import javax.ws.rs.core.Response;
 import org.eclipse.jetty.http.HttpStatus;
 import org.openo.vnfsdk.functest.FileUtil;
 import org.openo.vnfsdk.functest.TaskExecution;
+import org.openo.vnfsdk.functest.constants.ApplicationConstants;
 import org.openo.vnfsdk.functest.externalservice.entity.Environment;
 import org.openo.vnfsdk.functest.externalservice.entity.EnvironmentMap;
 import org.openo.vnfsdk.functest.externalservice.entity.OperationStatusHandler;
@@ -118,7 +119,6 @@ public class CommonManager {
 
             // Unzip the folder
             String tempDir = System.getProperty("user.dir") + nl + "temp";
-            List<String> list = FileUtil.unzip(filePath, tempDir);
             LOGGER.info("File path=" + filePath);
 
             String[] directories = FileUtil.getDirectory(tempDir);
@@ -127,9 +127,9 @@ public class CommonManager {
             }
 
             // convert uuid string to UUID
-            final UUID UuidEnv = UUID.fromString(functestEnvId);
+            final UUID uuidEnv = UUID.fromString(functestEnvId);
             // generate UUID for the upload
-            final UUID UuidUpload = UUID.randomUUID();
+            final UUID uuidUpload = UUID.randomUUID();
 
             final String finalPath = filePath;
             ExecutorService es = Executors.newFixedThreadPool(3);
@@ -138,16 +138,16 @@ public class CommonManager {
                 @Override
                 public Integer call() throws Exception {
 
-                    new TaskExecution().uploadScript(finalPath, UuidEnv, UuidUpload);
+                    new TaskExecution().uploadScript(finalPath, uuidEnv, uuidUpload);
                     return 0;
                 }
             });
 
             // Send REST response
-            return RestResponseUtil.getSuccessResponse(UuidUpload);
+            return RestResponseUtil.getSuccessResponse(uuidUpload);
 
         } catch(IOException e) {
-            LOGGER.error("Upload the script and execute the script and run command", e);
+            LOGGER.error(ApplicationConstants.RUN_SCRIPT_EXECUTE_CMD, e);
         }
 
         return null;
@@ -168,7 +168,7 @@ public class CommonManager {
 
         try {
 
-            final UUID EnvUUID = UUID.fromString(functestEnvId);
+            final UUID envUUID = UUID.fromString(functestEnvId);
             final UUID uploadUUID = UUID.fromString(uploadId);
 
             // generate UUID for execute
@@ -180,7 +180,7 @@ public class CommonManager {
                 @Override
                 public Integer call() throws Exception {
 
-                    new TaskExecution().executeRobotScript(EnvUUID, uploadUUID, executeUUID, frameworktype);
+                    new TaskExecution().executeRobotScript(envUUID, executeUUID, frameworktype);
                     return 0;
                 }
             });
@@ -189,7 +189,7 @@ public class CommonManager {
             return RestResponseUtil.getSuccessResponse(executeUUID);
 
         } catch(Exception e) {
-            LOGGER.error("Upload the script and execute the script and run command", e);
+            LOGGER.error(ApplicationConstants.RUN_SCRIPT_EXECUTE_CMD, e);
         }
 
         return null;
@@ -240,7 +240,7 @@ public class CommonManager {
             return RestResponseUtil.getSuccessResponse(uniqueKey.toString());
 
         } catch(IOException e) {
-            LOGGER.error("Upload the script and execute the script and run command", e);
+            LOGGER.error(ApplicationConstants.RUN_SCRIPT_EXECUTE_CMD, e);
         }
 
         return null;

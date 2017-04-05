@@ -46,8 +46,8 @@ public class OperationStatusHandler {
         return operStatusMap;
     }
 
-    public synchronized void setOperStatusMap(UUID uuid, OperationStatus InputOperStatusMap) {
-        operStatusMap.put(uuid, InputOperStatusMap);
+    public synchronized void setOperStatusMap(UUID uuid, OperationStatus inputOperStatusMap) {
+        operStatusMap.put(uuid, inputOperStatusMap);
     }
 
     public Response getOperationStatus(UUID uuid) {

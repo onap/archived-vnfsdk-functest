@@ -37,17 +37,17 @@ import org.xml.sax.SAXException;
 
 public class TestResultParser {
 
-    private static final String statusPass = "PASS";
+    private static final String STATUSPASS = "PASS";
 
-    private static final String ResultTag = "test";
+    private static final String RESULTTAG = "test";
 
-    private static final String NameTag = "name";
+    private static final String NAMETAG = "name";
 
-    private static final String StatusTag = "status";
+    private static final String STATUSTAG = "status";
 
-    private static final String KwTag = "kw";
+    private static final String KWTAG = "kw";
 
-    private static final String DocTag = "doc";
+    private static final String DOCTAG = "doc";
 
     private static final Logger logger = LoggerFactory.getLogger(TestResultParser.class);
 
@@ -64,7 +64,7 @@ public class TestResultParser {
     private void parseResultData(String xmlFile, List<TestResult> resultData) {
         try {
             Document doc = createDocument(xmlFile);
-            NodeList list = doc.getElementsByTagName(ResultTag);
+            NodeList list = doc.getElementsByTagName(RESULTTAG);
             for(int i = 0; i < list.getLength(); i++) {
                 Node node = list.item(i);
                 if(node.getNodeType() != Node.ELEMENT_NODE) {
@@ -76,13 +76,13 @@ public class TestResultParser {
                     continue;
                 }
 
-                String nameAttr = getNodeValue(attr.getNamedItem(NameTag));
+                String nameAttr = getNodeValue(attr.getNamedItem(NAMETAG));
                 if(null == nameAttr) {
                     continue;
                 }
 
                 String descriptionAttr = nameAttr;
-                String statusAttr = statusPass;
+                String statusAttr = STATUSPASS;
                 NodeList childlist = node.getChildNodes();
                 for(int j = 0; j < childlist.getLength(); j++) {
                     Node childNode = childlist.item(j);
@@ -90,7 +90,7 @@ public class TestResultParser {
                         continue;
                     }
 
-                    if(KwTag == childNode.getNodeName()) {
+                    if(KWTAG == childNode.getNodeName()) {
                         NodeList kwNodeList = childNode.getChildNodes();
                         for(int k = 0; k < kwNodeList.getLength(); k++) {
                             Node descNode = kwNodeList.item(k);
@@ -98,7 +98,7 @@ public class TestResultParser {
                                 continue;
                             }
 
-                            if(DocTag == descNode.getNodeName()) {
+                            if(DOCTAG == descNode.getNodeName()) {
                                 if(null != descNode.getTextContent()) {
                                     descriptionAttr = descNode.getTextContent();
                                     break;
@@ -107,10 +107,10 @@ public class TestResultParser {
                         }
                     }
 
-                    if(StatusTag == childNode.getNodeName()) {
+                    if(STATUSTAG == childNode.getNodeName()) {
                         NamedNodeMap statusAttrMap = childNode.getAttributes();
                         if(null != statusAttrMap) {
-                            statusAttr = getNodeValue(statusAttrMap.getNamedItem(StatusTag));
+                            statusAttr = getNodeValue(statusAttrMap.getNamedItem(STATUSTAG));
                         }
                     }
                 }

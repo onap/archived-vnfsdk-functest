@@ -19,7 +19,8 @@ package org.openo.vnfsdk.functest.externalservice.entity;
 public class OperationStatus {
 
     private boolean operFinished = false;
-
+    private String operResultMessage;
+    
     public enum operResultCode {
         SUCCESS, FAILURE, NOTFOUND
     };
@@ -32,9 +33,7 @@ public class OperationStatus {
 
     public void setoResultCode(operResultCode oResultCode) {
         this.oResultCode = oResultCode;
-    }
-
-    private String operResultMessage;
+    }    
 
     public String getOperResultMessage() {
         return operResultMessage;

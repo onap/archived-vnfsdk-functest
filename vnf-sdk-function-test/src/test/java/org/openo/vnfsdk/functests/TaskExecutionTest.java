@@ -43,7 +43,6 @@ public class TaskExecutionTest {
 	private String password = "root123";
 	private String path = "src\\test\\resources";
 	private UUID envId = UUID.randomUUID();
-	private UUID uploadId = UUID.randomUUID();
 	private UUID executeId = UUID.randomUUID();
 	private String frameworkType = "robotframework";
 	
@@ -76,7 +75,7 @@ public class TaskExecutionTest {
             }
         };
         try {
-        	testExecution.executeRobotScript(envId, uploadId, executeId, frameworkType );
+        	testExecution.executeRobotScript(envId, executeId, frameworkType );
         } catch( Exception e ) {
         	e.printStackTrace();
         }        

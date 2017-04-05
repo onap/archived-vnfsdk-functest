@@ -25,6 +25,7 @@ import java.util.Map.Entry;
 import java.util.UUID;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.openo.vnfsdk.functest.constants.ApplicationConstants;
 import org.openo.vnfsdk.functest.externalservice.entity.Environment;
 import org.openo.vnfsdk.functest.externalservice.entity.EnvironmentMap;
 import org.openo.vnfsdk.functest.externalservice.entity.OperationStatus;
@@ -42,18 +43,18 @@ public class TaskExecution {
     public void executeScript(String dirPath, UUID uniqueKey) {
 
         String nl = File.separator;
-        String curDir = System.getProperty("user.dir");
-        String confDir = curDir + nl + "conf" + nl + "robot" + nl;
+        String curDir = System.getProperty(ApplicationConstants.USER_DIR);
+        String confDir = curDir + nl + ApplicationConstants.CONF + nl + ApplicationConstants.ROBOT + nl;
 
         // Read the MetaData from the VNF package
         ObjectMapper mapper = new ObjectMapper();
 
         Map<String, String> mapValues = null;
         try {
-            mapValues = mapper.readValue(new FileInputStream(confDir + "robotMetaData.json"), Map.class);
+            mapValues = mapper.readValue(new FileInputStream(confDir + ApplicationConstants.ROBOTMETADATA_JSON), Map.class);
         } catch(IOException e) {
 
-            LOGGER.error("Reading Json Meta data file failed or file do not exist", e);
+            LOGGER.error(ApplicationConstants.JSON_METADATA_FILE_FAILED, e);
             return;
         }
 
@@ -65,12 +66,12 @@ public class TaskExecution {
         String remoteScriptResult = remoteScriptDir + "/" + "output ";
         mapValues.put("DIR_REMOTE_RESULT", remoteScriptResult);
 
-        String dirResult = mapValues.get("DIR_RESULT") + uniqueKey;
-        mapValues.put("DIR_RESULT", dirResult);
+        String dirResult = mapValues.get(ApplicationConstants.DIR_RESULT) + uniqueKey;
+        mapValues.put(ApplicationConstants.DIR_RESULT, dirResult);
 
         String remoteScriptFile = remoteScriptDir + "/" + mapValues.get("MAIN_SCRIPT");
         String remoteArgs = "--argumentfile " + remoteScriptDir + "/" + "config.args ";
-        String remoteCommand = "robot " + "-d " + remoteScriptResult + remoteArgs + remoteScriptFile;
+        String remoteCommand = ApplicationConstants.ROBOT_SPACE + "-d " + remoteScriptResult + remoteArgs + remoteScriptFile;
         mapValues.put("REMOTE_COMMAND", "\"" + remoteCommand + "\"");
 
         String robotvariables = "";
@@ -83,9 +84,9 @@ public class TaskExecution {
         String argumentFilePath = confDir + "config.args ";
         String robotScript = confDir + "RemoteConnection.robot";
 
-        String shellcommand = "cmd.exe /c ";
+        String shellcommand = ApplicationConstants.SHELL_COMMAND;
         if(SystemUtils.IS_OS_LINUX) {
-            shellcommand = "bash ";
+            shellcommand = ApplicationConstants.SHELL_COMMAND_BASH;
         }
 
         Process process = null;
@@ -97,28 +98,28 @@ public class TaskExecution {
             process = Runtime.getRuntime().exec(command);
             inputStream = process.getInputStream();
             while((ch = inputStream.read()) != -1) {
-                LOGGER.info("character ..." + Integer.toString(ch));
+                LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
             }
 
         } catch(Exception e) {
-            LOGGER.error("TaskExecution ... executeScript() ... [Exception] ...", e);
+            LOGGER.error(ApplicationConstants.TASKEXE_EXESCRIPT_EXCEPTION, e);
         }
     }
 
-    public void executeRobotScript(UUID envId, UUID uploadId, UUID executeId, String frameworktype) {
+    public void executeRobotScript(UUID envId, UUID executeId, String frameworktype) {
 
         String nl = File.separator;
-        String curDir = System.getProperty("user.dir");
-        String confDir = curDir + nl + "conf" + nl + "robot" + nl;
+        String curDir = System.getProperty(ApplicationConstants.USER_DIR);
+        String confDir = curDir + nl + ApplicationConstants.CONF + nl + ApplicationConstants.ROBOT + nl;
 
         // Read the MetaData from the VNF package
         ObjectMapper mapper = new ObjectMapper();
         Map<String, String> mapValues = null;
         try {
-            mapValues = mapper.readValue(new FileInputStream(confDir + "robotMetaData.json"), Map.class);
+            mapValues = mapper.readValue(new FileInputStream(confDir + ApplicationConstants.ROBOTMETADATA_JSON), Map.class);
         } catch(IOException e) {
 
-            LOGGER.error("Reading Json Meta data file failed or file do not exist", e);
+            LOGGER.error(ApplicationConstants.JSON_METADATA_FILE_FAILED, e);
             return;
         }
 
@@ -128,7 +129,7 @@ public class TaskExecution {
         String remoteDir = functestEnv.getPath() + mapValues.get("SCRIPT_NAME");
         String remoteScriptFile = remoteDir + "/" + mapValues.get("MAIN_SCRIPT");
         String remoteScriptResult = remoteDir + "/" + "output ";
-        String dirResult = mapValues.get("DIR_RESULT") + executeId;
+        String dirResult = mapValues.get(ApplicationConstants.DIR_RESULT) + executeId;
 
         // set the argument parameters
         String remoteArgs = "";
@@ -136,33 +137,33 @@ public class TaskExecution {
         remoteArgs = remoteArgs + " -v " + "NODE_USERNAME" + ":" + functestEnv.getUserName() + " ";
         remoteArgs = remoteArgs + " -v " + "NODE_PASSWORD" + ":" + functestEnv.getPassword() + " ";
 
-        String remoteCommand = "robot " + "-d " + remoteScriptResult + remoteArgs + remoteScriptFile;
+        String remoteCommand = ApplicationConstants.ROBOT_SPACE + "-d " + remoteScriptResult + remoteArgs + remoteScriptFile;
 
         // set the parameters required by the execute script
         remoteCommand = "\"" + remoteCommand + "\"";
         remoteArgs = remoteArgs + " -v " + "REMOTE_COMMAND" + ":" + remoteCommand + " ";
 
-        remoteArgs = remoteArgs + " -v " + "DIR_RESULT" + ":" + dirResult + " ";
+        remoteArgs = remoteArgs + " -v " + ApplicationConstants.DIR_RESULT + ":" + dirResult + " ";
         remoteArgs = remoteArgs + " -v " + "DIR_REMOTE_RESULT" + ":" + remoteScriptResult + " ";
 
         // Execute script directory
         String robotScript = confDir + "execute.robot";
-        String shellcommand = "cmd.exe /c ";
+        String shellcommand = ApplicationConstants.SHELL_COMMAND;
         if(SystemUtils.IS_OS_LINUX) {
-            shellcommand = "bash ";
+            shellcommand = ApplicationConstants.SHELL_COMMAND_BASH;
         }
         Process process = null;
         InputStream inputStream = null;
         int ch;
         try {
-            String command = shellcommand + "robot" + remoteArgs + robotScript;
+            String command = shellcommand + ApplicationConstants.ROBOT + remoteArgs + robotScript;
             process = Runtime.getRuntime().exec(command);
             inputStream = process.getInputStream();
             while((ch = inputStream.read()) != -1) {
-                LOGGER.info("character ..." + Integer.toString(ch));
+                LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
             }
         } catch(Exception e) {
-            LOGGER.error("TaskExecution ... executeScript() ... [Exception] ...", e);
+            LOGGER.error(ApplicationConstants.TASKEXE_EXESCRIPT_EXCEPTION, e);
         }
 
         OperationStatus operstatus = new OperationStatus();
@@ -172,11 +173,11 @@ public class TaskExecution {
         OperationStatusHandler.getInstance().setOperStatusMap(executeId, operstatus);
     }
 
-    public void uploadScript(String dirPath, UUID UUIDEnv, UUID UUIDUpload) {
+    public void uploadScript(String dirPath, UUID uuidEnv, UUID uuidUpload) {
 
         String nl = File.separator;
-        String curDir = System.getProperty("user.dir");
-        String confDir = curDir + nl + "conf" + nl + "robot" + nl;
+        String curDir = System.getProperty(ApplicationConstants.USER_DIR);
+        String confDir = curDir + nl + ApplicationConstants.CONF + nl + ApplicationConstants.ROBOT + nl;
 
         // Read the MetaData from the VNF package
         ObjectMapper mapper = new ObjectMapper();
@@ -184,10 +185,10 @@ public class TaskExecution {
         Map<String, String> mapValues = null;
         try {
 
-            mapValues = mapper.readValue(new FileInputStream(confDir + "robotMetaData.json"), Map.class);
+            mapValues = mapper.readValue(new FileInputStream(confDir + ApplicationConstants.ROBOTMETADATA_JSON ), Map.class);
         } catch(Exception e) {
 
-            LOGGER.error("Reading Json Meta data file failed or file do not exist", e);
+            LOGGER.error(ApplicationConstants.JSON_METADATA_FILE_FAILED, e);
             return;
         }
 
@@ -202,7 +203,7 @@ public class TaskExecution {
         }
 
         // Append the Func test environment variables
-        Environment functestEnv = EnvironmentMap.getInstance().getEnv(UUIDEnv);
+        Environment functestEnv = EnvironmentMap.getInstance().getEnv(uuidEnv);
         robotvariables = robotvariables + " -v " + "NODE_IP" + ":" + functestEnv.getRemoteIp() + " ";
         robotvariables = robotvariables + " -v " + "NODE_USERNAME" + ":" + functestEnv.getUserName() + " ";
         robotvariables = robotvariables + " -v " + "NODE_PASSWORD" + ":" + functestEnv.getPassword() + " ";
@@ -211,31 +212,31 @@ public class TaskExecution {
         // Execute the command
         String robotScript = confDir + "upload.robot";
 
-        String shellcommand = "cmd.exe /c ";
+        String shellcommand = ApplicationConstants.SHELL_COMMAND;
         if(SystemUtils.IS_OS_LINUX) {
-            shellcommand = "bash ";
+            shellcommand = ApplicationConstants.SHELL_COMMAND_BASH;
         }
 
         Process process = null;
         InputStream inputStream = null;
         int ch;
         try {
-            String command = shellcommand + "robot " + robotvariables + robotScript;
+            String command = shellcommand + ApplicationConstants.ROBOT_SPACE + robotvariables + robotScript;
             process = Runtime.getRuntime().exec(command);
             inputStream = process.getInputStream();
             while((ch = inputStream.read()) != -1) {
-                LOGGER.info("character ..." + Integer.toString(ch));
+                LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
             }
 
         } catch(Exception e) {
-            LOGGER.error("TaskExecution ... executeScript() ... [Exception] ...", e);
+            LOGGER.error(ApplicationConstants.TASKEXE_EXESCRIPT_EXCEPTION, e);
         }
 
         OperationStatus operstatus = new OperationStatus();
         operstatus.setoResultCode(operResultCode.SUCCESS);
         operstatus.setOperResultMessage("");
         operstatus.setOperFinished(true);
-        OperationStatusHandler.getInstance().setOperStatusMap(UUIDUpload, operstatus);
+        OperationStatusHandler.getInstance().setOperStatusMap(uuidUpload, operstatus);
 
     }
 
