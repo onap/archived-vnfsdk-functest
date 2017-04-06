@@ -20,6 +20,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openo.vnfsdk.functest.responsehandler.TestResult;
 
+import static org.junit.Assert.assertNotNull;
+
 public class TestResultTest {
 
     private TestResult testResult = null;
@@ -28,19 +30,16 @@ public class TestResultTest {
     public void setUp() {
         testResult = new TestResult();
     }
-
+    
     @Test
-    public void testSetName() {
-        testResult.setName("Huawei");
-    }
-
-    @Test
-    public void testSetDescription() {
-        testResult.setDescription("description");
-    }
-
-    @Test
-    public void testStatus() {
-        testResult.setStatus("success");
-    }
+    public void testResultTest() {
+    	testResult.setName("Huawei");
+    	testResult.setDescription("description");
+    	testResult.setStatus("success");
+    	
+    	assertNotNull( testResult );
+    	assertNotNull( testResult.getName() );
+    	assertNotNull( testResult.getStatus() );
+    	assertNotNull( testResult.getDescription() );    	
+    }   
 }

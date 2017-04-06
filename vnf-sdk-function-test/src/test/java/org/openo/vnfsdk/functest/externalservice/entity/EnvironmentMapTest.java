@@ -38,11 +38,11 @@ public class EnvironmentMapTest {
 
     @Test
     public void testAddEnv() {
-        EnvironmentMap.getInstance().addEnv(uuid, new Environment());
+        EnvironmentMap.getInstance().addEnv( uuid, new Environment() );
     }
 
     @Test
     public void testDelEnv() {
-        EnvironmentMap.getInstance().delEnv(uuid);
+        EnvironmentMap.getInstance().delEnv( uuid );
     }
 }

@@ -18,42 +18,50 @@ package org.openo.vnfsdk.functest.externalservice.entity;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceRegisterEntityTest {
 
     private ServiceRegisterEntity serviceRegistry;
+    private ServiceNode serviceNode;
 
     @Before
     public void setUp() {
         serviceRegistry = new ServiceRegisterEntity();
+        serviceNode = new ServiceNode();
     }
 
     @Test
-    public void testSetSingleNode() {
-        serviceRegistry.setSingleNode("127.0.0.1", "80", 10);
-    }
-
-    @Test
-    public void testSetServiceName() {
-        serviceRegistry.setServiceName("nfvo");
-
-    }
-
-    @Test
-    public void testSetVersion() {
-        serviceRegistry.setVersion("5.6");
-
-    }
-
-    @Test
-    public void testSetProtocol() {
-        serviceRegistry.setProtocol("http");
-    }
-
-    @Test
-    public void testSetVisualRange() {
-        serviceRegistry.setVisualRange("range");
-
-    }
-
+    public void ServiceRegisterEntity() {  
+    	
+    	List<ServiceNode> nodes = new ArrayList<ServiceNode>();
+    	
+    	serviceRegistry.setServiceName("nfvo");
+    	serviceRegistry.setVersion("5.6");
+    	serviceRegistry.setProtocol("http");
+    	serviceRegistry.setVisualRange("range");
+    	 
+    	serviceNode.setIp( "192.168.4.47" );
+    	serviceNode.setPort( "8080" );
+    	serviceNode.setTtl( 10 );
+    	nodes.add( serviceNode );
+    	
+    	serviceRegistry.setNodes( nodes ); 
+    	
+    	 assertNotNull( serviceRegistry );
+    	 assertNotNull( serviceRegistry.getServiceName() );
+    	 assertNotNull( serviceRegistry.getVersion() );
+    	 assertNotNull( serviceRegistry.getProtocol() );
+    	 assertNotNull( serviceRegistry.getVisualRange() );
+    	 assertNotNull( serviceRegistry.getNodes() );
+    	 
+    }  
+    
+   @Test
+   public void testSetSingleNode() {
+	   serviceRegistry.setSingleNode( "192.168.4.47", "8080", 10 );
+   }
 }

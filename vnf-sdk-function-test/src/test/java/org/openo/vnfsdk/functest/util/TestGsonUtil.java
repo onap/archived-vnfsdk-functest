@@ -21,6 +21,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import org.openo.vnfsdk.functest.externalservice.entity.Environment;
+
 public class TestGsonUtil {
 
     @Test
@@ -36,5 +38,20 @@ public class TestGsonUtil {
     @Test
     public void testGetNowTime() {
         assertNotNull(GsonUtil.getNowTime());
+    }
+    
+    @Test
+    public void testObjectToString() {
+    	try {
+    		Object envObj = new Environment();
+    		( ( Environment ) envObj ).setRemoteIp( "192.168.4.47" );
+    		( ( Environment ) envObj ).setUserName( "root" );
+    		( ( Environment ) envObj ).setPassword( "root123" );
+    		( ( Environment ) envObj ).setPath( "src\\test\\resources" );
+    		
+    		assertNotNull( GsonUtil.objectToString( envObj ) );    		
+    	} catch( Exception e ) {
+    		e.printStackTrace();
+    	}
     }
 }

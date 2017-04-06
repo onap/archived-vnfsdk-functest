@@ -19,6 +19,8 @@ package org.openo.vnfsdk.functest.externalservice.entity;
 import org.junit.Before;
 import org.junit.Test;
 import org.openo.vnfsdk.functest.externalservice.entity.OperationStatus.operResultCode;
+import static org.junit.Assert.assertNotNull;
+
 
 public class OperationStatusTest {
 
@@ -30,17 +32,16 @@ public class OperationStatusTest {
     }
 
     @Test
-    public void setTestResultCode() {
-        operationStatus.setoResultCode(operResultCode.SUCCESS);
-    }
-
-    @Test
-    public void setOperResultMsg() {
-        operationStatus.setOperResultMessage("success");
-    }
-
-    @Test
-    public void testOperationFinished() {
-        operationStatus.setOperFinished(true);
-    }
+    public void testOperationStatus() {
+    	 operationStatus.setoResultCode(operResultCode.SUCCESS);
+    	 operationStatus.setOperResultMessage("success");
+    	 operationStatus.setOperFinished(true);  
+    	 
+    	 assertNotNull( operationStatus );
+    	 assertNotNull( operationStatus.getoResultCode() );
+    	 assertNotNull( operationStatus.getoResultCode() );
+    	 assertNotNull( operationStatus.isOperFinished() );
+    	 
+    }    
+   
 }

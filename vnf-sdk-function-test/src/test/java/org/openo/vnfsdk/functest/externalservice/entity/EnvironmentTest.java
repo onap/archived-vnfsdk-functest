@@ -18,6 +18,7 @@ package org.openo.vnfsdk.functest.externalservice.entity;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
 
 public class EnvironmentTest {
 	private Environment environment = null;
@@ -25,25 +26,19 @@ public class EnvironmentTest {
 	@Before
 	public void setUp() {
 		environment = new Environment();
-	}
+	}	
 	
 	@Test
-	public void testSetRemoteIp() {
+	public void testEnvironment() {
 		environment.setRemoteIp( "192.168.4.47" );
-	}
-	
-	@Test
-	public void testSetUserName() {
 		environment.setUserName( "root" );
-	}
-	
-	@Test
-	public void testSetPassword() {
 		environment.setPassword( "root123" );
-	}
-	
-	@Test
-	public void testSetPath() {
 		environment.setPath( "src\\test\\resources" );
-	}
+		
+		assertNotNull( environment );
+		assertNotNull( environment.getRemoteIp() );
+		assertNotNull( environment.getUserName() );
+		assertNotNull( environment.getPassword() );
+		assertNotNull( environment.getPath() );
+	}	
 }

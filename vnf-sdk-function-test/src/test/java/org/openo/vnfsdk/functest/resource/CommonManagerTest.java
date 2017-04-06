@@ -17,6 +17,7 @@
 package org.openo.vnfsdk.functest.resource;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +27,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.ws.rs.core.Response;
 
 import org.junit.Before;
@@ -34,11 +34,18 @@ import org.junit.Test;
 import org.openo.vnfsdk.functest.responsehandler.VnfFuncTestResponseHandler;
 import org.openo.vnfsdk.functest.util.ZipCompressor;
 
+import mockit.Mock;
+import mockit.MockUp;
+
+import org.openo.vnfsdk.functest.FileUtil;
+
 public class CommonManagerTest {
 
     private CommonManager commonManger;
 
-    private String instanceId = "1234567";
+    private String instanceId;
+    
+    private String funcTestId = "59d1e651-df9f-4008-902f-e3b377e6ec30";
 
     private Response response = null;
 
@@ -47,6 +54,65 @@ public class CommonManagerTest {
         commonManger = new CommonManager();
     }
 
+    @Test
+    public void testUploadFuncTestPackage() {
+    	URL url = Thread.currentThread().getContextClassLoader().getResource("RobotScript");
+        String zipFileName = url.getPath() + ".zip";       
+        
+        new MockUp<FileUtil>() {
+            @Mock
+            public  String[] getDirectory(String directory) {
+            	File file = new File( "temp" );
+				return file.list();           	          	
+            }
+        };
+        
+    	try {
+    		InputStream mockInputStream = new FileInputStream(zipFileName);
+    		response = commonManger.uploadFuncTestPackage( mockInputStream, funcTestId );
+    		assertNotNull( response );
+    		assertEquals( 200 , response.getStatus() );   		 
+    	} catch( Exception e ) {
+    		e.printStackTrace();
+    	}
+    }
+    
+    @Test
+    public void testGetOperationResult() {
+    	try {
+    		response = commonManger.getOperationResult( funcTestId );
+    		assertNotNull( response );
+    		assertEquals( 200 , response.getStatus() );     		
+    	} catch( Exception e ) {
+    		e.printStackTrace();
+    	}
+    }
+    
+    @Test
+    public void testDownloadResults() {
+    	try {
+    		response = commonManger.downloadResults( funcTestId );
+    		assertNotNull( response );
+    		assertEquals( 200 , response.getStatus() );     		
+    	} catch( Exception e ) {
+    		e.printStackTrace();
+    	}
+    }
+    
+    @Test
+    public void testStoreChunkFileInLocal() {
+    	URL url = Thread.currentThread().getContextClassLoader().getResource("RobotScript");
+        String zipFileName = url.getPath() + ".zip";     
+        
+    	try {
+    		InputStream mockInputStream = new FileInputStream(zipFileName);
+    		String chunkFilePath = commonManger.storeChunkFileInLocal( "src/test/resources", "chunkFileInLocal" , mockInputStream );
+    		assertNotNull( chunkFilePath );   		
+    	} catch( Exception e ) {
+    		e.printStackTrace();
+    	}
+    }
+    
     @Test
     public void testSetEnvironment() {
         try {
@@ -93,7 +159,7 @@ public class CommonManagerTest {
 
     @Test
     public void testQueryResultWhenInstanceIdAbsent() {
-        Response response = commonManger.queryResultByFuncTest("1234567");
+        Response response = commonManger.queryResultByFuncTest( funcTestId );
         assertNotNull(response);
     }
 }

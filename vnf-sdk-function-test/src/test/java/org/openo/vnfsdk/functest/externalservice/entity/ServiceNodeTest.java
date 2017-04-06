@@ -18,6 +18,7 @@ package org.openo.vnfsdk.functest.externalservice.entity;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertNotNull;
 
 public class ServiceNodeTest {
 
@@ -27,19 +28,16 @@ public class ServiceNodeTest {
     public void setUp() {
         serviceNode = new ServiceNode();
     }
-
+    
     @Test
-    public void testSetIP() {
-        serviceNode.setIp("192.168.4.47");
-    }
-
-    @Test
-    public void testSetPort() {
-        serviceNode.setPort("8080");
-    }
-
-    @Test
-    public void testSetTtl() {
-        serviceNode.setTtl(80);
-    }
+    public void testServiceNode() {
+    	serviceNode.setIp("192.168.4.47");
+    	serviceNode.setPort("8080");
+    	serviceNode.setTtl( 10 );
+    	
+    	assertNotNull( serviceNode );
+    	assertNotNull( serviceNode.getIp() );
+    	assertNotNull( serviceNode.getPort() );    	 
+    	assertNotNull( serviceNode.getTtl() );    	 
+    }    
 }
