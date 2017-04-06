@@ -21,7 +21,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 import java.util.StringTokenizer;
 import java.util.UUID;
 import java.util.concurrent.Callable;
@@ -169,8 +168,7 @@ public class CommonManager {
         try {
 
             final UUID envUUID = UUID.fromString(functestEnvId);
-            final UUID uploadUUID = UUID.fromString(uploadId);
-
+           
             // generate UUID for execute
             final UUID executeUUID = UUID.randomUUID();
 
@@ -180,7 +178,7 @@ public class CommonManager {
                 @Override
                 public Integer call() throws Exception {
 
-                    new TaskExecution().executeRobotScript(envUUID, executeUUID, frameworktype);
+                    new TaskExecution().executeRobotScript(envUUID, executeUUID );
                     return 0;
                 }
             });

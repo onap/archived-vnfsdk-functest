@@ -44,9 +44,7 @@ public class TaskExecutionTest {
 	private String path = "src\\test\\resources";
 	private UUID envId = UUID.randomUUID();
 	private UUID executeId = UUID.randomUUID();
-	private String frameworkType = "robotframework";
-	
-	
+		
 	@Before
 	public void setUp() {
 		testExecution = new TaskExecution();
@@ -75,7 +73,7 @@ public class TaskExecutionTest {
             }
         };
         try {
-        	testExecution.executeRobotScript(envId, executeId, frameworkType );
+        	testExecution.executeRobotScript(envId, executeId );
         } catch( Exception e ) {
         	e.printStackTrace();
         }        

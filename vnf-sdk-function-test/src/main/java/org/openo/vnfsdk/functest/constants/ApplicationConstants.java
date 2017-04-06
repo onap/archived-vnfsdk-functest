@@ -18,6 +18,9 @@ package org.openo.vnfsdk.functest.constants;
 
 public class ApplicationConstants {
 	
+	private ApplicationConstants() {
+	}	
+	
 	public static final String USER_DIR = "user.dir";
 	public static final String ROBOT = "robot";
 	public static final String ROBOT_SPACE = "robot ";

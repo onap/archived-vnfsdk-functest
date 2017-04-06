@@ -106,7 +106,7 @@ public class TaskExecution {
         }
     }
 
-    public void executeRobotScript(UUID envId, UUID executeId, String frameworktype) {
+    public void executeRobotScript(UUID envId, UUID executeId ) {
 
         String nl = File.separator;
         String curDir = System.getProperty(ApplicationConstants.USER_DIR);
@@ -193,7 +193,6 @@ public class TaskExecution {
         }
 
         // Form the variables for the upload, transfer and execute command
-        String scriptDirName = new File(dirPath).getName();
         mapValues.put("SCRIPT_DIR", dirPath);
 
         String robotvariables = "";

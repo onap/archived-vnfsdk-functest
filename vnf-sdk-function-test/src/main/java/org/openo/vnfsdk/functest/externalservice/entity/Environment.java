@@ -19,51 +19,49 @@ package org.openo.vnfsdk.functest.externalservice.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Environment {
-	
-	@JsonProperty("RemoteIp")
-	private String RemoteIp;
 
-	@JsonProperty("UserName")
-	private String UserName;
+    @JsonProperty("remoteIp")
+    private String remoteIp;
 
-	@JsonProperty("Password")
-	private String Password;
+    @JsonProperty("userName")
+    private String userName;
 
-	@JsonProperty("Path")
-	private String Path;
+    @JsonProperty("password")
+    private String password;
+
+    @JsonProperty("path")
+    private String path;
 
     public String getRemoteIp() {
-        return RemoteIp;
+        return remoteIp;
     }
 
     public void setRemoteIp(String remoteIp) {
-        RemoteIp = remoteIp;
+        this.remoteIp = remoteIp;
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
     public String getPath() {
-        return Path;
+        return path;
     }
 
     public void setPath(String path) {
-        Path = path;
+        this.path = path;
     }
-
-   
 
 }

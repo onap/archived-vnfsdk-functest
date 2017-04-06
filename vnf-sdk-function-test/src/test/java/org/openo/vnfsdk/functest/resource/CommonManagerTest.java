@@ -52,7 +52,7 @@ public class CommonManagerTest {
         try {
 
             String jsonInput =
-                    "{\"RemoteIp\":\"192.168.4.47\",\"UserName\":\"root\",\"Password\":\"root123\", \"Path\":\"/src/test/resources\"}";
+                    "{\"remoteIp\":\"192.168.4.47\",\"userName\":\"root\",\"password\":\"root123\", \"path\":\"/src/test/resources\"}";
             response = commonManger.setEnvironment(jsonInput);
             assertNotNull(response);
         } catch(Exception e) {
