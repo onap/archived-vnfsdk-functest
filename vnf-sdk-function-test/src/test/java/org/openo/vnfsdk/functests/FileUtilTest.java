@@ -49,8 +49,8 @@ public class FileUtilTest {
 
     @Test
     public void testGetDirectory() {
-        String[] getDirectories = FileUtil.getDirectory(".");
-        // assertNotNull(getDirectories);
+        FileUtil.getDirectory(".");
+        assertTrue(true);
     }
 
     @Test

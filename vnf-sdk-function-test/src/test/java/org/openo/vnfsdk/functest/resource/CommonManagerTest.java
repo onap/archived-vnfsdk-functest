@@ -159,6 +159,7 @@ public class CommonManagerTest {
             String jsonInput =
                     "{\"remoteIp\":\"192.168.4.47\",\"userName\":\"root\",\"password\":\"root123\", \"path\":\"/src/test/resources\"}";
             response = commonManger.setEnvironment(jsonInput);
+            commonManger.executeFunctionTest(funcTestId, response.getEntity().toString(), "robot");
             assertNotNull(response);
         } catch(Exception e) {
             e.printStackTrace();
