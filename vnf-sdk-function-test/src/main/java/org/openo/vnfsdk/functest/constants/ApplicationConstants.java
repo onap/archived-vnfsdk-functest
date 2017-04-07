@@ -17,24 +17,40 @@
 package org.openo.vnfsdk.functest.constants;
 
 public class ApplicationConstants {
-	
-	private ApplicationConstants() {
-	}	
-	
-	public static final String USER_DIR = "user.dir";
-	public static final String ROBOT = "robot";
-	public static final String ROBOT_SPACE = "robot ";
-	public static final String CONF = "conf";
-	public static final String ROBOTMETADATA_JSON = "robotMetaData.json";
-	public static final String JSON_METADATA_FILE_FAILED = "Reading Json Meta data file failed or file do not exist";
-	public static final String DIR_RESULT = "DIR_RESULT";
-	public static final String SCRIPT_DIR = "SCRIPT_DIR";
-	public static final String DIR_REMOTE = "DIR_REMOTE";
-	public static final String DIR_REMOTE_RESULT = "DIR_REMOTE_RESULT";
-	public static final String MAIN_SCRIPT = "MAIN_SCRIPT";
-	public static final String SHELL_COMMAND = "cmd.exe /c ";
-	public static final String SHELL_COMMAND_BASH =  "bash ";
-	public static final String CHARACTER = "character ...";
-	public static final String TASKEXE_EXESCRIPT_EXCEPTION = "TaskExecution ... executeScript() ... [Exception] ...";
-	public static final String RUN_SCRIPT_EXECUTE_CMD = "Upload the script and execute the script and run command";
+
+    public static final String USER_DIR = "user.dir";
+
+    public static final String ROBOT = "robot";
+
+    public static final String ROBOT_SPACE = "robot ";
+
+    public static final String CONF = "conf";
+
+    public static final String ROBOTMETADATA_JSON = "robotMetaData.json";
+
+    public static final String JSON_METADATA_FILE_FAILED = "Reading Json Meta data file failed or file do not exist";
+
+    public static final String DIR_RESULT = "DIR_RESULT";
+
+    public static final String SCRIPT_DIR = "SCRIPT_DIR";
+
+    public static final String DIR_REMOTE = "DIR_REMOTE";
+
+    public static final String DIR_REMOTE_RESULT = "DIR_REMOTE_RESULT";
+
+    public static final String MAIN_SCRIPT = "MAIN_SCRIPT";
+
+    public static final String SHELL_COMMAND = "cmd.exe /c ";
+
+    public static final String SHELL_COMMAND_BASH = "bash ";
+
+    public static final String CHARACTER = "character ...";
+
+    public static final String TASKEXE_EXESCRIPT_EXCEPTION = "TaskExecution ... executeScript() ... [Exception] ...";
+
+    public static final String RUN_SCRIPT_EXECUTE_CMD = "Upload the script and execute the script and run command";
+
+    private ApplicationConstants() {
+    }
+
 }

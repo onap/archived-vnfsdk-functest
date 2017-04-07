@@ -17,19 +17,32 @@
 package org.openo.vnfsdk.functests;
 
 import org.junit.Test;
+
 import org.openo.vnfsdk.functest.VnfSdkFuncTestApp;
 import org.openo.vnfsdk.functest.VnfSdkFuncTestAppConfiguration;
 import org.openo.vnfsdk.functest.common.Config;
 import org.openo.vnfsdk.functest.common.ServiceRegistration;
 
+import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
+
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Before;
 
 public class VnfSdkFuncTestAppTest {
 
     private VnfSdkFuncTestApp vnfSdkFuncTestApp;
 
     private Environment environment;
-
+   
+    private Application<VnfSdkFuncTestAppConfiguration> vnfsdkFuncApp;
+    
+    @Before
+    public void setUp() {
+    	vnfsdkFuncApp = new VnfSdkFuncTestApp();
+    }
+    
     @Test
     public void RunApp() {
 
@@ -48,5 +61,11 @@ public class VnfSdkFuncTestAppTest {
         }
 
     }
-
+    
+    @Test
+    public void testGetName() {   
+    	assertNotNull( vnfsdkFuncApp.getName() );
+    }
+    
+    
 }

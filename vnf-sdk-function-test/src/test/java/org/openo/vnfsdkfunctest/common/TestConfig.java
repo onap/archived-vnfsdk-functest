@@ -14,29 +14,35 @@
  * limitations under the License.
  */
 
-package org.openo.vnfsdk.functests;
+package org.openo.vnfsdkfunctest.common;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.openo.vnfsdk.functest.VnfSdkFuncTestAppConfiguration;
 
 import io.dropwizard.db.DataSourceFactory;
 
+import org.openo.vnfsdk.functest.common.Config;
+
 import static org.junit.Assert.assertNotNull;
 
-public class VnfSdkFuncTestAppConfigurationTest {
+public class TestConfig {
 	
-    @Test
-    public void vnfSdkFuncTestBean() {
-        VnfSdkFuncTestAppConfiguration vnfSdkBean = new VnfSdkFuncTestAppConfiguration();
-        vnfSdkBean.setTemplate( "" );
+	private VnfSdkFuncTestAppConfiguration vnfSdkBean;
+	
+	@Before
+	public void setUp() {
+		vnfSdkBean = new VnfSdkFuncTestAppConfiguration();		
+	}
+	
+	@Test
+	public void testVnfSdkConfigBean() {
+		vnfSdkBean.setTemplate( "" );
         vnfSdkBean.setMsbServerAddr( "127.0.0.1" );
         vnfSdkBean.setServiceIp( "127.0.0.1" );
         vnfSdkBean.setDataSourceFactory( new DataSourceFactory() );
         
-        assertNotNull( vnfSdkBean );
-        assertNotNull( vnfSdkBean.getTemplate() );
-        assertNotNull( vnfSdkBean .getMsbServerAddr() );
-        assertNotNull( vnfSdkBean.getServiceIp() );
-        assertNotNull( vnfSdkBean.getDataSourceFactory() );       
-    }
+        Config.setConfigration( vnfSdkBean );
+        assertNotNull( Config.getConfigration() );
+	}	
 }
