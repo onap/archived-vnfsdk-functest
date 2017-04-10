@@ -18,6 +18,8 @@ package org.openo.vnfsdkfunctest.responsehandler;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.lang.reflect.Method;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openo.vnfsdk.functest.responsehandler.TestResultParser;
@@ -34,5 +36,18 @@ public class TestResultParserTest {
     @Test
     public void testPopulateResultList() {
         assertNotNull(testResParser.populateResultList("src/test/resources/sample.xml"));
+    } 
+    
+    @Test
+    public void testParseResultData() {
+    	try {
+    		Class<?> resParser = Class.forName( "TestResultParser" );
+	        Object serviceRegObj = resParser.newInstance();
+	        Method m=( ( Class<?> ) serviceRegObj ).getDeclaredMethod( "threadSleep",new Class[]{String.class});   
+	        m.setAccessible( true );  
+	        m.invoke( serviceRegObj,100 ); 
+    	} catch( Exception e ) {
+    		e.printStackTrace();
+    	}
     }
 }

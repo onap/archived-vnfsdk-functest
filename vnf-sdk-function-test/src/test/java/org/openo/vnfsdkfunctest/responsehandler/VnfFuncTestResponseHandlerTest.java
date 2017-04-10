@@ -21,6 +21,8 @@ import org.openo.vnfsdk.functest.responsehandler.VnfFuncTestResponseHandler;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.lang.reflect.Method;
+
 public class VnfFuncTestResponseHandlerTest {
 	
 	private VnfFuncTestResponseHandler vnfSdkFuncHandler;
@@ -29,5 +31,17 @@ public class VnfFuncTestResponseHandlerTest {
 	public void testGetInstance() {
 		vnfSdkFuncHandler = VnfFuncTestResponseHandler.getInstance();
 		assertNotNull( vnfSdkFuncHandler );
+	}
+	
+	@Test
+	public void testLoadConfigurations() {
+		try {
+			Class<?> vnfsdkResHandler = Class.forName( "VnfFuncTestResponseHandler" );
+	        Object serviceRegObj = vnfsdkResHandler.newInstance();
+	        Method m=( ( Class<?> ) serviceRegObj ).getDeclaredMethod( "loadConfigurations" );   
+	        m.setAccessible( true );	        
+		} catch( Exception e ) {
+			e.printStackTrace();
+		}
 	}
 }

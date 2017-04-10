@@ -30,6 +30,8 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 
+import java.lang.reflect.Method;  
+
 public class VnfSdkFuncTestAppTest {
 
     private VnfSdkFuncTestApp vnfSdkFuncTestApp;
@@ -67,5 +69,16 @@ public class VnfSdkFuncTestAppTest {
     	assertNotNull( vnfsdkFuncApp.getName() );
     }
     
+    @Test
+    public void tesInitService() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    	try {
+    		VnfSdkFuncTestApp vnfsdkTest = new VnfSdkFuncTestApp();
+    		Method method = VnfSdkFuncTestApp.class.getDeclaredMethod( "initService" );
+    		method.setAccessible(true);
+    		method.invoke( vnfsdkTest );    		
+    	} catch( Exception e ) {
+    		e.printStackTrace();
+    	}
+    }
     
 }
