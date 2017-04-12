@@ -27,13 +27,18 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.ws.rs.core.Response;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.openo.vnfsdk.functest.FileUtil;
+import org.openo.vnfsdk.functest.externalservice.entity.OperationStatus;
+import org.openo.vnfsdk.functest.externalservice.entity.OperationStatus.operResultCode;
+import org.openo.vnfsdk.functest.externalservice.entity.OperationStatusHandler;
 import org.openo.vnfsdk.functest.responsehandler.VnfFuncTestResponseHandler;
+import org.openo.vnfsdk.functest.util.RestResponseUtil;
 import org.openo.vnfsdk.functest.util.ZipCompressor;
 
 import mockit.Mock;
@@ -94,7 +99,8 @@ public class CommonManagerTest {
     @Test
     public void testUploadFuncTestPackage() {
         URL url = Thread.currentThread().getContextClassLoader().getResource("RobotScript");
-        String zipFileName = url.getPath() + ".zip";
+        // Some temporary folder uploaded in github
+        String zipFileName = "https://github.com/zoul/Finch/zipball/master/";
 
         new MockUp<FileUtil>() {
 
@@ -106,8 +112,8 @@ public class CommonManagerTest {
         };
 
         try {
-            InputStream mockInputStream = new FileInputStream(zipFileName);
-            response = commonManger.uploadFuncTestPackage(mockInputStream, funcTestId);
+            // InputStream mockInputStream = new FileInputStream(zipFileName);
+            response = commonManger.uploadFuncTestPackage(funcTestId, zipFileName);
             assertNotNull(response);
             assertEquals(200, response.getStatus());
         } catch(Exception e) {
@@ -128,6 +134,31 @@ public class CommonManagerTest {
 
     @Test
     public void testDownloadResults() {
+        new MockUp<OperationStatusHandler>() {
+
+            @Mock
+            public Response getOperationStatus(UUID uuid) {
+                OperationStatus operstatus = new OperationStatus();
+                operstatus.setOperFinished(true);
+                operstatus.setoResultCode(operResultCode.SUCCESS);
+                operstatus.setOperResultMessage("finished");
+                return response;
+            }
+        };
+
+        new MockUp<VnfFuncTestResponseHandler>() {
+
+            @Mock
+            public Response downloadResults(String funcTestId) {
+                OperationStatus operstatus = new OperationStatus();
+                operstatus.setOperFinished(true);
+                operstatus.setoResultCode(operResultCode.SUCCESS);
+                operstatus.setOperResultMessage("finished");
+
+                return RestResponseUtil.getSuccessResponse(operstatus);
+            }
+        };
+
         try {
             response = commonManger.downloadResults(funcTestId);
             assertNotNull(response);

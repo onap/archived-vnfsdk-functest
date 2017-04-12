@@ -16,11 +16,14 @@
 
 package org.openo.vnfsdk.functest.resource;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.UUID;
 import java.util.concurrent.Callable;
@@ -29,6 +32,7 @@ import java.util.concurrent.Executors;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -106,18 +110,22 @@ public class CommonManager {
                     @ApiResponse(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE_415, message = "Unprocessable MicroServiceInfo Entity ", response = String.class),
                     @ApiResponse(code = HttpStatus.INTERNAL_SERVER_ERROR_500, message = "internal server error", response = String.class)})
     @Timed
-    public Response uploadFuncTestPackage(InputStream csarInputStream,
-            @PathParam("functestEnvId") String functestEnvId) {
+    public Response uploadFuncTestPackage(@PathParam("functestEnvId") String functestEnvId,
+            @HeaderParam("URL") String url) {
         LOGGER.info("Upload function test package");
 
         try {
+            URL oracle = new URL(url);
+
+            InputStream fis = new BufferedInputStream(oracle.openStream());
 
             // Convert the stream to script folder
             String nl = File.separator;
-            String filePath = storeChunkFileInLocal("temp", "TempFile.rar", csarInputStream);
+            String filePath = storeChunkFileInLocal("temp", "TempFile.zip", fis);
 
             // Unzip the folder
             String tempDir = System.getProperty("user.dir") + nl + "temp";
+            List<String> list = FileUtil.unzip(filePath, tempDir);
             LOGGER.info("File path=" + filePath);
 
             String[] directories = FileUtil.getDirectory(tempDir);
@@ -168,7 +176,7 @@ public class CommonManager {
         try {
 
             final UUID envUUID = UUID.fromString(functestEnvId);
-           
+
             // generate UUID for execute
             final UUID executeUUID = UUID.randomUUID();
 
@@ -178,7 +186,7 @@ public class CommonManager {
                 @Override
                 public Integer call() throws Exception {
 
-                    new TaskExecution().executeRobotScript(envUUID, executeUUID );
+                    new TaskExecution().executeRobotScript(envUUID, executeUUID);
                     return 0;
                 }
             });
@@ -192,6 +200,7 @@ public class CommonManager {
 
         return null;
     }
+
     @Path("")
     @POST
     @ApiOperation(value = "execute the function test")
@@ -205,16 +214,17 @@ public class CommonManager {
         LOGGER.info("execute function test");
 
         try {
-            
+
             // Upload the script and execute the script and run command
             final UUID uniqueKey = UUID.randomUUID();
 
             // Convert the stream to script folder
             String nl = File.separator;
-            String filePath = storeChunkFileInLocal("package" + nl + uniqueKey.toString(), "TempFile.rar", csarInputStream);
+            String filePath =
+                    storeChunkFileInLocal("package" + nl + uniqueKey.toString(), "TempFile.rar", csarInputStream);
 
             // Unzip the folder
-            String tempDir = System.getProperty("user.dir") + nl + "package" + nl + uniqueKey + nl +"temp";
+            String tempDir = System.getProperty("user.dir") + nl + "package" + nl + uniqueKey + nl + "temp";
             FileUtil.unzip(filePath, tempDir);
             LOGGER.info("File path=" + filePath);
 
@@ -222,7 +232,7 @@ public class CommonManager {
             if(!FileUtil.checkFileExist(filePath)) {
                 return RestResponseUtil.getErrorResponse(null);
             }
-            
+
             final String finalPath = filePath;
             ExecutorService es = Executors.newFixedThreadPool(3);
             es.submit(new Callable<Integer>() {
