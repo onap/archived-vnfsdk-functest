@@ -51,7 +51,8 @@ public class TaskExecution {
 
         Map<String, String> mapValues = null;
         try {
-            mapValues = mapper.readValue(new FileInputStream(confDir + ApplicationConstants.ROBOTMETADATA_JSON), Map.class);
+            mapValues =
+                    mapper.readValue(new FileInputStream(confDir + ApplicationConstants.ROBOTMETADATA_JSON), Map.class);
         } catch(IOException e) {
 
             LOGGER.error(ApplicationConstants.JSON_METADATA_FILE_FAILED, e);
@@ -71,7 +72,8 @@ public class TaskExecution {
 
         String remoteScriptFile = remoteScriptDir + "/" + mapValues.get("MAIN_SCRIPT");
         String remoteArgs = "--argumentfile " + remoteScriptDir + "/" + "config.args ";
-        String remoteCommand = ApplicationConstants.ROBOT_SPACE + "-d " + remoteScriptResult + remoteArgs + remoteScriptFile;
+        String remoteCommand =
+                ApplicationConstants.ROBOT_SPACE + "-d " + remoteScriptResult + remoteArgs + remoteScriptFile;
         mapValues.put("REMOTE_COMMAND", "\"" + remoteCommand + "\"");
 
         String robotvariables = "";
@@ -95,6 +97,7 @@ public class TaskExecution {
         try {
             String command =
                     shellcommand + "robot --argumentfile " + argumentFilePath + robotvariables + " " + robotScript;
+            LOGGER.info("Command execute to execute the script:" + command);
             process = Runtime.getRuntime().exec(command);
             inputStream = process.getInputStream();
             while((ch = inputStream.read()) != -1) {
@@ -106,7 +109,7 @@ public class TaskExecution {
         }
     }
 
-    public void executeRobotScript(UUID envId, UUID executeId ) {
+    public void executeRobotScript(UUID envId, UUID executeId) {
 
         String nl = File.separator;
         String curDir = System.getProperty(ApplicationConstants.USER_DIR);
@@ -116,7 +119,8 @@ public class TaskExecution {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, String> mapValues = null;
         try {
-            mapValues = mapper.readValue(new FileInputStream(confDir + ApplicationConstants.ROBOTMETADATA_JSON), Map.class);
+            mapValues =
+                    mapper.readValue(new FileInputStream(confDir + ApplicationConstants.ROBOTMETADATA_JSON), Map.class);
         } catch(IOException e) {
 
             LOGGER.error(ApplicationConstants.JSON_METADATA_FILE_FAILED, e);
@@ -137,7 +141,8 @@ public class TaskExecution {
         remoteArgs = remoteArgs + " -v " + "NODE_USERNAME" + ":" + functestEnv.getUserName() + " ";
         remoteArgs = remoteArgs + " -v " + "NODE_PASSWORD" + ":" + functestEnv.getPassword() + " ";
 
-        String remoteCommand = ApplicationConstants.ROBOT_SPACE + "-d " + remoteScriptResult + remoteArgs + remoteScriptFile;
+        String remoteCommand =
+                ApplicationConstants.ROBOT_SPACE + "-d " + remoteScriptResult + remoteArgs + remoteScriptFile;
 
         // set the parameters required by the execute script
         remoteCommand = "\"" + remoteCommand + "\"";
@@ -157,6 +162,7 @@ public class TaskExecution {
         int ch;
         try {
             String command = shellcommand + ApplicationConstants.ROBOT + remoteArgs + robotScript;
+            LOGGER.info("Command execute to execute the script:" + command);
             process = Runtime.getRuntime().exec(command);
             inputStream = process.getInputStream();
             while((ch = inputStream.read()) != -1) {
@@ -185,7 +191,8 @@ public class TaskExecution {
         Map<String, String> mapValues = null;
         try {
 
-            mapValues = mapper.readValue(new FileInputStream(confDir + ApplicationConstants.ROBOTMETADATA_JSON ), Map.class);
+            mapValues =
+                    mapper.readValue(new FileInputStream(confDir + ApplicationConstants.ROBOTMETADATA_JSON), Map.class);
         } catch(Exception e) {
 
             LOGGER.error(ApplicationConstants.JSON_METADATA_FILE_FAILED, e);
@@ -221,6 +228,7 @@ public class TaskExecution {
         int ch;
         try {
             String command = shellcommand + ApplicationConstants.ROBOT_SPACE + robotvariables + robotScript;
+            LOGGER.info("Command execute to upload the script:" + command);
             process = Runtime.getRuntime().exec(command);
             inputStream = process.getInputStream();
             while((ch = inputStream.read()) != -1) {
