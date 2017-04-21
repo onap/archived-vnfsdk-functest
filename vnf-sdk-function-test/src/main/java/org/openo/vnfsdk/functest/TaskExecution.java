@@ -256,9 +256,9 @@ public class TaskExecution {
 
     private String getShellArg() {
 
-        String commandArg = "/c ";
+        String commandArg = "/c";
         if(SystemUtils.IS_OS_LINUX) {
-            commandArg = "-c ";
+            commandArg = "-c";
         }
 
         return commandArg;
