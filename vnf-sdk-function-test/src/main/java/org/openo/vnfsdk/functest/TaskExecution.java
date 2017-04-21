@@ -86,20 +86,17 @@ public class TaskExecution {
         String argumentFilePath = confDir + "config.args ";
         String robotScript = confDir + "RemoteConnection.robot";
 
-        String shellcommand = ApplicationConstants.SHELL_COMMAND;
-        if(SystemUtils.IS_OS_LINUX) {
-            shellcommand = ApplicationConstants.SHELL_COMMAND_BASH;
-        }
-
         Process process = null;
         InputStream inputStream = null;
         int ch;
         try {
-            String command =
-                    shellcommand + "robot --argumentfile " + argumentFilePath + robotvariables + " " + robotScript;
+            String command = "robot --argumentfile " + argumentFilePath + robotvariables + " " + robotScript;
             LOGGER.info("Command execute to execute the script:" + command);
-            process = Runtime.getRuntime().exec(command);
-            inputStream = process.getInputStream();
+            process = Runtime.getRuntime().exec(new String[] {getShellCommand(), getShellArg(), command});
+            if(process != null) {
+                process.waitFor();
+                inputStream = process.getInputStream();
+            }
             while((ch = inputStream.read()) != -1) {
                 LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
             }
@@ -153,18 +150,19 @@ public class TaskExecution {
 
         // Execute script directory
         String robotScript = confDir + "execute.robot";
-        String shellcommand = ApplicationConstants.SHELL_COMMAND;
-        if(SystemUtils.IS_OS_LINUX) {
-            shellcommand = ApplicationConstants.SHELL_COMMAND_BASH;
-        }
+
         Process process = null;
         InputStream inputStream = null;
         int ch;
         try {
-            String command = shellcommand + ApplicationConstants.ROBOT + remoteArgs + robotScript;
+            String command = ApplicationConstants.ROBOT + remoteArgs + robotScript;
             LOGGER.info("Command execute to execute the script:" + command);
-            process = Runtime.getRuntime().exec(command);
-            inputStream = process.getInputStream();
+            process = Runtime.getRuntime().exec(new String[] {getShellCommand(), getShellArg(), command});
+            if(process != null) {
+                process.waitFor();
+                inputStream = process.getInputStream();
+            }
+
             while((ch = inputStream.read()) != -1) {
                 LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
             }
@@ -218,19 +216,18 @@ public class TaskExecution {
         // Execute the command
         String robotScript = confDir + "upload.robot";
 
-        String shellcommand = ApplicationConstants.SHELL_COMMAND;
-        if(SystemUtils.IS_OS_LINUX) {
-            shellcommand = ApplicationConstants.SHELL_COMMAND_BASH;
-        }
-
         Process process = null;
         InputStream inputStream = null;
         int ch;
         try {
-            String command = shellcommand + ApplicationConstants.ROBOT_SPACE + robotvariables + robotScript;
+            String command = ApplicationConstants.ROBOT_SPACE + robotvariables + robotScript;
             LOGGER.info("Command execute to upload the script:" + command);
-            process = Runtime.getRuntime().exec(command);
-            inputStream = process.getInputStream();
+            process = Runtime.getRuntime().exec(new String[] {getShellCommand(), getShellArg(), command});
+            if(process != null) {
+                process.waitFor();
+                inputStream = process.getInputStream();
+            }
+
             while((ch = inputStream.read()) != -1) {
                 LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
             }
@@ -245,6 +242,26 @@ public class TaskExecution {
         operstatus.setOperFinished(true);
         OperationStatusHandler.getInstance().setOperStatusMap(uuidUpload, operstatus);
 
+    }
+
+    private String getShellCommand() {
+
+        String shellcommand = ApplicationConstants.SHELL_COMMAND;
+        if(SystemUtils.IS_OS_LINUX) {
+            shellcommand = ApplicationConstants.SHELL_COMMAND_BASH;
+        }
+
+        return shellcommand;
+    }
+
+    private String getShellArg() {
+
+        String commandArg = "/c ";
+        if(SystemUtils.IS_OS_LINUX) {
+            commandArg = "-c ";
+        }
+
+        return commandArg;
     }
 
 }

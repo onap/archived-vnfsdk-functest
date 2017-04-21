@@ -40,9 +40,9 @@ public class ApplicationConstants {
 
     public static final String MAIN_SCRIPT = "MAIN_SCRIPT";
 
-    public static final String SHELL_COMMAND = "cmd.exe /c ";
+    public static final String SHELL_COMMAND = "cmd.exe ";
 
-    public static final String SHELL_COMMAND_BASH = "";
+    public static final String SHELL_COMMAND_BASH = "/bin/bash ";
 
     public static final String CHARACTER = "character ...";
 
