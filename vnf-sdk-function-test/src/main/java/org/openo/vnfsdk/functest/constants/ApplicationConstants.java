@@ -42,7 +42,7 @@ public class ApplicationConstants {
 
     public static final String SHELL_COMMAND = "cmd.exe /c ";
 
-    public static final String SHELL_COMMAND_BASH = "bash ";
+    public static final String SHELL_COMMAND_BASH = "";
 
     public static final String CHARACTER = "character ...";
 
