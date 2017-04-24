@@ -126,8 +126,15 @@ public class TaskExecution {
 
         // Get environment of given UUID
         Environment functestEnv = EnvironmentMap.getInstance().getEnv(envId);
+        if(null == functestEnv) {
+            LOGGER.error("Function Test Environment details are empty,EnvID = " + envId);
+        } else {
+            LOGGER.info("Function Test Environment path,Path = " + functestEnv.getPath());
+        }
 
         String remoteDir = functestEnv.getPath() + mapValues.get("SCRIPT_NAME");
+
+        String remoteConfigArgs = remoteDir + "/" + "config.args ";
         String remoteScriptFile = remoteDir + "/" + mapValues.get("MAIN_SCRIPT");
         String remoteScriptResult = remoteDir + "/" + "output ";
         String dirResult = mapValues.get(ApplicationConstants.DIR_RESULT) + executeId;
@@ -138,8 +145,8 @@ public class TaskExecution {
         remoteArgs = remoteArgs + " -v " + "NODE_USERNAME" + ":" + functestEnv.getUserName() + " ";
         remoteArgs = remoteArgs + " -v " + "NODE_PASSWORD" + ":" + functestEnv.getPassword() + " ";
 
-        String remoteCommand =
-                ApplicationConstants.ROBOT_SPACE + "-d " + remoteScriptResult + remoteArgs + remoteScriptFile;
+        String remoteCommand = ApplicationConstants.ROBOT_SPACE + "-d " + remoteScriptResult + "--argumentfile "
+                + remoteConfigArgs + remoteScriptFile;
 
         // set the parameters required by the execute script
         remoteCommand = "\"" + remoteCommand + "\"";
