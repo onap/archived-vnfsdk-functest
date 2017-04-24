@@ -2,5 +2,6 @@
     "FRAMEWORK_TYPE": "robot",
     "MAIN_SCRIPT": "main.robot",
     "DIR_RESULT": "/home/functest/result/",
-    "DIR_REMOTE": "/home/root1/test/"
+    "DIR_REMOTE": "/home/root1/test/",
+    "SCRIPT_NAME": "RobotScript"
 }
