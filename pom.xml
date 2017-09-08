@@ -25,7 +25,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.onap.vnf-sdk.function-test</groupId>
     <artifactId>vnfsdk-functest-core-parent</artifactId>   
-    <name>vnf-sdk-function-test</name>
+    <name>vnfsdk-functest</name>
     <packaging>pom</packaging>
 
     <modules>
