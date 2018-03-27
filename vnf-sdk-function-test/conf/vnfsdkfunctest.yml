@@ -3,12 +3,11 @@ template: Hello, %s!
 
 defaultName: ${DW_DEFAULT_NAME:-Stranger}
 
-msbServerAddr: http://127.0.0.1:80
 #database
 database:
 
   # the name of your JDBC driver
-  driverClass: com.mysql.jdbc.Driver
+  driverClass: org.postgresql.Driver
 
   # the username
   user: functest
@@ -17,7 +16,13 @@ database:
   password: functest
 
   # the JDBC URL
-  url: jdbc:mysql://127.0.0.1:3306/functest
+  url: jdbc:postgresql://localhost:5432/functest
+
+  # any properties specific to your JDBC driver:
+  properties:
+    charSet: UTF-8
+    hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect  #org.hibernate.dialect.MySQL5InnoDBDialect
+#    hibernate.hbm2ddl.auto: create
 
 # use the simple server factory if you only want to run on a single port
 #server:
@@ -27,7 +32,7 @@ database:
 #    port: 8080
 server:
   type: simple
-  rootPath: '/openoapi/vnfsdk/v1/*'
+  rootPath: '/api/vnfsdk/v1/*'
   applicationContextPath: /
   adminContextPath: /admin
   connector:
@@ -44,7 +49,7 @@ logging:
   loggers:
 
     # Sets the level for 'com.example.app' to DEBUG.
-    org.openo.vnfsdk.functest.VnfSdkFunTestApp: INFO
+    org.onap.vnfsdk.functest.VnfSdkFunTestApp: INFO
 
   appenders:
     - type: console
