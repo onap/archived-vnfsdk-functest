@@ -27,7 +27,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <packagename>openo-vnfsdk-functest</packagename>
+        <packagename>onap-vnfsdk-functest</packagename>
         <linux64id>linux64</linux64id>
         <win64id>win64</win64id>
         <linux64outputdir>target/assembly/${linux64id}</linux64outputdir>
@@ -101,7 +101,7 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.openo.vnf-sdk.function-test</groupId>
+                                    <groupId>org.onap.vnf-sdk.function-test</groupId>
                                     <artifactId>vnf-sdk-function-test</artifactId>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
@@ -120,7 +120,7 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>org.openo.vnf-sdk.function-test</groupId>
+                                    <groupId>org.onap.vnf-sdk.function-test</groupId>
                                     <artifactId>vnf-sdk-function-test</artifactId>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
