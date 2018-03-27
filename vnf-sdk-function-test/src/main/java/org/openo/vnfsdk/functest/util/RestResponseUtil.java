@@ -32,8 +32,16 @@ public class RestResponseUtil {
         }
     }
 
-    public static Response getCreateSussceeResponse(Object obj) {
+    public static Response getCreateSuccessResponse(Object obj) {
         return Response.status(Status.CREATED).entity(obj).build();
+    }
+
+    public static Response getNotFoundResponse(Object obj) {
+        if (obj != null) {
+            return Response.status(Status.NOT_FOUND).entity(GsonUtil.objectToString(obj)).build();
+        } else {
+            return Response.serverError().build();
+        }
     }
 
     public static Response getErrorResponse(Object obj) {

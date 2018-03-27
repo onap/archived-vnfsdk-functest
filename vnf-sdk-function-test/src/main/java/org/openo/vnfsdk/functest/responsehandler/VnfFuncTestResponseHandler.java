@@ -16,43 +16,35 @@
 
 package org.openo.vnfsdk.functest.responsehandler;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.core.Response;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openo.vnfsdk.functest.FileUtil;
 import org.openo.vnfsdk.functest.util.RestResponseUtil;
 import org.openo.vnfsdk.functest.util.ZipCompressor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.ws.rs.core.Response;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public class VnfFuncTestResponseHandler {
 
-    private static int actioninProgress = 21;
-
-    private static int error = 22;
-
-    private static String resultFileName = "output.xml";
-
-    private static String resultpathkey = "DIR_RESULT";
-
-    private static Map<String, String> mapConfigValues;
-
-    private static VnfFuncTestResponseHandler vnfFuncRspHandler;
-
     private static final Logger logger = LoggerFactory.getLogger(VnfFuncTestResponseHandler.class);
+    private static int actioninProgress = 21;
+    private static int error = 22;
+    private static String resultFileName = "output.xml";
+    private static String resultpathkey = "DIR_RESULT";
+    private static Map<String, String> mapConfigValues;
+    private static VnfFuncTestResponseHandler vnfFuncRspHandler;
 
     private VnfFuncTestResponseHandler() {
     }
 
     public static VnfFuncTestResponseHandler getInstance() {
-        if(vnfFuncRspHandler == null) {
+        if (vnfFuncRspHandler == null) {
             vnfFuncRspHandler = new VnfFuncTestResponseHandler();
             loadConfigurations();
         }
@@ -63,10 +55,23 @@ public class VnfFuncTestResponseHandler {
         mapConfigValues = inMapConfigValues;
     }
 
+    @SuppressWarnings("unchecked")
+    private static void loadConfigurations() {
+        String curDir = System.getProperty("user.dir");
+        String confDir = curDir + File.separator + "conf" + File.separator + "robot" + File.separator;
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapConfigValues = mapper.readValue(new FileInputStream(confDir + "robotMetaData.json"), Map.class);
+        } catch (IOException e) {
+            logger.error("Reading Json Meta data file failed or file do not exist", e);
+            return;
+        }
+    }
+
     public Response getResponseByFuncTestId(String funcTestId) {
 
-        if((null == mapConfigValues) || (null == mapConfigValues.get(resultpathkey))) {
-            logger.warn("Result Store path not configfured !!!");
+        if ((null == mapConfigValues) || (null == mapConfigValues.get(resultpathkey))) {
+            logger.warn("Result Store path not configured !!!");
             return RestResponseUtil.getErrorResponse(error);
         }
 
@@ -77,15 +82,15 @@ public class VnfFuncTestResponseHandler {
          * -----------------------------------------------------
          */
         String fileName = resultPath + File.separator + funcTestId;
-        if(!FileUtil.checkFileExist(fileName)) {
-            logger.warn("Resquested function Test result not avaliable/In-Progress !!!");
+        if (!FileUtil.checkFileExist(fileName)) {
+            logger.warn("Requested function Test result not available/In-Progress !!!");
             return RestResponseUtil.getErrorResponse(actioninProgress);
         }
 
         String zipFileName = fileName + ".zip";
         try {
             new ZipCompressor(zipFileName).compress(fileName);
-        } catch(IOException e) {
+        } catch (IOException e) {
             logger.error("getResponseByFuncTestId ", e);
         }
 
@@ -95,7 +100,7 @@ public class VnfFuncTestResponseHandler {
          */
         byte[] byteArrayFile = FileUtil.convertZipFiletoByteArray(zipFileName);
 
-        if(null != byteArrayFile) {
+        if (null != byteArrayFile) {
 
             /*
              * Delete Result folders present if Success !!!
@@ -105,40 +110,27 @@ public class VnfFuncTestResponseHandler {
             /*
              * Later will delete this file
              */
-            logger.warn("Resquested function Test result Sucess !!!");
+            logger.warn("Requested function Test result Success !!!");
             return RestResponseUtil.getSuccessResponse(byteArrayFile);
         } else {
-            logger.warn("Resquested function Test result Faiuled !!!");
+            logger.warn("Requested function Test result Failed !!!");
             return RestResponseUtil.getErrorResponse(error);
         }
     }
 
     public Response downloadResults(String funcTestId) {
 
-        if((null == mapConfigValues) || (null == mapConfigValues.get(resultpathkey))) {
-            logger.warn("Result Store path not configfured !!!");
+        if ((null == mapConfigValues) || (null == mapConfigValues.get(resultpathkey))) {
+            logger.warn("Result Store path not configured !!!");
             return RestResponseUtil.getErrorResponse(error);
         }
 
         String resultPath = mapConfigValues.get(resultpathkey);
         String resultfileName = resultPath + File.separator + funcTestId + File.separator + resultFileName;
-
+        logger.info(resultfileName);
         TestResultParser oTestResultParser = new TestResultParser();
-        List<TestResult> resultList = oTestResultParser.populateResultList(resultfileName);
+        List<TestResult> resultList = oTestResultParser.populateResultList(funcTestId, resultfileName);
         return (!resultList.isEmpty()) ? RestResponseUtil.getSuccessResponse(resultList)
                 : RestResponseUtil.getErrorResponse(error);
-    }
-
-    @SuppressWarnings("unchecked")
-    private static void loadConfigurations() {
-        String curDir = System.getProperty("user.dir");
-        String confDir = curDir + File.separator + "conf" + File.separator + "robot" + File.separator;
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            mapConfigValues = mapper.readValue(new FileInputStream(confDir + "robotMetaData.json"), Map.class);
-        } catch(IOException e) {
-            logger.error("Reading Json Meta data file failed or file do not exist", e);
-            return;
-        }
     }
 }

@@ -20,43 +20,49 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openo.vnfsdk.functest.externalservice.entity.Environment;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
-
 import javax.ws.rs.core.Response;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 public class RestResponseUtilTest {
-		
-	private Response response;
-	private Object envObj;
-	
-	@Before
-	public void setUp() {
-		envObj = new Environment();
-		( ( Environment ) envObj ).setRemoteIp( "192.168.4.47" );
-		( ( Environment ) envObj ).setUserName( "root" );
-		( ( Environment ) envObj ).setPassword( "root123" );
-		( ( Environment ) envObj ).setPath( "src\\test\\resources" );
-	}
-	
-	
-	@Test
-	public void testGetSuccessResponse() {	
-		response = RestResponseUtil.getSuccessResponse( envObj ) ;		
-		assertNotNull( response );    
-		assertEquals( 200, response.getStatus() );
-	}
-	
-	@Test
-	public void testGetCreateSussceeResponse() {
-		response = RestResponseUtil.getCreateSussceeResponse( envObj );		
-		assertNotNull( response );    
-		assertEquals( 201, response.getStatus() );
-	}
-	
-	@Test
-	public void testGetErrorResponse() {
-		response = RestResponseUtil.getErrorResponse(envObj );
-		assertEquals( 500, response.getStatus() );
-	}
+
+    private Response response;
+    private Object envObj;
+
+    @Before
+    public void setUp() {
+        envObj = new Environment();
+        ((Environment) envObj).setRemoteIp("192.168.4.47");
+        ((Environment) envObj).setUserName("root");
+        ((Environment) envObj).setPassword("root123");
+        ((Environment) envObj).setPath("src\\test\\resources");
+    }
+
+
+    @Test
+    public void testGetSuccessResponse() {
+        response = RestResponseUtil.getSuccessResponse(envObj);
+        assertNotNull(response);
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    public void testGetCreateSussceeResponse() {
+        response = RestResponseUtil.getCreateSuccessResponse(envObj);
+        assertNotNull(response);
+        assertEquals(201, response.getStatus());
+    }
+
+    @Test
+    public void testGetErrorResponse() {
+        response = RestResponseUtil.getErrorResponse(envObj);
+        assertEquals(500, response.getStatus());
+    }
+
+    @Test
+    public void testGetNotFoundResponse() {
+        response = RestResponseUtil.getNotFoundResponse(envObj);
+        assertEquals(404, response.getStatus());
+    }
 }

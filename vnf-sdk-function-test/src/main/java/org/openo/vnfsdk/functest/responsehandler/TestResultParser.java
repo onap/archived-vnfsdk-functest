@@ -16,16 +16,6 @@
 
 package org.openo.vnfsdk.functest.responsehandler;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.openo.vnfsdk.functest.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +24,16 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class TestResultParser {
 
@@ -51,55 +51,55 @@ public class TestResultParser {
 
     private static final Logger logger = LoggerFactory.getLogger(TestResultParser.class);
 
-    public List<TestResult> populateResultList(String xmlFile) {
+    public List<TestResult> populateResultList(String taskID, String xmlFile) {
         List<TestResult> resultData = new ArrayList<>();
-        if(!FileUtil.checkFileExist(xmlFile)) {
+        if (!FileUtil.checkFileExist(xmlFile)) {
             logger.error("File Not Found !!! :" + xmlFile);
             return resultData;
         }
-        parseResultData(xmlFile, resultData);
+        parseResultData(taskID, xmlFile, resultData);
         return resultData;
     }
 
-    private void parseResultData(String xmlFile, List<TestResult> resultData) {
+    private void parseResultData(String taskID, String xmlFile, List<TestResult> resultData) {
         try {
             Document doc = createDocument(xmlFile);
             NodeList list = doc.getElementsByTagName(RESULTTAG);
-            for(int i = 0; i < list.getLength(); i++) {
+            for (int i = 0; i < list.getLength(); i++) {
                 Node node = list.item(i);
-                if(node.getNodeType() != Node.ELEMENT_NODE) {
+                if (node.getNodeType() != Node.ELEMENT_NODE) {
                     continue;
                 }
 
                 NamedNodeMap attr = node.getAttributes();
-                if(null == attr) {
+                if (null == attr) {
                     continue;
                 }
 
                 String nameAttr = getNodeValue(attr.getNamedItem(NAMETAG));
-                if(null == nameAttr) {
+                if (null == nameAttr) {
                     continue;
                 }
 
                 String descriptionAttr = nameAttr;
                 String statusAttr = STATUSPASS;
                 NodeList childlist = node.getChildNodes();
-                for(int j = 0; j < childlist.getLength(); j++) {
+                for (int j = 0; j < childlist.getLength(); j++) {
                     Node childNode = childlist.item(j);
-                    if(childNode.getNodeType() != Node.ELEMENT_NODE) {
+                    if (childNode.getNodeType() != Node.ELEMENT_NODE) {
                         continue;
                     }
 
-                    if(KWTAG == childNode.getNodeName()) {
+                    if (KWTAG == childNode.getNodeName()) {
                         NodeList kwNodeList = childNode.getChildNodes();
-                        for(int k = 0; k < kwNodeList.getLength(); k++) {
+                        for (int k = 0; k < kwNodeList.getLength(); k++) {
                             Node descNode = kwNodeList.item(k);
-                            if(descNode.getNodeType() != Node.ELEMENT_NODE) {
+                            if (descNode.getNodeType() != Node.ELEMENT_NODE) {
                                 continue;
                             }
 
-                            if(DOCTAG == descNode.getNodeName()) {
-                                if(null != descNode.getTextContent()) {
+                            if (DOCTAG == descNode.getNodeName()) {
+                                if (null != descNode.getTextContent()) {
                                     descriptionAttr = descNode.getTextContent();
                                     break;
                                 }
@@ -107,9 +107,9 @@ public class TestResultParser {
                         }
                     }
 
-                    if(STATUSTAG == childNode.getNodeName()) {
+                    if (STATUSTAG == childNode.getNodeName()) {
                         NamedNodeMap statusAttrMap = childNode.getAttributes();
-                        if(null != statusAttrMap) {
+                        if (null != statusAttrMap) {
                             statusAttr = getNodeValue(statusAttrMap.getNamedItem(STATUSTAG));
                         }
                     }
@@ -122,7 +122,10 @@ public class TestResultParser {
 
                 resultData.add(testData);
             }
-        } catch(ParserConfigurationException | SAXException | IOException e) {
+
+            TestResultMap.getInstance().setTestResultMap(UUID.fromString(taskID), resultData);
+
+        } catch (ParserConfigurationException | SAXException | IOException e) {
             logger.error("Exception while parsing file :" + xmlFile);
             logger.error("Exception while parsing file :", e);
         }

@@ -50,6 +50,16 @@ public class ApplicationConstants {
 
     public static final String RUN_SCRIPT_EXECUTE_CMD = "Upload the script and execute the script and run command";
 
+    public static final String UPLOAD_HOST = "127.0.0.1";
+
+    public static final String UPLOAD_USER = "kqin";
+
+    public static final String UPLOAD_PWD = "password";
+
+    public static final String UPLOAD_PATH = "C:/";
+
+    public static final String CATALOG_URI = "file:///C:/RobotScript/RobotScript.zip";
+
     private ApplicationConstants() {
     }
 

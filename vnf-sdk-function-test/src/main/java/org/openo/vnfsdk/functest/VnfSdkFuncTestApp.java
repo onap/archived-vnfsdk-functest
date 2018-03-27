@@ -16,25 +16,38 @@
 
 package org.openo.vnfsdk.functest;
 
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.openo.vnfsdk.functest.common.Config;
-import org.openo.vnfsdk.functest.common.ServiceRegistration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.hibernate.ScanningHibernateBundle;
+import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.server.SimpleServerFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.openo.vnfsdk.functest.common.Config;
+import org.openo.vnfsdk.functest.common.ServiceRegistration;
+import org.openo.vnfsdk.functest.db.TaskMgrCaseTblDAO;
+import org.openo.vnfsdk.functest.db.TaskMgrTaskTblDAO;
+import org.openo.vnfsdk.functest.scriptmgr.ScriptManager;
+import org.openo.vnfsdk.functest.taskmgr.TaskManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class VnfSdkFuncTestApp extends Application<VnfSdkFuncTestAppConfiguration> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VnfSdkFuncTestApp.class);
+    private final HibernateBundle<VnfSdkFuncTestAppConfiguration> hibernateBundle =
+            new ScanningHibernateBundle<VnfSdkFuncTestAppConfiguration>("org.openo.vnfsdk.functest.models") {
+                @Override
+                public DataSourceFactory getDataSourceFactory(VnfSdkFuncTestAppConfiguration configuration) {
+                    return configuration.getDataSourceFactory();
+                }
+            };
 
     public static void main(String[] args) throws Exception {
         new VnfSdkFuncTestApp().run(args);
@@ -48,7 +61,13 @@ public class VnfSdkFuncTestApp extends Application<VnfSdkFuncTestAppConfiguratio
     @Override
     public void initialize(Bootstrap<VnfSdkFuncTestAppConfiguration> bootstrap) {
         bootstrap.addBundle(new AssetsBundle("/api-doc", "/api-doc", "index.html", "api-doc"));
-
+        bootstrap.addBundle(new MigrationsBundle<VnfSdkFuncTestAppConfiguration>() {
+            @Override
+            public DataSourceFactory getDataSourceFactory(VnfSdkFuncTestAppConfiguration configuration) {
+                return configuration.getDataSourceFactory();
+            }
+        });
+        bootstrap.addBundle(hibernateBundle);
     }
 
     private void initService() {
@@ -69,17 +88,20 @@ public class VnfSdkFuncTestApp extends Application<VnfSdkFuncTestAppConfiguratio
     }
 
     private void initSwaggerConfig(Environment environment, VnfSdkFuncTestAppConfiguration configuration) {
+        final TaskMgrTaskTblDAO taskDAO = new TaskMgrTaskTblDAO(hibernateBundle.getSessionFactory());
+        final TaskMgrCaseTblDAO caseDAO = new TaskMgrCaseTblDAO(hibernateBundle.getSessionFactory());
         environment.jersey().register(new ApiListingResource());
         environment.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        environment.jersey().register(new TaskManager(taskDAO, caseDAO, new ScriptManager(taskDAO, caseDAO)));
 
         BeanConfig config = new BeanConfig();
         config.setTitle("Open-o VnfSdk Functest Service rest API");
         config.setVersion("1.0.0");
         config.setResourcePackage("org.openo.vnfsdk.functest.resource");
 
-        SimpleServerFactory simpleServerFactory = (SimpleServerFactory)configuration.getServerFactory();
+        SimpleServerFactory simpleServerFactory = (SimpleServerFactory) configuration.getServerFactory();
         String basePath = simpleServerFactory.getApplicationContextPath();
-        String rootPath = simpleServerFactory.getJerseyRootPath();
+        String rootPath = simpleServerFactory.getJerseyRootPath().toString();
         rootPath = rootPath.substring(0, rootPath.indexOf("/*"));
         basePath =
                 ("/").equals(rootPath) ? rootPath : (new StringBuilder()).append(basePath).append(rootPath).toString();
