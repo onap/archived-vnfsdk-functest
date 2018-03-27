@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_b1f7118c",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 0,
+      "message": "ONAP oparent is version 1.1.0 (not snapshot)",
+      "range": {
+        "startLine": 22,
+        "startChar": 17,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "29078dd84779639f98739d508e947db0662473df",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}

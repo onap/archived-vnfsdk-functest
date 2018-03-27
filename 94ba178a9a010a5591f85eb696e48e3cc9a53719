@@ -1,0 +1,648 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_312b01ed",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/db/TaskMgrCaseTblDAO.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 41
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_113a8536",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/db/TaskMgrTaskTblDAO.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_b13e3128",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/db/TaskMgrTaskTblDAO.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 41
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_d13bbd36",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/db/TaskMgrTaskTblDAO.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 47,
+        "startChar": 32,
+        "endLine": 47,
+        "endChar": 37
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_7148a9cc",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/models/CaseRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_f10b597b",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/models/TaskRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_d122dd00",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/models/TaskRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 29,
+        "startChar": 36,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_711f49b8",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/models/TaskRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 32,
+        "startChar": 40,
+        "endLine": 32,
+        "endChar": 45
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_911c55c3",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/responsehandler/TestResultMap.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_517ecde5",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/responsehandler/TestResultParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_51656d43",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/responsehandler/VnfFuncTestResponseHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "do we need this?  There are security vulnerabilities with Jackson databind.  It\u0027s OK to use it, but please make sure to do it securely and use strict validation of input strings.",
+      "range": {
+        "startLine": 19,
+        "startChar": 29,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_115fe573",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/responsehandler/VnfFuncTestResponseHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_b153916b",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/responsehandler/VnfFuncTestResponseHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 16
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_d1509d60",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/responsehandler/VnfFuncTestResponseHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 16
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_11d605c6",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/scriptmgr/ScriptManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap\n\nPlease replace openo with onap globally",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_31eea18c",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/taskmgr/TaskManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "please change openo to onap (globally)",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_f1e7d9aa",
+        "filename": "vnf-sdk-function-test/src/test/java/org/openo/vnfsdk/functest/db/TaskMgrCaseTblDAOTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_11eda58b",
+        "filename": "vnf-sdk-function-test/src/test/java/org/openo/vnfsdk/functest/db/TaskMgrCaseTblDAOTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_b101513b",
+        "filename": "vnf-sdk-function-test/src/test/java/org/openo/vnfsdk/functest/db/TaskMgrTaskTblDAOTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_d1fe5d38",
+        "filename": "vnf-sdk-function-test/src/test/java/org/openo/vnfsdk/functest/db/TaskMgrTaskTblDAOTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_71fbc947",
+        "filename": "vnf-sdk-function-test/src/test/java/org/openo/vnfsdk/functest/models/CaseRecordTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_91f8d54a",
+        "filename": "vnf-sdk-function-test/src/test/java/org/openo/vnfsdk/functest/models/TaskRecordTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_319541e4",
+        "filename": "vnf-sdk-function-test/src/test/java/org/openo/vnfsdk/functest/scriptmgr/ScriptManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap (please change globally)",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_11a4c555",
+        "filename": "vnf-sdk-function-test/src/test/java/org/openo/vnfsdk/functest/taskmgr/TaskManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap (please change globally)",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_d185fdad",
+        "filename": "vnf-sdk-function-test/src/test/java/org/openo/vnfsdkfunctest/responsehandler/TestResultMapTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_7192e9f7",
+        "filename": "vnf-sdk-function-test/src/test/java/org/openo/vnfsdkfunctest/responsehandler/TestResultMapTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_918f75cc",
+        "filename": "vnf-sdk-function-test/src/test/java/org/openo/vnfsdkfunctest/responsehandler/TestResultMapTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 16
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_51c1ede2",
+        "filename": "vnf-sdk-function-test/src/test/java/org/openo/vnfsdkfunctest/responsehandler/TestResultParserTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-27T15:51:10Z",
+      "side": 1,
+      "message": "onap",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 16
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
