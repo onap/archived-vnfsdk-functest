@@ -29,7 +29,7 @@ set class_path=%RUNHOME%;%RUNHOME%vnf-sdk-function-test.jar
 echo ### jvm_opts: %jvm_opts%
 echo ### class_path: %class_path%
 
-%JAVA% -classpath %class_path% %jvm_opts% org.openo.vnfsdk.functest.VnfSdkFuncTestApp server %RUNHOME%conf/vnfsdkfunctest.yml
+%JAVA% -classpath %class_path% %jvm_opts% org.onap.vnfsdk.functest.VnfSdkFuncTestApp server %RUNHOME%conf/vnfsdkfunctest.yml
 
 IF ERRORLEVEL 1 goto showerror
 exit

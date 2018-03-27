@@ -27,5 +27,5 @@ port=8701
 echo @JAVA_OPTS@ $JAVA_OPTS
 export CLASSPATH=CLASSPATH:"$JAVA_HOME/jre/lib"
 echo @CLASSPATH@ $CLASSPATH
-"$JAVA" $JAVA_OPTS -cp $RUNHOME/vnf-sdk-function-test  org.openo.vnfsdk.functest.VnfSdkFuncTestApp server "$RUNHOME/conf/vnfsdkfunctest.yml"
+"$JAVA" $JAVA_OPTS -cp $RUNHOME/vnf-sdk-function-test  org.onap.vnfsdk.functest.VnfSdkFuncTestApp server "$RUNHOME/conf/vnfsdkfunctest.yml"
 

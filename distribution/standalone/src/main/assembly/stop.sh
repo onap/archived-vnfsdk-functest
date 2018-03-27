@@ -17,7 +17,7 @@
 
 DIRNAME=`dirname $0`
 HOME=`cd $DIRNAME/; pwd`
-Main_Class="org.openo.vnfsdk.functest.VnfSdkFuncTestApp"
+Main_Class="org.onap.vnfsdk.functest.VnfSdkFuncTestApp"
 
 echo ================== catalog-service info =============================================
 echo HOME=$HOME

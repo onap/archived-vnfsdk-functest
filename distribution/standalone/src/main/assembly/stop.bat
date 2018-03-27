@@ -18,7 +18,7 @@
 title stopping vnfsdk-functest
 
 set HOME=%~dp0
-set Main_Class="org.openo.vnfsdk.functest.VnfSdkFuncTestApp"
+set Main_Class="org.onap.vnfsdk.functest.VnfSdkFuncTestApp"
 
 echo ================== extsys-service info =============================================
 echo HOME=$HOME
