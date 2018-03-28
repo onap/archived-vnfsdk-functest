@@ -23,7 +23,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.onap.vnf-sdk.function-test</groupId>
+    <groupId>org.onap.vnfsdk.functest</groupId>
     <artifactId>vnfsdk-functest-core-parent</artifactId>
     <name>vnfsdk-functest</name>
     <version>1.0.0-SNAPSHOT</version>
