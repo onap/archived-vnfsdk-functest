@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-    Copyright 2017 Huawei Technologies Co., Ltd.
+    Copyright 2017-2018 Huawei Technologies Co., Ltd.
    
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.onap.vnf-sdk.function-test</groupId>
+        <groupId>org.onap.vnfsdk.functest</groupId>
         <artifactId>distribution</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>standalone</artifactId>
-    <name>vnf-sdk-function-test/distribution/standalone</name>
+    <name>vnfsdk-functest/distribution/standalone</name>
     <packaging>pom</packaging>
 
     <properties>
