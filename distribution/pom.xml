@@ -16,14 +16,14 @@
  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.onap.vnf-sdk.function-test</groupId>
+        <groupId>org.onap.vnfsdk.functest</groupId>
         <artifactId>vnfsdk-functest-core-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>distribution</artifactId>
-    <name>vnf-sdk-function-test/distribution</name>
+    <artifactId>vnfsdk-functest-distribution</artifactId>
+    <name>vnfsdk Function Test distribution</name>
     <packaging>pom</packaging>
 
     <modules>
@@ -31,8 +31,8 @@
     </modules>
     <dependencies>
     <dependency>
-            <groupId>org.onap.vnf-sdk.function-test</groupId>
-            <artifactId>vnf-sdk-function-test</artifactId>
+            <groupId>org.onap.vnfsdk.functest</groupId>
+            <artifactId>vnfsdk-functest</artifactId>
             <version>1.0.0-SNAPSHOT</version>
     </dependency>
     </dependencies>
