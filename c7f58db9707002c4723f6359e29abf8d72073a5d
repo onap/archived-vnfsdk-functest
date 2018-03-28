@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a93c517_0a5d5f15",
+        "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/externalservice/msb/MicroserviceBusConsumer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3641
+      },
+      "writtenOn": "2018-03-28T15:43:42Z",
+      "side": 1,
+      "message": "Accept. Will remove.",
+      "parentUuid": "5a93c517_2faf0de5",
+      "revId": "c7f58db9707002c4723f6359e29abf8d72073a5d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a93c517_c4669029",
         "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/resource/CommonManager.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5a93c517_ca9e97b8",
+        "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/resource/CommonManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3641
+      },
+      "writtenOn": "2018-03-28T15:43:42Z",
+      "side": 1,
+      "message": "Accept. Will remove.",
+      "parentUuid": "5a93c517_c4669029",
+      "revId": "c7f58db9707002c4723f6359e29abf8d72073a5d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a93c517_447280e4",
         "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/scriptmgr/ScriptManager.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2018-03-28T09:20:54Z",
       "side": 1,
       "message": "Duplicate functions-Same as in Common Manager",
+      "revId": "c7f58db9707002c4723f6359e29abf8d72073a5d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_8a7f2f66",
+        "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/scriptmgr/ScriptManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3641
+      },
+      "writtenOn": "2018-03-28T15:43:42Z",
+      "side": 1,
+      "message": "Thanks Murali for all the inputs!\nThe original purpose was to leave the legacy code unchanged and let the code review to decide whether we would remove the legacy Rest APIs or not. Had concern about in case that other function test consumers other than nfvo/functest may invoke these hooks.\nBased on the comments, will clean up all the unused and duplicated functions for now. If any further requirement, we can still enhance the functions.",
+      "parentUuid": "5a93c517_447280e4",
       "revId": "c7f58db9707002c4723f6359e29abf8d72073a5d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
@@ -98,6 +152,24 @@
       "writtenOn": "2018-03-28T09:20:54Z",
       "side": 1,
       "message": "Hardcoding the variable.Better read from configuration file (env file) as existed earlier.",
+      "revId": "c7f58db9707002c4723f6359e29abf8d72073a5d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_4aaa87d3",
+        "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/taskmgr/TaskManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 3641
+      },
+      "writtenOn": "2018-03-28T15:43:42Z",
+      "side": 1,
+      "message": "Accept. Will read from config files.",
+      "parentUuid": "5a93c517_44ab601e",
       "revId": "c7f58db9707002c4723f6359e29abf8d72073a5d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
