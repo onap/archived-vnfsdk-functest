@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_c4669029",
+        "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/resource/CommonManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 749
+      },
+      "writtenOn": "2018-03-28T09:20:54Z",
+      "side": 1,
+      "message": "After moving the python code to java code, these interfaces become less meaningful.Can we move them?",
+      "revId": "c7f58db9707002c4723f6359e29abf8d72073a5d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_447280e4",
+        "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/scriptmgr/ScriptManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 749
+      },
+      "writtenOn": "2018-03-28T09:20:54Z",
+      "side": 1,
+      "message": "Duplicate functions-Same as in Common Manager",
+      "revId": "c7f58db9707002c4723f6359e29abf8d72073a5d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_44ab601e",
+        "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/taskmgr/TaskManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 749
+      },
+      "writtenOn": "2018-03-28T09:20:54Z",
+      "side": 1,
+      "message": "Hardcoding the variable.Better read from configuration file (env file) as existed earlier.",
+      "revId": "c7f58db9707002c4723f6359e29abf8d72073a5d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
