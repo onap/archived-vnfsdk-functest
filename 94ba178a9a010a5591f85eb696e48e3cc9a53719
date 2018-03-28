@@ -255,6 +255,30 @@
     },
     {
       "key": {
+        "uuid": "5a93c517_64121c64",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/responsehandler/VnfFuncTestResponseHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3641
+      },
+      "writtenOn": "2018-03-28T15:43:42Z",
+      "side": 1,
+      "message": "Accept. Replaced jackson.databind.ObjectMapper with Gson to parse json object into map. Considering the efficiency, we can still carry out more investigations on the alternatives later on.",
+      "parentUuid": "5a93c517_51656d43",
+      "range": {
+        "startLine": 19,
+        "startChar": 29,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a93c517_115fe573",
         "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/responsehandler/VnfFuncTestResponseHandler.java",
         "patchSetId": 1
@@ -335,6 +359,30 @@
       "writtenOn": "2018-03-27T15:51:10Z",
       "side": 1,
       "message": "onap\n\nPlease replace openo with onap globally",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "94ba178a9a010a5591f85eb696e48e3cc9a53719",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_843e48d9",
+        "filename": "vnf-sdk-function-test/src/main/java/org/openo/vnfsdk/functest/scriptmgr/ScriptManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3641
+      },
+      "writtenOn": "2018-03-28T15:43:42Z",
+      "side": 1,
+      "message": "Accept. Already replaced openo with onap globally.",
+      "parentUuid": "5a93c517_11d605c6",
       "range": {
         "startLine": 17,
         "startChar": 12,
