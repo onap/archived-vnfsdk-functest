@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_649f7c04",
+        "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/scriptmgr/ScriptManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 749
+      },
+      "writtenOn": "2018-03-28T09:20:54Z",
+      "side": 1,
+      "message": "Common Manager and Script Manager has lot of common or duplicate functions.How about cleaning them up?",
+      "revId": "2ea2d3281456ebf74c5e405520bb3ea674ec9d52",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
