@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a93c517_2faf0de5",
+        "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/externalservice/msb/MicroserviceBusConsumer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 749
+      },
+      "writtenOn": "2018-03-28T09:42:49Z",
+      "side": 1,
+      "message": "We do not use Micro service bus which was used in Open-O, I think we can remove this folder and service registration code",
+      "revId": "c7f58db9707002c4723f6359e29abf8d72073a5d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a93c517_c4669029",
         "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/resource/CommonManager.java",
         "patchSetId": 3
