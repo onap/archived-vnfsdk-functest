@@ -18,7 +18,6 @@ package org.onap.vnfsdk.functest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.dropwizard.Application;
-import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.ScanningHibernateBundle;
@@ -59,7 +58,6 @@ public class VnfSdkFuncTestApp extends Application<VnfSdkFuncTestAppConfiguratio
 
     @Override
     public void initialize(Bootstrap<VnfSdkFuncTestAppConfiguration> bootstrap) {
-        bootstrap.addBundle(new AssetsBundle("/api-doc", "/api-doc", "index.html", "api-doc"));
         bootstrap.addBundle(new MigrationsBundle<VnfSdkFuncTestAppConfiguration>() {
             @Override
             public DataSourceFactory getDataSourceFactory(VnfSdkFuncTestAppConfiguration configuration) {
