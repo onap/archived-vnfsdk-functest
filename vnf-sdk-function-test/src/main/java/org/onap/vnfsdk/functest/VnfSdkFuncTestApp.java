@@ -21,7 +21,6 @@ import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.ScanningHibernateBundle;
-import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.server.SimpleServerFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -58,12 +57,6 @@ public class VnfSdkFuncTestApp extends Application<VnfSdkFuncTestAppConfiguratio
 
     @Override
     public void initialize(Bootstrap<VnfSdkFuncTestAppConfiguration> bootstrap) {
-        bootstrap.addBundle(new MigrationsBundle<VnfSdkFuncTestAppConfiguration>() {
-            @Override
-            public DataSourceFactory getDataSourceFactory(VnfSdkFuncTestAppConfiguration configuration) {
-                return configuration.getDataSourceFactory();
-            }
-        });
         bootstrap.addBundle(hibernateBundle);
     }
 
