@@ -211,10 +211,8 @@ public final class FileUtil {
         }
 
         byte[] byteArrayFile = new byte[(int) file.length()];
-        try {
-            FileInputStream fileInputStream = new FileInputStream(filename);
+        try (FileInputStream fileInputStream = new FileInputStream(filename)) {
             int value = fileInputStream.read(byteArrayFile);
-            fileInputStream.close();
             LOG.debug("Number of bytes read from fileInputStream = " + value);
         } catch (Exception e) {
             LOG.error("convertZipFiletoByteArray: " + e);

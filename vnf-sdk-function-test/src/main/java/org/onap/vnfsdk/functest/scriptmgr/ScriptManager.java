@@ -181,12 +181,12 @@ public class ScriptManager {
                     taskMgrTaskTblDAO.saveOrUpdate(taskRecord);
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
+                LOGGER.error("uploadFuncTestPackage InterruptedException", e);
             } catch (ExecutionException e) {
-                e.printStackTrace();
+                LOGGER.error("uploadFuncTestPackage ExecutionException", e);
             } catch (TimeoutException e) {
                 LOGGER.info("Time out.");
-                e.printStackTrace();
             }
 
             return uploadID;

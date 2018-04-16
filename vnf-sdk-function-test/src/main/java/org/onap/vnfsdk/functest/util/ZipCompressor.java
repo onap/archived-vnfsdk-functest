@@ -48,9 +48,7 @@ public class ZipCompressor {
         if (!file.exists()) {
             throw new FileNotFoundException(srcPathName + "not exist!");
         }
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(zipFile);
-            CheckedOutputStream cos = new CheckedOutputStream(fileOutputStream, new CRC32());
+        try (FileOutputStream fileOutputStream = new FileOutputStream(zipFile); CheckedOutputStream cos = new CheckedOutputStream(fileOutputStream, new CRC32())) {
             ZipOutputStream out = new ZipOutputStream(cos);
             String basedir = "";
             compress(file, out, basedir);

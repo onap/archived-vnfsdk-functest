@@ -132,12 +132,13 @@ public class TestResultParser {
     }
 
     private Document createDocument(String fileName) throws ParserConfigurationException, SAXException, IOException {
-        InputStream inputStream = new FileInputStream(fileName);
-        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-        Document doc = docBuilder.parse(inputStream);
-        doc.getDocumentElement().normalize();
-        return doc;
+        try (InputStream inputStream = new FileInputStream(fileName)) {
+            DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(inputStream);
+            doc.getDocumentElement().normalize();
+            return doc;
+        }
     }
 
     private String getNodeValue(Node namedItem) {
