@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_6f706740",
+        "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/scriptmgr/ScriptManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 749
+      },
+      "writtenOn": "2018-04-16T06:19:54Z",
+      "side": 1,
+      "message": "Missed logging exception here, and also need to change from info to error.",
+      "range": {
+        "startLine": 189,
+        "startChar": 17,
+        "endLine": 189,
+        "endChar": 39
+      },
+      "revId": "c230bd8f30d77a54cf6e5c34177cc95cb9c5f96a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
