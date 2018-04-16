@@ -22,6 +22,30 @@
       "revId": "c230bd8f30d77a54cf6e5c34177cc95cb9c5f96a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_efe9d7b7",
+        "filename": "vnf-sdk-function-test/src/main/java/org/onap/vnfsdk/functest/scriptmgr/ScriptManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 3641
+      },
+      "writtenOn": "2018-04-16T06:32:21Z",
+      "side": 1,
+      "message": "Accept. Fixed in patch set 2.",
+      "parentUuid": "5a93c517_6f706740",
+      "range": {
+        "startLine": 189,
+        "startChar": 17,
+        "endLine": 189,
+        "endChar": 39
+      },
+      "revId": "c230bd8f30d77a54cf6e5c34177cc95cb9c5f96a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
