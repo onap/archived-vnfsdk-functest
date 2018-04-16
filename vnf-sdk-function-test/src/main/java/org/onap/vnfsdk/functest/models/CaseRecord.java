@@ -120,4 +120,9 @@ public class CaseRecord {
 
         return Objects.equals(this.taskID, that.taskID);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(taskID);
+    }
 }

@@ -98,12 +98,21 @@ public class TaskExecution {
                 process.waitFor();
                 inputStream = process.getInputStream();
             }
-            while ((ch = inputStream.read()) != -1) {
-                LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
+            if (inputStream != null){
+                while ((ch = inputStream.read()) != -1) {
+                    LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
+                }
             }
-
         } catch (Exception e) {
             LOGGER.error(ApplicationConstants.TASKEXE_EXESCRIPT_EXCEPTION, e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    LOGGER.error("executeScript", e);
+                }
+            }
         }
     }
 
@@ -126,26 +135,26 @@ public class TaskExecution {
             return;
         }
 
+        String remoteDir = "";
+        String remoteArgs = "";
+
         // Get environment of given UUID
         Environment functestEnv = EnvironmentMap.getInstance().getEnv(envId);
-        if (null == functestEnv) {
-            LOGGER.error("Function Test Environment details are empty,EnvID = " + envId);
-        } else {
+        if (null != functestEnv) {
             LOGGER.info("Function Test Environment path,Path = " + functestEnv.getPath());
+            remoteDir = functestEnv.getPath() + mapValues.get("SCRIPT_NAME");
+            // set the argument parameters
+            remoteArgs = remoteArgs + " -v " + "NODE_IP" + ":" + functestEnv.getRemoteIp() + " ";
+            remoteArgs = remoteArgs + " -v " + "NODE_USERNAME" + ":" + functestEnv.getUserName() + " ";
+            remoteArgs = remoteArgs + " -v " + "NODE_PASSWORD" + ":" + functestEnv.getPassword() + " ";
+        } else {
+            LOGGER.error("Function Test Environment details are empty,EnvID = " + envId);
         }
-
-        String remoteDir = functestEnv.getPath() + mapValues.get("SCRIPT_NAME");
 
         String remoteConfigArgs = remoteDir + "/" + "config.args ";
         String remoteScriptFile = remoteDir + "/" + mapValues.get("MAIN_SCRIPT");
         String remoteScriptResult = remoteDir + "/" + "output ";
         String dirResult = mapValues.get(ApplicationConstants.DIR_RESULT) + executeId;
-
-        // set the argument parameters
-        String remoteArgs = "";
-        remoteArgs = remoteArgs + " -v " + "NODE_IP" + ":" + functestEnv.getRemoteIp() + " ";
-        remoteArgs = remoteArgs + " -v " + "NODE_USERNAME" + ":" + functestEnv.getUserName() + " ";
-        remoteArgs = remoteArgs + " -v " + "NODE_PASSWORD" + ":" + functestEnv.getPassword() + " ";
 
         String remoteCommand = ApplicationConstants.ROBOT_SPACE + "-d " + remoteScriptResult + "--argumentfile "
                 + remoteConfigArgs + remoteScriptFile;
@@ -171,12 +180,21 @@ public class TaskExecution {
                 process.waitFor();
                 inputStream = process.getInputStream();
             }
-
-            while ((ch = inputStream.read()) != -1) {
-                LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
+            if (inputStream != null) {
+                while ((ch = inputStream.read()) != -1) {
+                    LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
+                }
             }
         } catch (Exception e) {
             LOGGER.error(ApplicationConstants.TASKEXE_EXESCRIPT_EXCEPTION, e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e){
+                    LOGGER.error("executeRobotScript IOException", e);
+                }
+            }
         }
 
         OperationStatus operstatus = new OperationStatus();
@@ -236,13 +254,21 @@ public class TaskExecution {
                 process.waitFor();
                 inputStream = process.getInputStream();
             }
-
-            while ((ch = inputStream.read()) != -1) {
-                LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
+            if (inputStream != null) {
+                while ((ch = inputStream.read()) != -1) {
+                    LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
+                }
             }
-
         } catch (Exception e) {
             LOGGER.error(ApplicationConstants.TASKEXE_EXESCRIPT_EXCEPTION, e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e){
+                    LOGGER.error("uploadScript IOException", e);
+                }
+            }
         }
 
         OperationStatus operstatus = new OperationStatus();
