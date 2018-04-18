@@ -17,19 +17,23 @@
 package org.onap.vnfsdk.functest.taskmgr;
 
 import io.dropwizard.testing.junit.DAOTestRule;
-import mockit.Mock;
-import mockit.MockUp;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 import org.onap.vnfsdk.functest.db.TaskMgrCaseTblDAO;
 import org.onap.vnfsdk.functest.db.TaskMgrTaskTblDAO;
 import org.onap.vnfsdk.functest.externalservice.entity.OperationStatus;
 import org.onap.vnfsdk.functest.externalservice.entity.OperationStatusHandler;
 import org.onap.vnfsdk.functest.models.CaseRecord;
 import org.onap.vnfsdk.functest.models.TaskRecord;
+import org.onap.vnfsdk.functest.responsehandler.VnfFuncTestResponseHandler;
 import org.onap.vnfsdk.functest.scriptmgr.ScriptManager;
 import org.onap.vnfsdk.functest.util.RestResponseUtil;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.reflect.Whitebox;
 
 import javax.ws.rs.core.Response;
 import java.lang.reflect.Method;
@@ -40,6 +44,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class TaskManagerTest {
 
+    public final ExpectedException exception = ExpectedException.none();
     @Rule
     public DAOTestRule daoTestRule = DAOTestRule.newBuilder()
             .addEntityClass(TaskRecord.class)
@@ -77,17 +82,11 @@ public class TaskManagerTest {
 
     @Test
     public void testStartOnboardTestingPackageIDAbsentInDB() {
-        new MockUp<ScriptManager>() {
-            @Mock
-            public UUID uploadFuncTestPackage(UUID taskID, UUID envID, String url) {
-                return UUID.randomUUID();
-            }
-        };
-
         try {
             response = taskManager.startOnboardTesting(requestBody);
-            assertNotNull(response);
+            exception.expect(IndexOutOfBoundsException.class);
             assertEquals(201, response.getStatus());
+        } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -161,13 +160,12 @@ public class TaskManagerTest {
     }
 
     @Test
+    @PrepareForTest({VnfFuncTestResponseHandler.class})
     public void testCollectTaskResultUncreated() {
-        new MockUp<ScriptManager>() {
-            @Mock
-            public Response downloadResults(UUID taskID) {
-                return RestResponseUtil.getSuccessResponse(null);
-            }
-        };
+        VnfFuncTestResponseHandler mockVnfFuncTestResponseHandler = PowerMockito.mock(VnfFuncTestResponseHandler.class);
+        Whitebox.setInternalState(VnfFuncTestResponseHandler.class, "vnfFuncRspHandler", mockVnfFuncTestResponseHandler);
+        PowerMockito.when(mockVnfFuncTestResponseHandler.downloadResults(Mockito.anyString())).thenReturn(RestResponseUtil.getSuccessResponse(null));
+
         try {
             daoTestRule.inTransaction(() -> taskMgrCaseTblDAO.saveOrUpdate(new CaseRecord(taskID, funcID, testID, testResult, testDescription)));
             response = taskManager.collectTaskResult(taskID);

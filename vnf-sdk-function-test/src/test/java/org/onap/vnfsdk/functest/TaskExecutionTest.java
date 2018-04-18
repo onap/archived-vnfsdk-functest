@@ -16,15 +16,20 @@
 
 package org.onap.vnfsdk.functest;
 
-import mockit.Mock;
-import mockit.MockUp;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.onap.vnfsdk.functest.externalservice.entity.Environment;
 import org.onap.vnfsdk.functest.externalservice.entity.EnvironmentMap;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 import java.util.UUID;
 
+@RunWith(PowerMockRunner.class)
 public class TaskExecutionTest {
 
     private TaskExecution testExecution = null;
@@ -57,17 +62,16 @@ public class TaskExecutionTest {
     }
 
     @Test
+    @PrepareForTest(EnvironmentMap.class)
     public void testExecuteRobotScript() {
-        new MockUp<EnvironmentMap>() {
-            @Mock
-            public synchronized Environment getEnv(UUID uuid) {
-                functestEnv.setRemoteIp(remoteIP);
-                functestEnv.setUserName(userName);
-                functestEnv.setPassword(password);
-                functestEnv.setPath(path);
-                return functestEnv;
-            }
-        };
+        EnvironmentMap mockEnvironmentMap = PowerMockito.mock(EnvironmentMap.class);
+        Whitebox.setInternalState(EnvironmentMap.class, "oInstance", mockEnvironmentMap);
+        functestEnv.setRemoteIp(remoteIP);
+        functestEnv.setUserName(userName);
+        functestEnv.setPassword(password);
+        functestEnv.setPath(path);
+        PowerMockito.when(mockEnvironmentMap.getEnv(Mockito.any())).thenReturn(functestEnv);
+
         try {
             testExecution.executeRobotScript(envId, executeId);
         } catch (Exception e) {
@@ -76,17 +80,16 @@ public class TaskExecutionTest {
     }
 
     @Test
+    @PrepareForTest(EnvironmentMap.class)
     public void testUploadScript() {
-        new MockUp<EnvironmentMap>() {
-            @Mock
-            public synchronized Environment getEnv(UUID uuid) {
-                functestEnv.setRemoteIp(remoteIP);
-                functestEnv.setUserName(userName);
-                functestEnv.setPassword(password);
-                functestEnv.setPath(path);
-                return functestEnv;
-            }
-        };
+        EnvironmentMap mockEnvironmentMap = PowerMockito.mock(EnvironmentMap.class);
+        Whitebox.setInternalState(EnvironmentMap.class, "oInstance", mockEnvironmentMap);
+        functestEnv.setRemoteIp(remoteIP);
+        functestEnv.setUserName(userName);
+        functestEnv.setPassword(password);
+        functestEnv.setPath(path);
+        PowerMockito.when(mockEnvironmentMap.getEnv(Mockito.any())).thenReturn(functestEnv);
+
         try {
             testExecution.uploadScript(dirPath, UUIDEnv, UUIDUpload);
         } catch (Exception e) {

@@ -17,11 +17,11 @@
 package org.onap.vnfsdk.functest.scriptmgr;
 
 import io.dropwizard.testing.junit.DAOTestRule;
-import mockit.Mock;
-import mockit.MockUp;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.onap.vnfsdk.functest.FileUtil;
 import org.onap.vnfsdk.functest.db.TaskMgrCaseTblDAO;
 import org.onap.vnfsdk.functest.db.TaskMgrTaskTblDAO;
@@ -32,6 +32,10 @@ import org.onap.vnfsdk.functest.models.TaskRecord;
 import org.onap.vnfsdk.functest.responsehandler.VnfFuncTestResponseHandler;
 import org.onap.vnfsdk.functest.util.RestResponseUtil;
 import org.onap.vnfsdk.functest.util.ZipCompressor;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 import javax.ws.rs.core.Response;
 import java.io.File;
@@ -43,6 +47,7 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+@RunWith(PowerMockRunner.class)
 public class ScriptManagerTest {
 
     @Rule
@@ -67,19 +72,15 @@ public class ScriptManagerTest {
     }
 
     @Test
+    @PrepareForTest({FileUtil.class})
     public void testUploadFuncTestPackage() {
         URL url = Thread.currentThread().getContextClassLoader().getResource("RobotScript");
         // Some temporary folder uploaded in github
         String zipFileName = "https://github.com/zoul/Finch/zipball/master/";
 
-        new MockUp<FileUtil>() {
-
-            @Mock
-            public String[] getDirectory(String directory) {
-                File file = new File("temp");
-                return file.list();
-            }
-        };
+        File file = new File("temp");
+        PowerMockito.mockStatic(FileUtil.class);
+        PowerMockito.when(FileUtil.getDirectory(Mockito.anyString())).thenReturn(file.list());
 
         try {
             // InputStream mockInputStream = new FileInputStream(zipFileName);
@@ -102,31 +103,19 @@ public class ScriptManagerTest {
     }
 
     @Test
+    @PrepareForTest({OperationStatusHandler.class, VnfFuncTestResponseHandler.class})
     public void testDownloadResults() {
-        MockUp<OperationStatusHandler> mockOperationStatusHandler = new MockUp<OperationStatusHandler>() {
+        OperationStatusHandler mockOperationStatusHandler = PowerMockito.mock(OperationStatusHandler.class);
+        Whitebox.setInternalState(OperationStatusHandler.class, "oInstance", mockOperationStatusHandler);
+        PowerMockito.when(mockOperationStatusHandler.getOperationStatus(Mockito.any())).thenReturn(response);
 
-            @Mock
-            public Response getOperationStatus(UUID uuid) {
-                OperationStatus operstatus = new OperationStatus();
-                operstatus.setOperFinished(true);
-                operstatus.setoResultCode(OperationStatus.operResultCode.SUCCESS);
-                operstatus.setOperResultMessage("finished");
-                return response;
-            }
-        };
-
-        MockUp<VnfFuncTestResponseHandler> mockVnfFuncTestResponseHandler = new MockUp<VnfFuncTestResponseHandler>() {
-
-            @Mock
-            public Response downloadResults(String taskID) {
-                OperationStatus operstatus = new OperationStatus();
-                operstatus.setOperFinished(true);
-                operstatus.setoResultCode(OperationStatus.operResultCode.SUCCESS);
-                operstatus.setOperResultMessage("finished");
-
-                return RestResponseUtil.getSuccessResponse(operstatus);
-            }
-        };
+        VnfFuncTestResponseHandler mockVnfFuncTestResponseHandler = PowerMockito.mock(VnfFuncTestResponseHandler.class);
+        Whitebox.setInternalState(VnfFuncTestResponseHandler.class, "vnfFuncRspHandler", mockVnfFuncTestResponseHandler);
+        OperationStatus operstatus = new OperationStatus();
+        operstatus.setOperFinished(true);
+        operstatus.setoResultCode(OperationStatus.operResultCode.SUCCESS);
+        operstatus.setOperResultMessage("finished");
+        PowerMockito.when(mockVnfFuncTestResponseHandler.downloadResults(Mockito.anyString())).thenReturn(RestResponseUtil.getSuccessResponse(operstatus));
 
         try {
             response = scriptManager.downloadResults(taskID);
@@ -135,9 +124,6 @@ public class ScriptManagerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        mockOperationStatusHandler.tearDown();
-        mockVnfFuncTestResponseHandler.tearDown();
     }
 
     @Test
