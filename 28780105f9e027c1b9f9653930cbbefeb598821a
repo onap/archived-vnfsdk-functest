@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Lianhao Lu <lianhao.lu@intel.com>
+Submitted-by: Lianhao Lu <lianhao.lu@intel.com>
+Submitted-at: Fri, 31 Aug 2018 01:22:08 +0000
+Reviewed-on: https://gerrit.onap.org/r/63923
+Project: vnfsdk/functest
+Branch: refs/heads/master
