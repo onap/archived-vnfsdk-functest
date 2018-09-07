@@ -60,10 +60,8 @@ public class VnfFuncTestResponseHandler {
     private static void loadConfigurations() {
         String curDir = System.getProperty("user.dir");
         String confDir = curDir + File.separator + "conf" + File.separator + "robot" + File.separator;
-//        ObjectMapper mapper = new ObjectMapper();
 
         try {
-//            mapConfigValues = mapper.readValue(new FileInputStream(confDir + "robotMetaData.json"), Map.class);
             mapConfigValues = new Gson().fromJson(new JsonReader(new FileReader(confDir + "robotMetaData.json")), Map.class);
         } catch (IOException e) {
             logger.error("Reading Json Meta data file failed or file do not exist", e);

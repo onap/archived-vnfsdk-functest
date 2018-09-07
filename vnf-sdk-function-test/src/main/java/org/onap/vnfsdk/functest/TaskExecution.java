@@ -47,12 +47,8 @@ public class TaskExecution {
         String confDir = curDir + nl + ApplicationConstants.CONF + nl + ApplicationConstants.ROBOT + nl;
 
         // Read the MetaData from the VNF package
-//        ObjectMapper mapper = new ObjectMapper();
-
         Map<String, String> mapValues = null;
         try {
-//            mapValues =
-//                    mapper.readValue(new FileInputStream(confDir + ApplicationConstants.ROBOTMETADATA_JSON), Map.class);
             mapValues = new Gson().fromJson(new JsonReader(new FileReader(confDir + ApplicationConstants.ROBOTMETADATA_JSON)), Map.class);
         } catch (IOException e) {
 
@@ -123,11 +119,8 @@ public class TaskExecution {
         String confDir = curDir + nl + ApplicationConstants.CONF + nl + ApplicationConstants.ROBOT + nl;
 
         // Read the MetaData from the VNF package
-//        ObjectMapper mapper = new ObjectMapper();
         Map<String, String> mapValues = null;
         try {
-//            mapValues =
-//                    mapper.readValue(new FileInputStream(confDir + ApplicationConstants.ROBOTMETADATA_JSON), Map.class);
             mapValues = new Gson().fromJson(new JsonReader(new FileReader(confDir + ApplicationConstants.ROBOTMETADATA_JSON)), Map.class);
         } catch (IOException e) {
 
@@ -211,12 +204,9 @@ public class TaskExecution {
         String confDir = curDir + nl + ApplicationConstants.CONF + nl + ApplicationConstants.ROBOT + nl;
 
         // Read the MetaData from the VNF package
-//        ObjectMapper mapper = new ObjectMapper();
 
         Map<String, String> mapValues = null;
         try {
-//            mapValues =
-//                    mapper.readValue(new FileInputStream(confDir + ApplicationConstants.ROBOTMETADATA_JSON), Map.class);
             mapValues = new Gson().fromJson(new JsonReader(new FileReader(confDir + ApplicationConstants.ROBOTMETADATA_JSON)), Map.class);
         } catch (Exception e) {
 

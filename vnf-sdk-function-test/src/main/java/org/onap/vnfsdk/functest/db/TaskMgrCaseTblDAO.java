@@ -28,7 +28,6 @@ public class TaskMgrCaseTblDAO extends AbstractDAO<CaseRecord> {
     }
 
     public CaseRecord findByTaskID(String taskID) {
-        //return Optional.ofNullable(get(taskID));
         return get(taskID);
     }
 

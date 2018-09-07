@@ -102,8 +102,6 @@ public class ScriptManager {
             final UUID envID = UUID.randomUUID();
 
             // Convert input string to Environment class
-//            ObjectMapper mapper = new ObjectMapper();
-//            Environment envObj = mapper.readValue(env, Environment.class);
             Environment envObj = new Gson().fromJson(env, Environment.class);
             if (null == envObj) {
                 // Converting input to Env object failed
