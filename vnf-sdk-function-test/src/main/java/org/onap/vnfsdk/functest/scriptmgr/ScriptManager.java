@@ -76,20 +76,15 @@ public class ScriptManager {
             actualFile = st.nextToken();
         }
         File file = new File(tmpDir + File.separator + actualFile);
-        OutputStream os = null;
-        try {
+        try (OutputStream os = new FileOutputStream(file, true)) {
             int read = 0;
             byte[] bytes = new byte[1024];
-            os = new FileOutputStream(file, true);
+
             while ((read = uploadedInputStream.read(bytes)) != -1) {
                 os.write(bytes, 0, read);
             }
             os.flush();
             return file.getAbsolutePath();
-        } finally {
-            if (os != null) {
-                os.close();
-            }
         }
     }
 

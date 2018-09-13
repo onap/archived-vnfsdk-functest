@@ -91,30 +91,25 @@ public final class FileUtil {
      * @throws IOException e1
      */
     public static List<String> unzip(String zipFileName, String extPlace) throws IOException {
-        ZipFile zipFile = null;
+
         ArrayList<String> unzipFileNams = new ArrayList<String>();
 
-        try {
-            zipFile = new ZipFile(zipFileName);
+        try (ZipFile zipFile = new ZipFile(zipFileName)) {
             Enumeration<?> fileEn = zipFile.entries();
             byte[] buffer = new byte[BUFFER_SIZE];
 
             while (fileEn.hasMoreElements()) {
-                InputStream input = null;
-                BufferedOutputStream bos = null;
-                try {
-                    ZipEntry entry = (ZipEntry) fileEn.nextElement();
-                    if (entry.isDirectory()) {
-                        continue;
-                    }
+                ZipEntry entry = (ZipEntry) fileEn.nextElement();
+                if (entry.isDirectory()) {
+                    continue;
+                }
+                File file = new File(extPlace, entry.getName());
+                if (!file.getParentFile().exists()) {
+                    createDirectory(file.getParentFile().getAbsolutePath());
+                }
+                try (InputStream input = zipFile.getInputStream(entry);
+                     BufferedOutputStream bos =  new BufferedOutputStream(new FileOutputStream(file))) {
 
-                    input = zipFile.getInputStream(entry);
-                    File file = new File(extPlace, entry.getName());
-                    if (!file.getParentFile().exists()) {
-                        createDirectory(file.getParentFile().getAbsolutePath());
-                    }
-
-                    bos = new BufferedOutputStream(new FileOutputStream(file));
                     while (true) {
                         int length = input.read(buffer);
                         if (length == -1) {
@@ -123,13 +118,14 @@ public final class FileUtil {
                         bos.write(buffer, 0, length);
                     }
                     unzipFileNams.add(file.getAbsolutePath());
-                } finally {
-                    closeOutputStream(bos);
-                    closeInputStream(input);
+                } catch (Exception ex) {
+                    LOG.error("close InputStream error!: " + ex);
+                    LOG.error("close OutputStream error!: " + ex);
                 }
             }
-        } finally {
-            closeZipFile(zipFile);
+        } catch (Exception ex) {
+            LOG.error("close ZipFile error!: " + ex);
+            throw new IOException(ex);
         }
         return unzipFileNams;
     }
@@ -142,52 +138,6 @@ public final class FileUtil {
                 return new File(current, name).isDirectory();
             }
         });
-    }
-
-    /**
-     * close InputStream.
-     *
-     * @param inputStream the inputstream to close
-     */
-    private static void closeInputStream(InputStream inputStream) {
-        try {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-        } catch (Exception ex) {
-            LOG.error("close InputStream error!: " + ex);
-        }
-    }
-
-    /**
-     * close OutputStream.
-     *
-     * @param outputStream the output stream to close
-     */
-    private static void closeOutputStream(OutputStream outputStream) {
-        try {
-            if (outputStream != null) {
-                outputStream.close();
-            }
-        } catch (Exception ex) {
-            LOG.error("close OutputStream error!: " + ex);
-        }
-    }
-
-    /**
-     * close zipFile.
-     *
-     * @param zipFile the zipFile to close
-     */
-    private static void closeZipFile(ZipFile zipFile) {
-        try {
-            ZipFile tempZipFile = zipFile;
-            if (tempZipFile != null) {
-                tempZipFile.close();
-            }
-        } catch (IOException ioe) {
-            LOG.error("close ZipFile error!: " + ioe);
-        }
     }
 
     public static Boolean checkFileExist(String filePath) {
