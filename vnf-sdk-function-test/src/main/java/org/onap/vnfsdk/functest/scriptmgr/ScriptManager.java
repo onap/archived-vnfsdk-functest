@@ -131,7 +131,7 @@ public class ScriptManager {
 
             // Unzip the folder
             String tempDir = System.getProperty("user.dir") + nl + "temp";
-            List<String> list = FileUtil.unzip(filePath, tempDir);
+
             LOGGER.info("File path={}", filePath);
 
             String[] directories = FileUtil.getDirectory(tempDir);

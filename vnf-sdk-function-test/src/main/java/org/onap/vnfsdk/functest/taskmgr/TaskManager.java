@@ -82,7 +82,7 @@ public class TaskManager {
 
         try {
             if (taskMgrTaskTblDAO.findByPackageID(packageID).isPresent()) {
-                throw new Exception("Already Onboard.");
+                throw new IllegalArgumentException("Already Onboard.");
             } else {
                 initOnboardTesting(taskRecord, caseRecord, packageID);
                 scriptManager.uploadFuncTestPackage(UUID.fromString(taskRecord.getTaskID()), UUID.fromString(taskRecord.getEnvID()), ApplicationConstants.CATALOG_URI);
@@ -117,7 +117,7 @@ public class TaskManager {
 
             List<TaskRecord> taskRecordList = taskMgrTaskTblDAO.findByTaskID(taskID);
             if (taskRecordList.isEmpty()) {
-                throw new Exception("Task Not Exist.");
+                throw new IllegalArgumentException(ApplicationConstants.TASK_NOT_EXIST);
             } else {
 
                 TaskRecord taskRecord = taskRecordList.get(0);
@@ -171,10 +171,10 @@ public class TaskManager {
         try {
             CaseRecord caseRecord = taskMgrCaseTblDAO.findByTaskID(taskID);
             if (null == caseRecord) {
-                throw new Exception("Task Not Exist.");
+                throw new IllegalArgumentException(ApplicationConstants.TASK_NOT_EXIST);
             } else {
                 /* To check whether we have already collected the result of Task: taskID. */
-                if ("NOT CREATED".equals(caseRecord.getTestID())) {
+                if (ApplicationConstants.NOT_CREATED.equals(caseRecord.getTestID())) {
                     return scriptManager.downloadResults(UUID.fromString(taskID));
                 } else {
                     CaseRecord oldCaseRecord = new CaseRecord();
@@ -185,7 +185,7 @@ public class TaskManager {
                 }
             }
         } catch (Exception e) {
-            if ("Task Not Exist.".equals(e.getMessage())) {
+            if (ApplicationConstants.TASK_NOT_EXIST.equals(e.getMessage())) {
                 LOGGER.error("The Task " + taskID + " does not exist..!", e);
                 return RestResponseUtil.getNotFoundResponse(taskID);
             } else {
@@ -204,10 +204,10 @@ public class TaskManager {
         // Setup the environment
         final UUID envID = scriptManager.setEnvironment(loadEnvConfigurations());
         taskRecord.setEnvID(envID.toString());
-        taskRecord.setUploadID("NOT CREATED");
-        taskRecord.setOperID("NOT CREATED");
+        taskRecord.setUploadID(ApplicationConstants.NOT_CREATED);
+        taskRecord.setOperID(ApplicationConstants.NOT_CREATED);
         taskRecord.setFuncID("");
-        taskRecord.setStatus("CREATED");
+        taskRecord.setStatus(ApplicationConstants.CREATED);
         taskRecord.setOperFinished("False");
         taskRecord.setOperResult("FAILURE");
         taskRecord.setOperResultMessage("");
@@ -216,7 +216,7 @@ public class TaskManager {
         /* Create CaseRecord entry in db */
         caseRecord.setTaskID(taskID.toString());
         caseRecord.setFuncID("");
-        caseRecord.setTestID("NOT CREATED");
+        caseRecord.setTestID(ApplicationConstants.NOT_CREATED);
         caseRecord.setTestResult("NULL");
         caseRecord.setTestDescription("");
         taskMgrCaseTblDAO.saveOrUpdate(caseRecord);

@@ -51,7 +51,7 @@ public class TaskMgrCaseTblDAOTest {
         assertThat(caseRecord.getTaskID()).isEqualTo("c0a1a373-8635-484d-bc6c-307a606cb8a1");
         assertThat(caseRecord.getTestID()).isEqualTo("INTEL");
         assertThat(caseRecord.getTestResult()).isEqualTo("SUCCESS");
-        assertThat(taskMgrCaseTblDAO.findByTaskID(caseRecord.getTaskID()).equals(caseRecord));
+        assertThat(taskMgrCaseTblDAO.findByTaskID(caseRecord.getTaskID()).equals(caseRecord)).isTrue();
     }
 
     @Test

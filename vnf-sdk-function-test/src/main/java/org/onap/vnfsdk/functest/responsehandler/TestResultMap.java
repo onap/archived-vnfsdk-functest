@@ -16,9 +16,6 @@
 
 package org.onap.vnfsdk.functest.responsehandler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +23,7 @@ import java.util.UUID;
 
 public class TestResultMap {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestResultMap.class);
-
-    private static Map<UUID, List<TestResult>> testResultMap = new HashMap<UUID, List<TestResult>>();
+    private static Map<UUID, List<TestResult>> resultMap = new HashMap<>();
 
     private static TestResultMap oInstance = new TestResultMap();
 
@@ -41,11 +36,11 @@ public class TestResultMap {
     }
 
     public synchronized Map<UUID, List<TestResult>> getTestResultMap() {
-        return testResultMap;
+        return resultMap;
     }
 
     public synchronized void setTestResultMap(UUID uuid, List<TestResult> inputTestResult) {
-        testResultMap.put(uuid, inputTestResult);
+        resultMap.put(uuid, inputTestResult);
     }
 
 }

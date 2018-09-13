@@ -23,6 +23,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -49,9 +50,7 @@ public final class FileUtil {
         int tryCount = 0;
         while (tryCount < TRY_COUNT) {
             tryCount++;
-            if (!folder.exists() && !folder.mkdirs()) {
-                continue;
-            } else {
+            if (folder.exists() || folder.mkdirs()) {
                 return true;
             }
         }
@@ -92,7 +91,7 @@ public final class FileUtil {
      */
     public static List<String> unzip(String zipFileName, String extPlace) throws IOException {
 
-        ArrayList<String> unzipFileNams = new ArrayList<String>();
+        ArrayList<String> unzipFileNams = new ArrayList<>();
 
         try (ZipFile zipFile = new ZipFile(zipFileName)) {
             Enumeration<?> fileEn = zipFile.entries();
@@ -132,12 +131,7 @@ public final class FileUtil {
 
     public static String[] getDirectory(String directory) {
         File file = new File(directory);
-        return file.list(new FilenameFilter() {
-
-            public boolean accept(File current, String name) {
-                return new File(current, name).isDirectory();
-            }
-        });
+        return file.list((current, name) -> new File(current, name).isDirectory());
     }
 
     public static Boolean checkFileExist(String filePath) {
@@ -175,18 +169,19 @@ public final class FileUtil {
      * <br/>
      *
      * @param directory
+     * @return boolean
      * @since VNFSDK 2.0
      */
-    public static void deleteDirectory(String directory) {
+    public static boolean deleteDirectory(String directory) {
         File file = new File(directory);
         if (!file.exists()) {
-            return;
+            return false;
         }
         if (file.isDirectory()) {
-            for (File sub : file.listFiles()) {
+            for (File sub : Objects.requireNonNull(file.listFiles())) {
                 deleteFile(sub);
             }
         }
-        file.delete();
+        return file.delete();
     }
 }

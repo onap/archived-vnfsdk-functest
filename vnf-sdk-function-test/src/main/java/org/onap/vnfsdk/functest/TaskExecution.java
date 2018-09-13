@@ -68,19 +68,20 @@ public class TaskExecution {
         mapValues.put(ApplicationConstants.DIR_RESULT, dirResult);
 
         String remoteScriptFile = remoteScriptDir + "/" + mapValues.get("MAIN_SCRIPT");
-        String remoteArgs = "--argumentfile " + remoteScriptDir + "/" + "config.args ";
+        String remoteArgs = "--argumentfile " + remoteScriptDir + "/" + ApplicationConstants.CONFIG_ARGS;
         String remoteCommand =
                 ApplicationConstants.ROBOT_SPACE + "-d " + remoteScriptResult + remoteArgs + remoteScriptFile;
         mapValues.put("REMOTE_COMMAND", "\"" + remoteCommand + "\"");
 
-        String robotvariables = "";
+        StringBuilder robotvariablesBuilder = new StringBuilder();
         for (Entry<String, String> values : mapValues.entrySet()) {
 
-            robotvariables = robotvariables + " -v " + values.getKey() + ":" + values.getValue() + " ";
+            robotvariablesBuilder.append(" -v ").append(values.getKey()).append(":").append(values.getValue()).append(" ");
         }
+        String robotvariables = robotvariablesBuilder.toString();
 
         // Execute the command
-        String argumentFilePath = confDir + "config.args ";
+        String argumentFilePath = confDir + ApplicationConstants.CONFIG_ARGS;
         String robotScript = confDir + "RemoteConnection.robot";
 
         Process process = null;
@@ -144,7 +145,7 @@ public class TaskExecution {
             LOGGER.error("Function Test Environment details are empty, EnvID = {}", envId);
         }
 
-        String remoteConfigArgs = remoteDir + "/" + "config.args ";
+        String remoteConfigArgs = remoteDir + "/" + ApplicationConstants.CONFIG_ARGS;
         String remoteScriptFile = remoteDir + "/" + mapValues.get("MAIN_SCRIPT");
         String remoteScriptResult = remoteDir + "/" + "output ";
         String dirResult = mapValues.get(ApplicationConstants.DIR_RESULT) + executeId;
@@ -217,11 +218,12 @@ public class TaskExecution {
         // Form the variables for the upload, transfer and execute command
         mapValues.put("SCRIPT_DIR", dirPath);
 
-        String robotvariables = "";
+        StringBuilder robotvariablesBuilder = new StringBuilder();
         for (Entry<String, String> values : mapValues.entrySet()) {
 
-            robotvariables = robotvariables + " -v " + values.getKey() + ":" + values.getValue() + " ";
+            robotvariablesBuilder.append(" -v ").append(values.getKey()).append(":").append(values.getValue()).append(" ");
         }
+        String robotvariables = robotvariablesBuilder.toString();
 
         // Append the Func test environment variables
         Environment functestEnv = EnvironmentMap.getInstance().getEnv(uuidEnv);

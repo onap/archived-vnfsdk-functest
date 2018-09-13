@@ -22,7 +22,6 @@ public class OperationStatus {
     private boolean operFinished = false;
     private String operResultMessage;
 
-    ;
 
     public operResultCode getoResultCode() {
         return oResultCode;

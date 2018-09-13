@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class EnvironmentMap {
 
-    private static Map<UUID, Environment> envMap = new HashMap<UUID, Environment>();
+    private static Map<UUID, Environment> envMap = new HashMap<>();
 
     private static EnvironmentMap oInstance = new EnvironmentMap();
 

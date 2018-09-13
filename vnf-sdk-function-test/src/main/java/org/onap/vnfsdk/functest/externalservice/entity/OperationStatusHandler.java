@@ -29,7 +29,7 @@ public class OperationStatusHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationStatusHandler.class);
 
-    private static Map<UUID, OperationStatus> operStatusMap = new HashMap<UUID, OperationStatus>();
+    private static Map<UUID, OperationStatus> operStatusMap = new HashMap<>();
 
     private static OperationStatusHandler oInstance = new OperationStatusHandler();
 

@@ -40,7 +40,7 @@ public class ServiceRegisterEntity {
 
     private String visualRange;
 
-    private List<ServiceNode> nodes = new ArrayList<ServiceNode>();
+    private List<ServiceNode> nodes = new ArrayList<>();
 
     public String getServiceName() {
         return serviceName;

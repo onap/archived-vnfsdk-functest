@@ -57,7 +57,7 @@ public class TaskMgrTaskTblDAOTest {
         assertThat(taskRecord.getStatus()).isEqualTo("CREATED");
         assertThat(taskRecord.getOperResult()).isEqualTo("SUCCESS");
         assertThat(taskMgrTaskTblDAO.findByPackageID(taskRecord.getPackageID())).isEqualTo(Optional.of(taskRecord));
-        assertThat(taskMgrTaskTblDAO.findByTaskID(taskRecord.getTaskID()).get(0).equals(taskRecord));
+        assertThat(taskMgrTaskTblDAO.findByTaskID(taskRecord.getTaskID()).get(0).equals(taskRecord)).isTrue();
     }
 
     @Test

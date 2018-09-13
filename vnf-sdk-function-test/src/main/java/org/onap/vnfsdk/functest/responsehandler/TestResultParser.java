@@ -98,11 +98,9 @@ public class TestResultParser {
                                 continue;
                             }
 
-                            if (DOCTAG == descNode.getNodeName()) {
-                                if (null != descNode.getTextContent()) {
-                                    descriptionAttr = descNode.getTextContent();
-                                    break;
-                                }
+                            if (DOCTAG == descNode.getNodeName() && null != descNode.getTextContent()) {
+                                descriptionAttr = descNode.getTextContent();
+                                break;
                             }
                         }
                     }

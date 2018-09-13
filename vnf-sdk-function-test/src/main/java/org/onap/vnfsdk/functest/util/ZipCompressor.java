@@ -93,7 +93,6 @@ public class ZipCompressor {
             while ((count = bis.read(data, 0, BUFFER)) != -1) {
                 out.write(data, 0, count);
             }
-            bis.close();
         } catch (IOException e) {
             LOG.info("Exception wile compress file" + file.getAbsolutePath(), e);
         }

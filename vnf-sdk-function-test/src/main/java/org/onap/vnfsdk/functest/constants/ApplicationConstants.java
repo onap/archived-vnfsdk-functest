@@ -56,6 +56,14 @@ public class ApplicationConstants {
 
     public static final String CATALOG_URI = "file:///C:/RobotScript/RobotScript.zip";
 
+    public static final String TASK_NOT_EXIST = "Task Not Exist.";
+
+    public static final String CREATED = "CREATED";
+
+    public static final String NOT_CREATED = "NOT CREATED";
+
+    public static final String CONFIG_ARGS = "config.args ";
+
     private ApplicationConstants() {
     }
 
