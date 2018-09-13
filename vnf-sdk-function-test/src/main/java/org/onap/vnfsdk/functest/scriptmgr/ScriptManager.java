@@ -66,7 +66,7 @@ public class ScriptManager {
     public static String storeChunkFileInLocal(String dirName, String fileName, InputStream uploadedInputStream)
             throws IOException {
         File tmpDir = new File(dirName);
-        LOGGER.info("tmpdir=" + dirName);
+        LOGGER.info("tmpdir={}", dirName);
         if (!tmpDir.exists()) {
             tmpDir.mkdirs();
         }
@@ -132,10 +132,10 @@ public class ScriptManager {
             // Unzip the folder
             String tempDir = System.getProperty("user.dir") + nl + "temp";
             List<String> list = FileUtil.unzip(filePath, tempDir);
-            LOGGER.info("File path=" + filePath);
+            LOGGER.info("File path={}", filePath);
 
             String[] directories = FileUtil.getDirectory(tempDir);
-            LOGGER.info("tempdir=" + tempDir);
+            LOGGER.info("tempdir={}", tempDir);
             if (null != directories && 0 != directories.length) {
                 filePath = tempDir + File.separator + directories[0];
             } else {
@@ -192,13 +192,13 @@ public class ScriptManager {
     }
 
     public Response getOperationResult(UUID operID) {
-        LOGGER.info("[Script Manager] Query functest Status by ID." + operID);
+        LOGGER.info("[Script Manager] Query functest Status by ID: {}.", operID);
 
         return OperationStatusHandler.getInstance().getOperationStatus(operID);
     }
 
     public Response downloadResults(UUID taskID) {
-        LOGGER.info("[Script Manager] Download functest Result by ID: " + taskID);
+        LOGGER.info("[Script Manager] Download functest Result by ID: {}.", taskID);
 
         Response resp = VnfFuncTestResponseHandler.getInstance().downloadResults(taskID.toString());
 

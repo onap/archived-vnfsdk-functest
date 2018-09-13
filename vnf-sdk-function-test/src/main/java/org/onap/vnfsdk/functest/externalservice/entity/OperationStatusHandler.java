@@ -54,8 +54,8 @@ public class OperationStatusHandler {
         if (getOperStatusMap().containsKey(uuid)) {
 
             OperationStatus operstatus = getOperStatusMap().get(uuid);
-            LOGGER.info("Operation Finished?" + operstatus.isOperFinished());
-            LOGGER.info("Operation Result Message" + operstatus.getOperResultMessage());
+            LOGGER.info("Operation Finished? {}", operstatus.isOperFinished());
+            LOGGER.info("Operation Result Message: {}.", operstatus.getOperResultMessage());
 
             return RestResponseUtil.getSuccessResponse(operstatus);
         } else {

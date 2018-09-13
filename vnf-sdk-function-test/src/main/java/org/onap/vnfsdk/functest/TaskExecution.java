@@ -88,7 +88,7 @@ public class TaskExecution {
         int ch;
         try {
             String command = "robot --argumentfile " + argumentFilePath + robotvariables + " " + robotScript;
-            LOGGER.info("Command execute to execute the script:" + command);
+            LOGGER.info("Command execute to execute the script: {}.", command);
             process = Runtime.getRuntime().exec(new String[]{getShellCommand(), getShellArg(), command});
             if (process != null) {
                 process.waitFor();
@@ -96,7 +96,7 @@ public class TaskExecution {
             }
             if (inputStream != null){
                 while ((ch = inputStream.read()) != -1) {
-                    LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
+                    LOGGER.info(ApplicationConstants.CHARACTER, ch);
                 }
             }
         } catch (Exception e) {
@@ -134,14 +134,14 @@ public class TaskExecution {
         // Get environment of given UUID
         Environment functestEnv = EnvironmentMap.getInstance().getEnv(envId);
         if (null != functestEnv) {
-            LOGGER.info("Function Test Environment path,Path = " + functestEnv.getPath());
+            LOGGER.info("Function Test Environment path,Path = {}", functestEnv.getPath());
             remoteDir = functestEnv.getPath() + mapValues.get("SCRIPT_NAME");
             // set the argument parameters
             remoteArgs = remoteArgs + " -v " + "NODE_IP" + ":" + functestEnv.getRemoteIp() + " ";
             remoteArgs = remoteArgs + " -v " + "NODE_USERNAME" + ":" + functestEnv.getUserName() + " ";
             remoteArgs = remoteArgs + " -v " + "NODE_PASSWORD" + ":" + functestEnv.getPassword() + " ";
         } else {
-            LOGGER.error("Function Test Environment details are empty,EnvID = " + envId);
+            LOGGER.error("Function Test Environment details are empty, EnvID = {}", envId);
         }
 
         String remoteConfigArgs = remoteDir + "/" + "config.args ";
@@ -167,7 +167,7 @@ public class TaskExecution {
         int ch;
         try {
             String command = ApplicationConstants.ROBOT + remoteArgs + robotScript;
-            LOGGER.info("Command execute to execute the script:" + command);
+            LOGGER.info("Command execute to execute the script: {}", command);
             process = Runtime.getRuntime().exec(new String[]{getShellCommand(), getShellArg(), command});
             if (process != null) {
                 process.waitFor();
@@ -175,7 +175,7 @@ public class TaskExecution {
             }
             if (inputStream != null) {
                 while ((ch = inputStream.read()) != -1) {
-                    LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
+                    LOGGER.info(ApplicationConstants.CHARACTER, ch);
                 }
             }
         } catch (Exception e) {
@@ -238,7 +238,7 @@ public class TaskExecution {
         int ch;
         try {
             String command = ApplicationConstants.ROBOT_SPACE + robotvariables + robotScript;
-            LOGGER.info("Command execute to upload the script:" + command);
+            LOGGER.info("Command execute to upload the script: {}.", command);
             process = Runtime.getRuntime().exec(new String[]{getShellCommand(), getShellArg(), command});
             if (process != null) {
                 process.waitFor();
@@ -246,7 +246,7 @@ public class TaskExecution {
             }
             if (inputStream != null) {
                 while ((ch = inputStream.read()) != -1) {
-                    LOGGER.info(ApplicationConstants.CHARACTER + Integer.toString(ch));
+                    LOGGER.info(ApplicationConstants.CHARACTER, ch);
                 }
             }
         } catch (Exception e) {

@@ -60,10 +60,10 @@ public class ZipCompressor {
 
     private void compress(File file, ZipOutputStream out, String basedir) {
         if (file.isDirectory()) {
-            LOG.info("compress: " + basedir + file.getName());
+            LOG.info("compress: {} {}", basedir, file.getName());
             this.compressDirectory(file, out, basedir);
         } else {
-            LOG.info("compress: " + basedir + file.getName());
+            LOG.info("compress: {} {}", basedir, file.getName());
             this.compressFile(file, out, basedir);
         }
     }

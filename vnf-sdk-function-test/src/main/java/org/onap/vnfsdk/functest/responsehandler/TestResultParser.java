@@ -54,7 +54,7 @@ public class TestResultParser {
     public List<TestResult> populateResultList(String taskID, String xmlFile) {
         List<TestResult> resultData = new ArrayList<>();
         if (!FileUtil.checkFileExist(xmlFile)) {
-            logger.error("File Not Found !!! :" + xmlFile);
+            logger.error("File Not Found !!! : {}", xmlFile);
             return resultData;
         }
         parseResultData(taskID, xmlFile, resultData);
@@ -126,7 +126,7 @@ public class TestResultParser {
             TestResultMap.getInstance().setTestResultMap(UUID.fromString(taskID), resultData);
 
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            logger.error("Exception while parsing file :" + xmlFile);
+            logger.error("Exception while parsing file : {}", xmlFile);
             logger.error("Exception while parsing file :", e);
         }
     }

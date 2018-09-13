@@ -71,13 +71,13 @@ public final class FileUtil {
         boolean isFileExist = file.exists();
         if (!isFileExist) {
             if (isFileDeleted) {
-                LOG.info("delete " + hintInfo + file.getAbsolutePath());
+                LOG.info("delete {} {}", hintInfo, file.getAbsolutePath());
             } else {
                 isFileDeleted = true;
-                LOG.info("file not exist. no need delete " + hintInfo + file.getAbsolutePath());
+                LOG.info("file not exist. no need delete {} {}", hintInfo, file.getAbsolutePath());
             }
         } else {
-            LOG.info("fail to delete " + hintInfo + file.getAbsolutePath());
+            LOG.info("fail to delete {} {}", hintInfo, file.getAbsolutePath());
         }
         return isFileDeleted;
     }
@@ -119,12 +119,12 @@ public final class FileUtil {
                     }
                     unzipFileNams.add(file.getAbsolutePath());
                 } catch (Exception ex) {
-                    LOG.error("close InputStream error!: " + ex);
-                    LOG.error("close OutputStream error!: " + ex);
+                    LOG.error("close InputStream error!: {}", ex);
+                    LOG.error("close OutputStream error!: {}", ex);
                 }
             }
         } catch (Exception ex) {
-            LOG.error("close ZipFile error!: " + ex);
+            LOG.error("close ZipFile error!: ", ex);
             throw new IOException(ex);
         }
         return unzipFileNams;
@@ -163,9 +163,9 @@ public final class FileUtil {
         byte[] byteArrayFile = new byte[(int) file.length()];
         try (FileInputStream fileInputStream = new FileInputStream(filename)) {
             int value = fileInputStream.read(byteArrayFile);
-            LOG.debug("Number of bytes read from fileInputStream = " + value);
+            LOG.debug("Number of bytes read from fileInputStream = {}", value);
         } catch (Exception e) {
-            LOG.error("convertZipFiletoByteArray: " + e);
+            LOG.error("convertZipFiletoByteArray: {}", e);
         }
         return byteArrayFile;
     }

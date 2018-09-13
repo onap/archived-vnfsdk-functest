@@ -111,7 +111,7 @@ public class TaskManager {
     @Timed
     @UnitOfWork
     public Response queryTestStatus(@ApiParam(value = "taskID") @PathParam("taskID") String taskID) {
-        LOGGER.info("[Task Manager] Query Function Test Status by ID: " + taskID);
+        LOGGER.info("[Task Manager] Query Function Test Status by ID: {}.", taskID);
 
         try {
 
@@ -166,7 +166,7 @@ public class TaskManager {
     @Timed
     @UnitOfWork
     public Response collectTaskResult(@ApiParam(value = "taskID") @PathParam("taskID") String taskID) {
-        LOGGER.info("[Task Manager] Collect Function Test Result by ID." + taskID);
+        LOGGER.info("[Task Manager] Collect Function Test Result by ID: {}.", taskID);
 
         try {
             CaseRecord caseRecord = taskMgrCaseTblDAO.findByTaskID(taskID);
