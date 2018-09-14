@@ -42,6 +42,7 @@ public class ServiceRegisterEntityTest {
 
         serviceRegistry.setServiceName("nfvo");
         serviceRegistry.setVersion("5.6");
+        serviceRegistry.setUrl("http://localhost:8080");
         serviceRegistry.setProtocol("http");
         serviceRegistry.setVisualRange("range");
 
@@ -55,6 +56,7 @@ public class ServiceRegisterEntityTest {
         assertNotNull(serviceRegistry);
         assertNotNull(serviceRegistry.getServiceName());
         assertNotNull(serviceRegistry.getVersion());
+        assertNotNull(serviceRegistry.getUrl());
         assertNotNull(serviceRegistry.getProtocol());
         assertNotNull(serviceRegistry.getVisualRange());
         assertNotNull(serviceRegistry.getNodes());
@@ -64,5 +66,10 @@ public class ServiceRegisterEntityTest {
     @Test
     public void testSetSingleNode() {
         serviceRegistry.setSingleNode("192.168.4.47", "8080", 10);
+    }
+
+    @Test
+    public void testSetSingleNodeEmptyIp() {
+        serviceRegistry.setSingleNode("", "8080", 10);
     }
 }

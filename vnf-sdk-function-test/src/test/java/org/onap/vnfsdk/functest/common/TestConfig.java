@@ -21,7 +21,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.onap.vnfsdk.functest.VnfSdkFuncTestAppConfiguration;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class TestConfig {
 
@@ -30,6 +35,14 @@ public class TestConfig {
     @Before
     public void setUp() {
         vnfSdkBean = new VnfSdkFuncTestAppConfiguration();
+    }
+
+    @Test
+    public void testConstructorIsPrivate() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor<Config> constructor = Config.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
     }
 
     @Test
