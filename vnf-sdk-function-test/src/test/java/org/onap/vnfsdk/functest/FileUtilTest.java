@@ -16,9 +16,13 @@
 
 package org.onap.vnfsdk.functest;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 
 import static org.junit.Assert.assertTrue;
 
@@ -30,9 +34,21 @@ public class FileUtilTest {
 
     private String zipFileName = "src/test/resources/RobotScript.zip";
 
+    @Before
+    public void setUp() {
+        FileUtil.createDirectory(createDirPath);
+    }
+
+    @Test
+    public void testConstructorIsPrivate() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor<FileUtil> constructor = FileUtil.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
+
     @Test
     public void testCreateDirectory() {
-
         assertTrue(FileUtil.createDirectory(createDirPath));
     }
 
@@ -47,9 +63,28 @@ public class FileUtilTest {
     }
 
     @Test
+    public void testUnzip() {
+        try {
+            FileUtil.unzip(zipFileName, createDirPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void testGetDirectory() {
         FileUtil.getDirectory(".");
         assertTrue(true);
+    }
+
+    @Test
+    public void testCheckFileExist() {
+        assertTrue(FileUtil.checkFileExist(deleteDirPath));
+    }
+
+    @Test
+    public void testDeleteFileWithPath() {
+        assertTrue(FileUtil.deleteFile(deleteDirPath));
     }
 
     @Test

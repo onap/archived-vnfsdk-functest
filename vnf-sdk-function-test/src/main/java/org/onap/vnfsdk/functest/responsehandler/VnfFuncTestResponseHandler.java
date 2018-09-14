@@ -68,6 +68,7 @@ public class VnfFuncTestResponseHandler {
         }
     }
 
+    /* TO DO: check whether getResponseByFuncTestId is still needed */
     public Response getResponseByFuncTestId(String funcTestId) {
 
         if ((null == mapConfigValues) || (null == mapConfigValues.get(resultPathKey))) {
