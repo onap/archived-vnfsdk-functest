@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_b68869e8",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 39
+      },
+      "writtenOn": "2018-10-11T07:40:54Z",
+      "side": 1,
+      "message": "1.1.0 to 1.1.1 seems like the change is a temporary and little bug fix, could we change the version to 1.2.0?",
+      "revId": "ab7ff4acb0ccdafb653e6cef810cac8d593ea343",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
