@@ -18,13 +18,14 @@
     <parent>
         <groupId>org.onap.vnfsdk.functest</groupId>
         <artifactId>vnfsdk-functest-core-parent</artifactId>
-        <version>1.1.1</version>
+        <version>1.1.2-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>vnfsdk-functest-distribution</artifactId>
     <name>vnfsdk Function Test distribution</name>
     <packaging>pom</packaging>
+	<version>1.1.2-SNAPSHOT</version>
 
     <modules>
         <module>standalone</module>
@@ -33,7 +34,7 @@
     <dependency>
             <groupId>org.onap.vnfsdk.functest</groupId>
             <artifactId>vnf-sdk-function-test</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2-SNAPSHOT</version>
     </dependency>
     </dependencies>
 </project>
